@@ -8,12 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:unreal_whatsapp/l10n/l10n.dart';
 import 'package:unreal_whatsapp/layouts/views/mobile.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login.dart';
+import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/login/data/providers/firebase_login.dart';
 import 'package:unreal_whatsapp/login/data/repositeries/firebase_login.dart';
 import 'package:unreal_whatsapp/login/views/landing.dart';
 import 'package:unreal_whatsapp/router.dart';
-import 'package:unreal_whatsapp/select_contact/bloc/select_contact_cubit.dart';
+import 'package:unreal_whatsapp/select_contact/cubit/select_contact_cubit.dart';
 import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 import 'package:unreal_whatsapp/widgets/loader.dart';
@@ -90,15 +90,12 @@ class _LoadingViewState extends State<LoadingView> {
       final user =
           await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
       if (user != null && mounted) {
-        log(user.toString());
         await Navigator.pushReplacementNamed(context, MobileView.routeName);
       } else if (user == null && mounted) {
         log('user is null');
         await Navigator.pushReplacementNamed(context, LandingView.routeName);
       }
     } catch (e) {
-      // showSnackBar(context: context, content: 'Error: $e');
-      // await Navigator.pushReplacementNamed(context, LandingView.routeName);
       log(e.toString());
     }
   }

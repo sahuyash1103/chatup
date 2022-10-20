@@ -7,7 +7,10 @@ import 'package:unreal_whatsapp/var/colors.dart';
 void showSnackBar({required BuildContext context, required String content}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(content),
+      content: Text(
+        content,
+        style: const TextStyle(fontSize: 14, color: Colors.white),
+      ),
       backgroundColor: backgroundColor,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(

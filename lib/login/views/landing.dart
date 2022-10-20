@@ -19,7 +19,7 @@ class LandingView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            SizedBox(height: size.height * 0.1),
             const Text(
               'Welcome to WhatsApp',
               style: TextStyle(
@@ -27,17 +27,17 @@ class LandingView extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: size.height / 9),
+            SizedBox(height: size.height * 0.1),
             Image.asset(
               'assets/bg.png',
               height: 340,
               width: 340,
               color: tabColor,
             ),
-            SizedBox(height: size.height / 9),
-            const Padding(
-              padding: EdgeInsets.all(15),
-              child: Text(
+            SizedBox(height: size.height * 0.1),
+            Container(
+              padding: const EdgeInsets.only(right: 30),
+              child: const Text(
                 '''
                 Read our Privacy Policy. Tap "Agree and continue" to accept the Terms of Service.
                 ''',
@@ -45,7 +45,7 @@ class LandingView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: size.height * 0.005),
             SizedBox(
               width: size.width * 0.75,
               child: ThemedButton(

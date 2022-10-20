@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unreal_whatsapp/common/utils/utils.dart';
 import 'package:unreal_whatsapp/layouts/views/mobile.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login.dart';
+import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 
 class UserInformationView extends StatefulWidget {
@@ -38,11 +38,14 @@ class _UserInformationViewState extends State<UserInformationView> {
     );
     if (result != null || !mounted) return;
 
-    await Navigator.pushNamedAndRemoveUntil(
-      context,
-      MobileView.routeName,
-      (route) => false,
-    );
+    await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+
+    if (mounted) {
+      await Navigator.of(context).pushNamedAndRemoveUntil(
+        MobileView.routeName,
+        (route) => false,
+      );
+    }
   }
 
   @override

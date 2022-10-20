@@ -17,7 +17,15 @@ class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
   late String? _verificationId;
 
   Future<AppUser?> getCurrentUser() async {
-    return firebaseLoginRepository.getCurrentUser();
+    final user = await firebaseLoginRepository.getCurrentUser();
+    if (user != null) {
+      emit(FirebaseAuthLogedInState(appUser: user));
+    }
+    return user;
+  }
+
+  Stream<AppUser> getUserByUID(String uid) {
+    return firebaseLoginRepository.getUserByUID(uid);
   }
 
   Future<void> verifyPhoneNumber(String number) async {

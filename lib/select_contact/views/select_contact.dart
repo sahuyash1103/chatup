@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:unreal_whatsapp/select_contact/bloc/select_contact_cubit.dart';
-import 'package:unreal_whatsapp/select_contact/bloc/select_contact_state.dart';
+import 'package:unreal_whatsapp/select_contact/cubit/select_contact_cubit.dart';
+import 'package:unreal_whatsapp/select_contact/cubit/select_contact_state.dart';
 import 'package:unreal_whatsapp/var/strings.dart';
 import 'package:unreal_whatsapp/widgets/loader.dart';
 
@@ -56,6 +56,10 @@ class _SelectContactsViewState extends State<SelectContactsView> {
           }
 
           if (state is SelectContactError) {
+            Future.delayed(
+              const Duration(seconds: 5),
+              () => BlocProvider.of<SelectContactCubit>(context).reset(),
+            );
             return Center(
               child: Text(
                 'Error ${state.message}',

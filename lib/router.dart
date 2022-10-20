@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unreal_whatsapp/chating/views/chating_view.dart';
 import 'package:unreal_whatsapp/layouts/views/mobile.dart';
 import 'package:unreal_whatsapp/login/views/landing.dart';
 import 'package:unreal_whatsapp/login/views/login.dart';
@@ -25,7 +26,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const UserInformationView());
       case MobileView.routeName:
         return MaterialPageRoute(builder: (_) => const MobileView());
-
+      case ChatingView.routeName:
+        final args = settings.arguments! as Map<String, String>;
+        return MaterialPageRoute(
+          builder: (_) => ChatingView(
+            name: args['name']!,
+            profilePic: args['profilePic']!,
+            uid: args['uid']!,
+          ),
+        );
       case SelectContactsView.routeName:
         return MaterialPageRoute(builder: (_) => const SelectContactsView());
       default:

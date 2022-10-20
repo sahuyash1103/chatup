@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/select_contact/bloc/select_contact_state.dart';
+import 'package:unreal_whatsapp/select_contact/cubit/select_contact_state.dart';
 import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact.dart';
 
 class SelectContactCubit extends Cubit<SelectContactState> {
@@ -27,8 +29,13 @@ class SelectContactCubit extends Cubit<SelectContactState> {
         return null;
       } else {
         emit(SelectContactError(message: e.toString()));
+        log(e.toString());
         return null;
       }
     }
+  }
+
+  void reset() {
+    emit(SelectContactInitial());
   }
 }

@@ -40,4 +40,8 @@ class LoginRepository {
   Future<AppUser?> getCurrentUser() {
     return firebaseLoginProvider.getCurrentUserData();
   }
+
+  Stream<AppUser> getUserByUID(String uid) {
+    return firebaseLoginProvider.userData(uid);
+  }
 }
