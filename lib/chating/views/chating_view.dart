@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unreal_whatsapp/chating/views/widgets/bottom_chat_field.dart';
+import 'package:unreal_whatsapp/chating/views/widgets/chat_list.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 
-class ChatingView extends StatefulWidget {
+class ChatingView extends StatelessWidget {
   const ChatingView({
     super.key,
     required this.name,
@@ -19,11 +21,6 @@ class ChatingView extends StatefulWidget {
   final bool isGroup;
 
   @override
-  State<ChatingView> createState() => _ChatingViewState();
-}
-
-class _ChatingViewState extends State<ChatingView> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,29 +30,30 @@ class _ChatingViewState extends State<ChatingView> {
               padding: const EdgeInsets.fromLTRB(1, 0, 10, 0),
               child: CircleAvatar(
                 backgroundColor: appBarColor,
-                backgroundImage: NetworkImage(widget.profilePic),
+                backgroundImage: NetworkImage(profilePic),
                 radius: 20,
               ),
             ),
-            if (widget.isGroup)
-              Text(widget.name)
+            if (isGroup)
+              Text(name)
             else
               StreamBuilder<AppUser>(
                 stream: BlocProvider.of<FirebaseLoginCubit>(context)
-                    .getUserByUID(widget.uid),
+                    .getUserByUID(uid),
                 builder: (context, snapshot) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.name,
+                        name,
                         style: const TextStyle(fontSize: 18),
                       ),
-                      Text(
-                        snapshot.data!.isOnline ? 'online' : 'offline',
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
+                      if (snapshot.data != null)
+                        Text(
+                          snapshot.data!.isOnline ? 'online' : 'offline',
+                          style:
+                              const TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
                     ],
                   );
                 },
@@ -76,6 +74,20 @@ class _ChatingViewState extends State<ChatingView> {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.more_vert),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ChatList(
+              recieverUserId: uid,
+              isGroupChat: isGroup,
+            ),
+          ),
+          BottomChatField(
+            recieverUserId: uid,
+            isGroupChat: isGroup,
           ),
         ],
       ),
