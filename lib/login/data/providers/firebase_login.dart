@@ -49,7 +49,7 @@ class LoginProvider {
       final user = AppUser(
         name: name,
         uid: uid,
-        photoUrl: photoUrl,
+        profilePic: photoUrl,
         isOnline: true,
         email: firebaseAuth.currentUser!.email ?? '',
         number: firebaseAuth.currentUser!.phoneNumber!,

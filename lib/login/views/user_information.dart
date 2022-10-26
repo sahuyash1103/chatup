@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unreal_whatsapp/common/utils/utils.dart';
-import 'package:unreal_whatsapp/layouts/views/mobile.dart';
+import 'package:unreal_whatsapp/layouts/views/mobile_layout.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 
@@ -36,15 +36,15 @@ class _UserInformationViewState extends State<UserInformationView> {
       name: nameController.text.trim(),
       profilePic: image,
     );
-    if (result != null || !mounted) return;
 
-    await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+    if (result != null || !mounted) return;
+    await Navigator.of(context).pushNamedAndRemoveUntil(
+      MobileView.routeName,
+      (route) => false,
+    );
 
     if (mounted) {
-      await Navigator.of(context).pushNamedAndRemoveUntil(
-        MobileView.routeName,
-        (route) => false,
-      );
+      await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
     }
   }
 

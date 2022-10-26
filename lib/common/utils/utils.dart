@@ -18,6 +18,7 @@ void showSnackBar({required BuildContext context, required String content}) {
       ),
       elevation: 5,
       margin: const EdgeInsets.all(50),
+      duration: const Duration(seconds: 1),
     ),
   );
 }
