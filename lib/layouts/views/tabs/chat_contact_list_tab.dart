@@ -57,7 +57,10 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: Text(
-                          chatContact.lastMessage,
+                          chatContact.lastMessage.length <= 30
+                              ? chatContact.lastMessage
+                              : '${chatContact.lastMessage.substring(0, 30)}'
+                                  '......',
                           style: const TextStyle(fontSize: 15),
                         ),
                       ),

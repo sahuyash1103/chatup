@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 
 import 'package:unreal_whatsapp/chating/cubit/chat_state.dart';
 import 'package:unreal_whatsapp/chating/data/models/chat_contact.dart';
+import 'package:unreal_whatsapp/chating/data/models/message.dart';
 import 'package:unreal_whatsapp/chating/data/repositories/chat_repository.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 
@@ -13,6 +14,10 @@ class ChatCubit extends Cubit<ChatState> {
 
   Stream<List<ChatContact>> fetchChatContacts() {
     return chatRepository.fetchChatContacts();
+  }
+
+  Stream<List<Message>> fetchMessages({required String contactID}) {
+    return chatRepository.fetchMessages(contactID);
   }
 
   Future<void> sendTextMessage({

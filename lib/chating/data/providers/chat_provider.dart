@@ -143,4 +143,22 @@ class ChatProvider {
         .doc(messageID)
         .set(message.toMap());
   }
+
+  Stream<List<Message>> fetchMessages(String contactID) {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .doc(contactID)
+        .collection('messages')
+        .snapshots()
+        .asyncMap((event) async {
+      final messages = <Message>[];
+      for (final document in event.docs) {
+        final message = Message.fromMap(document.data());
+        messages.add(message);
+      }
+      return messages;
+    });
+  }
 }
