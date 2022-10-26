@@ -1,4 +1,5 @@
 import 'package:unreal_whatsapp/chating/data/models/chat_contact.dart';
+import 'package:unreal_whatsapp/chating/data/models/message.dart';
 import 'package:unreal_whatsapp/chating/data/providers/chat_provider.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 
@@ -20,5 +21,9 @@ class ChatRepository {
       recieverID: recieverID,
       sender: sender,
     );
+  }
+
+  Stream<List<Message>> fetchMessages(String contactID) {
+    return chatProvider.fetchMessages(contactID);
   }
 }
