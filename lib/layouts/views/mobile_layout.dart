@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unreal_whatsapp/chating/views/chating_view.dart';
 import 'package:unreal_whatsapp/common/utils/utils.dart';
+import 'package:unreal_whatsapp/layouts/views/tabs/chat_contact_list_tab.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
@@ -78,7 +79,7 @@ class _MobileViewState extends State<MobileView>
                   child: CircleAvatar(
                     backgroundColor: appBarColor,
                     backgroundImage: NetworkImage(
-                      state.appUser.photoUrl,
+                      state.appUser.profilePic,
                     ),
                   ),
                 ),
@@ -138,7 +139,7 @@ class _MobileViewState extends State<MobileView>
               body: TabBarView(
                 controller: tabBarController,
                 children: const [
-                  Text('Chats'),
+                  ChatContactListTab(),
                   Text('status'),
                   Text('Calls'),
                 ],
@@ -155,7 +156,7 @@ class _MobileViewState extends State<MobileView>
                       ChatingView.routeName,
                       arguments: {
                         'name': user.name,
-                        'profilePic': user.photoUrl,
+                        'profilePic': user.profilePic,
                         'uid': user.uid,
                       },
                     );

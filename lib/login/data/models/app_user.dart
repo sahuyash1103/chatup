@@ -6,7 +6,7 @@ class AppUser {
     required this.name,
     required this.email,
     required this.number,
-    required this.photoUrl,
+    required this.profilePic,
     this.groupId = const [],
     this.isOnline = false,
   });
@@ -15,7 +15,7 @@ class AppUser {
     return AppUser(
       name: map['name'] as String,
       uid: map['uid'] as String,
-      photoUrl: map['profilePic'] as String,
+      profilePic: map['profilePic'] as String,
       number: map['phoneNumber'] as String,
       email: map['email'] != null ? map['email'] as String : '',
       groupId: List<String>.from(map['groupId'] as List),
@@ -28,7 +28,7 @@ class AppUser {
       uid: user.uid,
       name: user.displayName ?? '',
       email: user.email ?? '',
-      photoUrl: user.photoURL ?? '',
+      profilePic: user.photoURL ?? '',
       number: user.phoneNumber ?? '',
     );
   }
@@ -36,7 +36,7 @@ class AppUser {
   String name;
   String email;
   String number;
-  String photoUrl;
+  String profilePic;
   List<dynamic> groupId;
   bool isOnline;
 
@@ -44,7 +44,7 @@ class AppUser {
     return {
       'name': name,
       'uid': uid,
-      'profilePic': photoUrl,
+      'profilePic': profilePic,
       'isOnline': isOnline,
       'phoneNumber': number,
       'groupId': groupId,

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
+import 'package:unreal_whatsapp/chating/cubit/chat_state.dart';
+import 'package:unreal_whatsapp/common/utils/utils.dart';
+import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 
 class BottomChatField extends StatefulWidget {
@@ -93,28 +98,57 @@ class _BottomChatFieldState extends State<BottomChatField> {
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.fromLTRB(1, 0, 5, 0),
-            padding: const EdgeInsets.fromLTRB(10, 8, 6, 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: const Color(0xFF128C7E),
-            ),
-            child: isTyping
-                ? const Icon(
-                    Icons.send_rounded,
-                    size: 25,
-                  )
-                : const Icon(
-                    Icons.mic,
-                    size: 25,
-                  ),
-          ),
+        BlocConsumer<ChatCubit, ChatState>(
+          listener: (context, state) {
+            if (state is ChatErrorState) {
+              showSnackBar(context: context, content: state.error);
+            }
+          },
+          builder: (context, state) {
+            return GestureDetector(
+              onTap: isTyping ? sendTextMessage : recordAudio,
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.fromLTRB(1, 0, 5, 0),
+                padding: const EdgeInsets.fromLTRB(10, 8, 6, 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color(0xFF128C7E),
+                ),
+                child: isTyping
+                    ? const Icon(
+                        Icons.send_rounded,
+                        size: 25,
+                      )
+                    : const Icon(
+                        Icons.mic,
+                        size: 25,
+                      ),
+              ),
+            );
+          },
         )
       ],
     );
+  }
+
+  Future<void> recordAudio() async {}
+
+  Future<void> sendTextMessage() async {
+    final sender =
+        await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+    if (mounted && sender != null) {
+      await BlocProvider.of<ChatCubit>(context).sendTextMessage(
+        text: _textEditingControllerMessage.text.trim(),
+        recieverID: widget.recieverUserId,
+        sender: sender,
+      );
+      setState(() {
+        _textEditingControllerMessage.text = '';
+      });
+      showSnackBar(context: context, content: 'Message sent');
+    } else {
+      showSnackBar(context: context, content: 'Unable to send message');
+    }
   }
 }

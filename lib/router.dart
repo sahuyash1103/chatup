@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unreal_whatsapp/chating/views/chating_view.dart';
-import 'package:unreal_whatsapp/layouts/views/mobile.dart';
+import 'package:unreal_whatsapp/layouts/views/mobile_layout.dart';
 import 'package:unreal_whatsapp/login/views/landing.dart';
 import 'package:unreal_whatsapp/login/views/login.dart';
 import 'package:unreal_whatsapp/login/views/otp.dart';

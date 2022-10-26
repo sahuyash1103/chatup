@@ -6,8 +6,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
+import 'package:unreal_whatsapp/chating/data/providers/chat_provider.dart';
+import 'package:unreal_whatsapp/chating/data/repositories/chat_repository.dart';
 import 'package:unreal_whatsapp/l10n/l10n.dart';
-import 'package:unreal_whatsapp/layouts/views/mobile.dart';
+import 'package:unreal_whatsapp/layouts/views/mobile_layout.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/login/data/providers/firebase_login.dart';
 import 'package:unreal_whatsapp/login/data/repositeries/firebase_login.dart';
@@ -34,6 +37,12 @@ class App extends StatelessWidget {
     final selectContactRepository =
         SelectContactRepository(firebaseStorage: FirebaseStorage.instance);
 
+    final chatRepository = ChatRepository(
+      chatProvider: ChatProvider(
+        auth: FirebaseAuth.instance,
+        firestore: FirebaseFirestore.instance,
+      ),
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -44,6 +53,11 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => SelectContactCubit(
             selectContactRepository: selectContactRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ChatCubit(
+            chatRepository: chatRepository,
           ),
         ),
       ],
