@@ -19,8 +19,12 @@ class OTPView extends StatelessWidget {
   }
 
   void navigateToUserInfoView(BuildContext context) {
+    BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, UserInformationView.routeName);
+    Navigator.pushReplacementNamed(
+      context,
+      UserInformationView.routeName,
+    );
   }
 
   @override

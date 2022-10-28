@@ -37,7 +37,7 @@ class LoginProvider {
   }) async {
     try {
       final uid = firebaseAuth.currentUser!.uid;
-      var photoUrl = defaultProfileURL;
+      var photoUrl = defaultProfilePath;
 
       if (profilePic != null) {
         photoUrl = await storeFileToFirebase(

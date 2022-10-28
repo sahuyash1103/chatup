@@ -17,7 +17,8 @@ import 'package:unreal_whatsapp/login/data/repositeries/firebase_login.dart';
 import 'package:unreal_whatsapp/login/views/landing.dart';
 import 'package:unreal_whatsapp/router.dart';
 import 'package:unreal_whatsapp/select_contact/cubit/select_contact_cubit.dart';
-import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact.dart';
+import 'package:unreal_whatsapp/select_contact/data/providers/select_contact_provider.dart';
+import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact_repository.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 import 'package:unreal_whatsapp/widgets/loader.dart';
 
@@ -34,8 +35,10 @@ class App extends StatelessWidget {
         firebaseStorage: FirebaseStorage.instance,
       ),
     );
-    final selectContactRepository =
-        SelectContactRepository(firebaseStorage: FirebaseStorage.instance);
+    final selectContactRepository = SelectContactRepository(
+      selectContactProvider:
+          SelectContactProvider(firestore: FirebaseFirestore.instance),
+    );
 
     final chatRepository = ChatRepository(
       chatProvider: ChatProvider(

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
 import 'package:unreal_whatsapp/chating/views/chating_view.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
+import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
 class ChatContactListTab extends StatefulWidget {
   const ChatContactListTab({super.key});
@@ -13,24 +14,27 @@ class ChatContactListTab extends StatefulWidget {
 }
 
 class _ChatContactListTabState extends State<ChatContactListTab> {
+  String formatLastMessage(String lastMessage) {
+    return '${lastMessage.substring(0, 30)}......';
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: BlocProvider.of<ChatCubit>(context).fetchChatContacts(),
       builder: (context, snapshot) {
-        if (snapshot.data != null) {
+        if (snapshot.data != null && snapshot.data!.isNotEmpty) {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final chatContact = snapshot.data![index];
               return Column(
                 children: [
+                  const SizedBox(height: 3,),
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: 8,
-                      left: 5,
-                      right: 5,
-                      bottom: 2,
+                      left: 1,
+                      right: 1,
                     ),
                     child: ListTile(
                       onTap: () {
@@ -44,9 +48,9 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                           },
                         );
                       },
-                      tileColor: appBarColor,
+                      tileColor: chatBarMessage,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(3),
                       ),
                       title: Text(
                         chatContact.name,
@@ -59,13 +63,12 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                         child: Text(
                           chatContact.lastMessage.length <= 30
                               ? chatContact.lastMessage
-                              : '${chatContact.lastMessage.substring(0, 30)}'
-                                  '......',
+                              : formatLastMessage(chatContact.lastMessage),
                           style: const TextStyle(fontSize: 15),
                         ),
                       ),
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(chatContact.profilePic),
+                      leading: CustomCircleAvatar(
+                        profilePicURL: chatContact.profilePic,
                         radius: 30,
                       ),
                       trailing: Text(
@@ -77,7 +80,6 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                       ),
                     ),
                   ),
-                  const Divider(color: dividerColor, height: 3),
                 ],
               );
             },

@@ -138,14 +138,14 @@ class _BottomChatFieldState extends State<BottomChatField> {
     final sender =
         await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
     if (mounted && sender != null) {
+      final textMessage = _textEditingControllerMessage.text.trim();
+      _textEditingControllerMessage.text = '';
+      setState(() {});
       await BlocProvider.of<ChatCubit>(context).sendTextMessage(
-        text: _textEditingControllerMessage.text.trim(),
+        text: textMessage,
         recieverID: widget.recieverUserId,
         sender: sender,
       );
-      setState(() {
-        _textEditingControllerMessage.text = '';
-      });
       showSnackBar(context: context, content: 'Message sent');
     } else {
       showSnackBar(context: context, content: 'Unable to send message');

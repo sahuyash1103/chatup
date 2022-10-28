@@ -69,8 +69,9 @@ class _SelectContactsViewState extends State<SelectContactsView> {
 
           if (state is SelectContactLoaded) {
             final contactList = state.contacts;
-            const networkImage = NetworkImage(defaultProfileURL);
 
+            if (contactList.isEmpty) return const CustomLoadingIndicator();
+            
             return ListView.builder(
               itemCount: contactList.length,
               itemBuilder: (context, index) {
@@ -96,7 +97,7 @@ class _SelectContactsViewState extends State<SelectContactsView> {
                       ),
                       leading: contact.photo == null
                           ? const CircleAvatar(
-                              backgroundImage: networkImage,
+                              backgroundImage: AssetImage(defaultProfilePath),
                               radius: 30,
                             )
                           : CircleAvatar(

@@ -1,2 +1,1 @@
-const String defaultProfileURL =
-    'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png';
+const String defaultProfilePath = 'assets/default_user_profile_pic.png';
