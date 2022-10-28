@@ -39,3 +39,4 @@ flutter:
   assets:
     - assets/backgroundImage.png
     - assets/bg.png
+    - assets/default_user_profile_pic.png

@@ -151,6 +151,7 @@ class ChatProvider {
         .collection('chats')
         .doc(contactID)
         .collection('messages')
+        .orderBy('timeStamp')
         .snapshots()
         .asyncMap((event) async {
       final messages = <Message>[];

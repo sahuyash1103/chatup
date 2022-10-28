@@ -48,12 +48,12 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void sendPhoneNumber() {
-    final phoneNumber = phoneController.text.trim();
-    if (_country != null && phoneNumber.isNotEmpty) {
-      this.phoneNumber = '+${_country!.phoneCode}$phoneNumber';
-      if (this.phoneNumber != null) {
+    final phoneNum = phoneController.text.trim();
+    if (_country != null && phoneNum.isNotEmpty) {
+      phoneNumber = '+${_country!.phoneCode}$phoneNum';
+      if (phoneNumber != null) {
         BlocProvider.of<FirebaseLoginCubit>(context)
-            .verifyPhoneNumber(this.phoneNumber!);
+            .verifyPhoneNumber(phoneNumber!);
         Navigator.pushNamed(
           context,
           OTPView.routeName,

@@ -5,6 +5,7 @@ import 'package:unreal_whatsapp/chating/views/widgets/chat_list.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
+import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
 class ChatingView extends StatelessWidget {
   const ChatingView({
@@ -28,9 +29,8 @@ class ChatingView extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(1, 0, 10, 0),
-              child: CircleAvatar(
-                backgroundColor: appBarColor,
-                backgroundImage: NetworkImage(profilePic),
+              child: CustomCircleAvatar(
+                profilePicURL: profilePic,
                 radius: 20,
               ),
             ),

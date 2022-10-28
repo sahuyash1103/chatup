@@ -10,6 +10,7 @@ import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 import 'package:unreal_whatsapp/select_contact/views/select_contact.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
+import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
 class MobileView extends StatefulWidget {
   const MobileView({super.key});
@@ -76,11 +77,8 @@ class _MobileViewState extends State<MobileView>
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.all(5),
-                  child: CircleAvatar(
-                    backgroundColor: appBarColor,
-                    backgroundImage: NetworkImage(
-                      state.appUser.profilePic,
-                    ),
+                  child: CustomCircleAvatar(
+                    profilePicURL: state.appUser.profilePic,
                   ),
                 ),
                 actions: [
