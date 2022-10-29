@@ -34,10 +34,11 @@ class LoginProvider {
   Future<String?> saveUserDataToFireStore({
     required String name,
     File? profilePic,
+    String? previousPic,
   }) async {
     try {
       final uid = firebaseAuth.currentUser!.uid;
-      var photoUrl = defaultProfilePath;
+      var photoUrl = previousPic ?? defaultProfilePath;
 
       if (profilePic != null) {
         photoUrl = await storeFileToFirebase(

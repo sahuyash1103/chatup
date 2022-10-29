@@ -83,10 +83,12 @@ class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
   Future<String?> saveUserDataToFireStore({
     required String name,
     File? profilePic,
+    String? previousPic,
   }) async {
     return firebaseLoginRepository.saveUserDataToFireStore(
       name: name,
       profilePic: profilePic,
+      previousPic: previousPic,
     );
   }
 

@@ -13,6 +13,8 @@ name: "unreal whatsapp"
 jobs:
   build:
     name: unreal whatsapp
+    env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
@@ -24,10 +26,12 @@ jobs:
           flutter-version: '3.3.3'
       - run: flutter pub get
       # - run: flutter test
-      - run: flutter build apk --flavor development --debug --split-per-abi
-      - run: flutter build apk --flavor staging --debug --split-per-abi
-      - run: flutter build apk --flavor production --debug --split-per-abi
-      # - run: flutter build apk --debug --split-per-abi --target=lib/main_development.dart
+      - run: echo $KEYSTORE_BASE64 | base64 -D  -o $RUNNER_TEMP/release.keystore
+      - run: pwd | ls
+      - run: echo $KEYSTORE_BASE64 | base64 -D  -o release.keystore
+      - run: pwd | ls
+      - run: cd $RUNNER_TEMP pwd | ls
+      # - run: flutter build apk --flavor production --release --split-per-abi
       # - run: |
       #     flutter build ios --no-codesign
       #     cd build/ios/iphoneos
@@ -36,6 +40,8 @@ jobs:
       #     ln -s ../Runner.app
       #     cd ..
       #     zip -r app.ipa Payload
+      # - run: rm $RUNNER_TEMP/release.keystore
+      # - run: rm release.keystore
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:

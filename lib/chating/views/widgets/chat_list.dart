@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
 import 'package:unreal_whatsapp/chating/cubit/chat_state.dart';
+import 'package:unreal_whatsapp/chating/views/widgets/info_message.dart';
 import 'package:unreal_whatsapp/chating/views/widgets/sender_message_card.dart';
 import 'package:unreal_whatsapp/chating/views/widgets/user_message_card.dart';
+import 'package:unreal_whatsapp/common/utils/utils.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({
@@ -38,21 +39,30 @@ class _ChatListState extends State<ChatList> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
-                final timeStamp = DateFormat.Hm().format(message.timeStamp);
+                final timeStamp = formateTime(message.timeStamp);
+                final previousDay =
+                    formateDate(snapshot.data![index - 1].timeStamp);
+                final newDay = formateDate(message.timeStamp);
 
-                if (message.senderId ==
-                    FirebaseAuth.instance.currentUser!.uid) {
-                  return UserMessageCard(
-                    message: message.text,
-                    date: timeStamp,
-                    type: message.messageType,
-                    isSeen: message.isSeen,
-                  );
-                }
-                return SenderMessageCard(
-                  message: message.text,
-                  date: timeStamp,
-                  type: message.messageType,
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (previousDay != newDay) InfoMessage(infoMessage: newDay),
+                    if (message.senderId ==
+                        FirebaseAuth.instance.currentUser!.uid)
+                      UserMessageCard(
+                        message: message.text,
+                        date: timeStamp,
+                        type: message.messageType,
+                        isSeen: message.isSeen,
+                      )
+                    else
+                      SenderMessageCard(
+                        message: message.text,
+                        date: timeStamp,
+                        type: message.messageType,
+                      ),
+                  ],
                 );
               },
             );
