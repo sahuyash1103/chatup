@@ -1,14 +1,12 @@
 on:
   pull_request:
     branches:
-      - main
       - master
+      - production
   push:
     branches:
-      - main
       - master
-      - prod
-      - dev
+      - production
 name: "unreal whatsapp"
 jobs:
   build:
