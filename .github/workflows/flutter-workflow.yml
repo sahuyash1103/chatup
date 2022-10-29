@@ -25,10 +25,8 @@ jobs:
       - run: flutter pub get
       # - run: flutter test
       - run: echo $KEYSTORE_BASE64 | base64 -D  -o $RUNNER_TEMP/release.keystore
-      - run: pwd | ls
       - run: echo $KEYSTORE_BASE64 | base64 -D  -o release.keystore
-      - run: pwd | ls
-      - run: cd $RUNNER_TEMP pwd | ls
+      - run: echo $RUNNER_TEMP | cd $RUNNER_TEMP | pwd | ls
       # - run: flutter build apk --flavor production --release --split-per-abi
       # - run: |
       #     flutter build ios --no-codesign
