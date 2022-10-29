@@ -45,3 +45,20 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
   }
   return image;
 }
+
+String formateDate(DateTime dateTime) {
+  final now = DateTime.now();
+  final difference = now.difference(dateTime);
+
+  if (difference.inHours < 24) {
+    return 'Today';
+  } else if (difference.inDays == 1) {
+    return 'Yesterday';
+  } else {
+    return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+}
+
+String formateTime(DateTime dateTime) {
+  return '${dateTime.hour}:${dateTime.minute}';
+}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
 import 'package:unreal_whatsapp/chating/views/chating_view.dart';
+import 'package:unreal_whatsapp/common/utils/utils.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
@@ -18,6 +18,12 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
     return '${lastMessage.substring(0, 30)}......';
   }
 
+  String formatDateTime(DateTime dateTime) {
+    return formateDate(dateTime) == 'Today'
+        ? formateTime(dateTime)
+        : formateDate(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -30,7 +36,9 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
               final chatContact = snapshot.data![index];
               return Column(
                 children: [
-                  const SizedBox(height: 3,),
+                  const SizedBox(
+                    height: 3,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 1,
@@ -72,7 +80,7 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                         radius: 30,
                       ),
                       trailing: Text(
-                        DateFormat.Hm().format(chatContact.timeStamp),
+                        formatDateTime(chatContact.timeStamp),
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 13,

@@ -30,10 +30,12 @@ class LoginRepository {
   Future<String?> saveUserDataToFireStore({
     required String name,
     File? profilePic,
+    String? previousPic,
   }) async {
     return firebaseLoginProvider.saveUserDataToFireStore(
       name: name,
       profilePic: profilePic,
+      previousPic: previousPic,
     );
   }
 

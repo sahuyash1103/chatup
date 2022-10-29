@@ -39,11 +39,12 @@ class _UserInformationViewState extends State<UserInformationView> {
     setState(() {});
   }
 
-  Future<void> storeUserData() async {
+  Future<void> storeUserData(String previousPic) async {
     final result = await BlocProvider.of<FirebaseLoginCubit>(context)
         .saveUserDataToFireStore(
       name: nameController.text.trim(),
       profilePic: image,
+      previousPic: previousPic.isNotEmpty ? previousPic : null,
     );
 
     if (result != null || !mounted) return;
@@ -132,7 +133,8 @@ class _UserInformationViewState extends State<UserInformationView> {
                           ),
                         ),
                         IconButton(
-                          onPressed: storeUserData,
+                          onPressed: () =>
+                              storeUserData(state.appUser.profilePic),
                           icon: const Icon(
                             Icons.done,
                             color: tabColor,
