@@ -1,14 +1,12 @@
 on:
   pull_request:
     branches:
-      - main
       - master
+      - production
   push:
     branches:
-      - main
       - master
-      - prod
-      - dev
+      - production
 name: "unreal whatsapp"
 jobs:
   build:
@@ -26,11 +24,13 @@ jobs:
           flutter-version: '3.3.3'
       - run: flutter pub get
       # - run: flutter test
-      - run: echo $KEYSTORE_BASE64 | base64 -D  -o $RUNNER_TEMP/release.keystore
-      - run: pwd | ls
-      - run: echo $KEYSTORE_BASE64 | base64 -D  -o release.keystore
-      - run: pwd | ls
-      - run: cd $RUNNER_TEMP pwd | ls
+      - run: echo $KEYSTORE_BASE64 | base64 -D  -o $RUNNER_TEMP/release.keystore | pwd
+      - run: echo $KEYSTORE_BASE64 | base64 -D  -o release.keystore | pwd
+      - run: '[ ! -f release.keystore ] && echo "Not found"'
+      - run: echo pwd
+      - run: echo $RUNNER_TEMP | cd $RUNNER_TEMP | pwd | ls
+      - run: '[ ! -f release.keystore ] && echo "Not found"'
+      - run: echo pwd
       # - run: flutter build apk --flavor production --release --split-per-abi
       # - run: |
       #     flutter build ios --no-codesign
