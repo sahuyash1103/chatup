@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:unreal_whatsapp/select_contact/cubit/select_contact_cubit.dart';
 import 'package:unreal_whatsapp/select_contact/cubit/select_contact_state.dart';
-import 'package:unreal_whatsapp/var/strings.dart';
+import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
+import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 import 'package:unreal_whatsapp/widgets/loader.dart';
 
 class SelectContactsView extends StatefulWidget {
@@ -15,7 +15,7 @@ class SelectContactsView extends StatefulWidget {
 }
 
 class _SelectContactsViewState extends State<SelectContactsView> {
-  Future<void> selectContact(Contact contact) async {
+  Future<void> selectContact(AppContact contact) async {
     final user = await BlocProvider.of<SelectContactCubit>(context)
         .selectContact(contact: contact);
 
@@ -70,8 +70,18 @@ class _SelectContactsViewState extends State<SelectContactsView> {
           if (state is SelectContactLoaded) {
             final contactList = state.contacts;
 
-            if (contactList.isEmpty) return const CustomLoadingIndicator();
-            
+            if (contactList.isEmpty) {
+              return const Center(
+                child: Text(
+                  'Your friends are not using unreal whatsapp',
+                  style: TextStyle(
+                    color: Color(0xFFFFFFFF),
+                    fontSize: 16,
+                  ),
+                ),
+              );
+            }
+
             return ListView.builder(
               itemCount: contactList.length,
               itemBuilder: (context, index) {
@@ -82,28 +92,19 @@ class _SelectContactsViewState extends State<SelectContactsView> {
                     padding: const EdgeInsets.fromLTRB(2, 5, 2, 5),
                     child: ListTile(
                       title: Text(
-                        contact.displayName,
+                        contact.name,
                         style: const TextStyle(
                           fontSize: 18,
                         ),
                       ),
                       subtitle: Text(
-                        contact.phones.isNotEmpty
-                            ? contact.phones.first.number
-                            : '',
+                        contact.phoneNumber,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      leading: contact.photo == null
-                          ? const CircleAvatar(
-                              backgroundImage: AssetImage(defaultProfilePath),
-                              radius: 30,
-                            )
-                          : CircleAvatar(
-                              backgroundImage: MemoryImage(contact.photo!),
-                              radius: 30,
-                            ),
+                      leading:
+                          CustomCircleAvatar(profilePicURL: contact.profilePic),
                     ),
                   ),
                 );

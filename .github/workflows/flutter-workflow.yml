@@ -27,8 +27,6 @@ jobs:
         with:
           flutter-version: '3.3.3'
       - run: echo $KEYSTORE_BASE64 | base64 -D  -o $RUNNER_TEMP/release.keystore
-      - run: cd $RUNNER_TEMP && pwd && ls
-      - run: echo $ANDROID_KEYSTORE_ALIAS | echo $ANDROID_KEYSTORE_PATH
       - run: flutter pub get
       - run: flutter build apk --flavor production --release --split-per-abi
       # - run: |
@@ -39,7 +37,7 @@ jobs:
       #     ln -s ../Runner.app
       #     cd ..
       #     zip -r app.ipa Payload
-      - run: cd $RUNNER_TEMP && rm release.keystore && ls
+      - run: cd $RUNNER_TEMP && rm release.keystore
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:

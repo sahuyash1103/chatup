@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
+import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
 import 'package:unreal_whatsapp/select_contact/data/providers/select_contact_provider.dart';
 
 class SelectContactRepository {
@@ -10,8 +11,8 @@ class SelectContactRepository {
 
   final SelectContactProvider selectContactProvider;
 
-  Future<List<Contact>> getContact() async {
-    final contacts = <Contact>[];
+  Future<List<AppContact>> getContact() async {
+    final contacts = <AppContact>[];
     try {
       if (await Permission.contacts.request().isGranted ||
           await FlutterContacts.requestPermission()) {
@@ -24,10 +25,12 @@ class SelectContactRepository {
             continue;
           }
 
-          final isVerified = await selectContactProvider
+          final verifiedUser = await selectContactProvider
               .verify(contact.phones.first.number.replaceAll(' ', ''));
 
-          if (isVerified) contacts.add(contact);
+          if (verifiedUser != null) {
+            contacts.add(AppContact.fromMap(verifiedUser));
+          }
         }
       } else {
         log('Permission not granted');
@@ -42,9 +45,9 @@ class SelectContactRepository {
     return contacts;
   }
 
-  Future<AppUser> selectContact({required Contact contact}) async {
+  Future<AppUser?> selectContact({required AppContact contact}) async {
     final userMap = await selectContactProvider
-        .selectContact(contact.phones.first.number.replaceAll(' ', ''));
-    return AppUser.fromMap(userMap);
+        .selectContact(contact.phoneNumber.replaceAll(' ', ''));
+    return userMap != null ? AppUser.fromMap(userMap) : null;
   }
 }

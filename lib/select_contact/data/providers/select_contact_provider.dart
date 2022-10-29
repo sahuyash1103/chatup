@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SelectContactProvider {
@@ -14,22 +13,25 @@ class SelectContactProvider {
   final FirebaseFirestore firestore;
   QuerySnapshot<Map<String, dynamic>>? usersCollection;
 
-  Future<Map<String, dynamic>> selectContact(String phoneNumber) async {
-    final user = usersCollection!.docs.firstWhere(
-      (element) => element.data()['phoneNumber'] == phoneNumber,
-      orElse: () => throw Exception('User not found'),
-    );
-    return user.data();
-  }
-
-  Future<bool> verify(String phoneNumber) async {
+  Future<Map<String, dynamic>?> selectContact(String phoneNumber) async {
     try {
-      usersCollection!.docs.firstWhere(
+      final user = usersCollection!.docs.firstWhere(
         (element) => element.data()['phoneNumber'] == phoneNumber,
       );
-      return true;
+      return user.data();
     } catch (e) {
-      return false;
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> verify(String phoneNumber) async {
+    try {
+      final user = usersCollection!.docs.firstWhere(
+        (element) => element.data()['phoneNumber'] == phoneNumber,
+      );
+      return user.data();
+    } catch (e) {
+      return null;
     }
   }
 }

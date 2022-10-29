@@ -1,9 +1,8 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_contacts/contact.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 import 'package:unreal_whatsapp/select_contact/cubit/select_contact_state.dart';
+import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
 import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact_repository.dart';
 
 class SelectContactCubit extends Cubit<SelectContactState> {
@@ -12,27 +11,16 @@ class SelectContactCubit extends Cubit<SelectContactState> {
 
   final SelectContactRepository selectContactRepository;
 
-  Future<List<Contact>> getContact() async {
+  Future<List<AppContact>> getContact() async {
     emit(SelectContactLoading());
     final contacts = await selectContactRepository.getContact();
     emit(SelectContactLoaded(contacts: contacts));
     return contacts;
   }
 
-  Future<AppUser?> selectContact({required Contact contact}) async {
-    try {
-      final user =
-          await selectContactRepository.selectContact(contact: contact);
-      return user;
-    } catch (e) {
-      if (e is Exception) {
-        return null;
-      } else {
-        emit(SelectContactError(message: e.toString()));
-        log(e.toString());
-        return null;
-      }
-    }
+  Future<AppUser?> selectContact({required AppContact contact}) async {
+    final user = await selectContactRepository.selectContact(contact: contact);
+    return user;
   }
 
   void reset() {
