@@ -18,7 +18,7 @@ class ThemedButton extends StatelessWidget {
         ? ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: tabColor,
+              backgroundColor: buttonColor,
               minimumSize: const Size(double.infinity, 50),
             ),
             child: Text(
@@ -31,7 +31,7 @@ class ThemedButton extends StatelessWidget {
         : ElevatedButton.icon(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: tabColor,
+              backgroundColor: buttonColor,
               minimumSize: const Size(double.infinity, 50),
             ),
             icon: icon!,

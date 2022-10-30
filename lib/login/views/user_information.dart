@@ -108,7 +108,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              color: tabColor,
+                              color: buttonColor,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: IconButton(
@@ -132,10 +132,10 @@ class _UserInformationViewState extends State<UserInformationView> {
                             controller: nameController,
                             decoration: const InputDecoration(
                               hintText: 'Enter your name',
-                              hintStyle: TextStyle(color: tabColor),
-                              focusColor: tabColor,
+                              hintStyle: TextStyle(color: buttonColor),
+                              focusColor: buttonColor,
                               border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: tabColor),
+                                borderSide: BorderSide(color: buttonColor),
                               ),
                             ),
                           ),
@@ -145,7 +145,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                               storeUserData(state.appUser.profilePic),
                           icon: const Icon(
                             Icons.done,
-                            color: tabColor,
+                            color: buttonColor,
                           ),
                         ),
                       ],

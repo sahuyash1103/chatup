@@ -85,7 +85,7 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
           );
         } else {
           return const Center(
-            child: Text('Your Chats Will Show here.'),
+            child: Text('Your chat contact Will Show here.'),
           );
         }
       },

@@ -113,7 +113,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                 padding: const EdgeInsets.fromLTRB(10, 8, 6, 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xFF128C7E),
+                  color: tabColor,
                 ),
                 child: isTyping
                     ? const Icon(

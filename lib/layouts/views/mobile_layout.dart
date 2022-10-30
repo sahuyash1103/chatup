@@ -10,6 +10,7 @@ import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
 import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 import 'package:unreal_whatsapp/select_contact/views/select_contact.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
+import 'package:unreal_whatsapp/widgets/custom_center_text.dart';
 import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
 class MobileView extends StatefulWidget {
@@ -138,8 +139,8 @@ class _MobileViewState extends State<MobileView>
                 controller: tabBarController,
                 children: const [
                   ChatContactListTab(),
-                  Text('status'),
-                  Text('Calls'),
+                  CustomCenteredText(text: 'status will show here'),
+                  CustomCenteredText(text: 'status will show here'),
                 ],
               ),
               floatingActionButton: FloatingActionButton(
@@ -162,7 +163,7 @@ class _MobileViewState extends State<MobileView>
                     log(user.toString());
                   }
                 },
-                backgroundColor: tabColor,
+                backgroundColor: buttonColor,
                 child: const Icon(
                   Icons.comment,
                   color: Colors.white,
