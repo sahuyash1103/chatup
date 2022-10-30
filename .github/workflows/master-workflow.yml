@@ -5,10 +5,10 @@ on:
   push:
     branches:
       - master
-name: "unreal whatsapp"
+name: "chatup BETA"
 jobs:
   build:
-    name: unreal whatsapp
+    name: chatup BETA
     env:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       ANDROID_KEYSTORE_PATH: ${{secrets.ANDROID_KEYSTORE_PATH}}
