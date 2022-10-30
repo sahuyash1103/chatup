@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,16 +79,22 @@ class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
     }
   }
 
-  Future<String?> saveUserDataToFireStore({
+  Future<void> saveUserDataToFireStore({
     required String name,
     File? profilePic,
     String? previousPic,
   }) async {
-    return firebaseLoginRepository.saveUserDataToFireStore(
+    emit(FirebaseAuthSaveLoadingState());
+    final error = await firebaseLoginRepository.saveUserDataToFireStore(
       name: name,
       profilePic: profilePic,
       previousPic: previousPic,
     );
+    if (error == null) {
+      emit(FirebaseAuthSavedState());
+    } else {
+      emit(FirebaseAuthSaveErrorState(error: 'user data can not be uploaded'));
+    }
   }
 
   void logOut() {
@@ -106,6 +111,7 @@ class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
   }
 
   void reset() {
+    logOut();
     emit(FirebaseAuthInitialState());
   }
 }

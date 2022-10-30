@@ -39,52 +39,43 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                   const SizedBox(
                     height: 3,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 1,
-                      right: 1,
+                  ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        ChatingView.routeName,
+                        arguments: {
+                          'name': chatContact.name,
+                          'profilePic': chatContact.profilePic,
+                          'uid': chatContact.contactId,
+                        },
+                      );
+                    },
+                    tileColor: chatBarMessage,
+                    title: Text(
+                      chatContact.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          ChatingView.routeName,
-                          arguments: {
-                            'name': chatContact.name,
-                            'profilePic': chatContact.profilePic,
-                            'uid': chatContact.contactId,
-                          },
-                        );
-                      },
-                      tileColor: chatBarMessage,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(3),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        chatContact.lastMessage.length <= 30
+                            ? chatContact.lastMessage
+                            : formatLastMessage(chatContact.lastMessage),
+                        style: const TextStyle(fontSize: 15),
                       ),
-                      title: Text(
-                        chatContact.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: Text(
-                          chatContact.lastMessage.length <= 30
-                              ? chatContact.lastMessage
-                              : formatLastMessage(chatContact.lastMessage),
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ),
-                      leading: CustomCircleAvatar(
-                        profilePicURL: chatContact.profilePic,
-                        radius: 30,
-                      ),
-                      trailing: Text(
-                        formatDateTime(chatContact.timeStamp),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 13,
-                        ),
+                    ),
+                    leading: CustomCircleAvatar(
+                      profilePicURL: chatContact.profilePic,
+                      radius: 30,
+                    ),
+                    trailing: Text(
+                      formatDateTime(chatContact.timeStamp),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13,
                       ),
                     ),
                   ),

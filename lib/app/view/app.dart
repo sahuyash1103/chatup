@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
 import 'package:unreal_whatsapp/chating/data/providers/chat_provider.dart';
 import 'package:unreal_whatsapp/chating/data/repositories/chat_repository.dart';
+import 'package:unreal_whatsapp/common/utils/utils.dart';
 import 'package:unreal_whatsapp/l10n/l10n.dart';
 import 'package:unreal_whatsapp/layouts/views/mobile_layout.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
@@ -20,7 +19,7 @@ import 'package:unreal_whatsapp/select_contact/cubit/select_contact_cubit.dart';
 import 'package:unreal_whatsapp/select_contact/data/providers/select_contact_provider.dart';
 import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact_repository.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/widgets/loader.dart';
+import 'package:unreal_whatsapp/widgets/custom_loader.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -109,11 +108,14 @@ class _LoadingViewState extends State<LoadingView> {
       if (user != null && mounted) {
         await Navigator.pushReplacementNamed(context, MobileView.routeName);
       } else if (user == null && mounted) {
-        log('user is null');
         await Navigator.pushReplacementNamed(context, LandingView.routeName);
       }
     } catch (e) {
-      log(e.toString());
+      showSnackBar(
+        context: context,
+        content: 'somthing went wrong, make sure your data is on'
+            ' and restart the app.',
+      );
     }
   }
 

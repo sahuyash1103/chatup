@@ -4,7 +4,7 @@ import 'package:unreal_whatsapp/select_contact/cubit/select_contact_cubit.dart';
 import 'package:unreal_whatsapp/select_contact/cubit/select_contact_state.dart';
 import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
 import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
-import 'package:unreal_whatsapp/widgets/loader.dart';
+import 'package:unreal_whatsapp/widgets/custom_loader.dart';
 
 class SelectContactsView extends StatefulWidget {
   const SelectContactsView({super.key});

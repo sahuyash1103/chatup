@@ -17,6 +17,15 @@ class FirebaseAuthLogedInState extends FirebaseAuthState {
 
 class FirebaseAuthLogedOutState extends FirebaseAuthState {}
 
+class FirebaseAuthSaveLoadingState extends FirebaseAuthState {}
+
+class FirebaseAuthSavedState extends FirebaseAuthState {}
+
+class FirebaseAuthSaveErrorState extends FirebaseAuthState {
+  FirebaseAuthSaveErrorState({required this.error});
+  final String error;
+}
+
 class FirebaseAuthErrorState extends FirebaseAuthState {
   FirebaseAuthErrorState({required this.error});
   final String error;

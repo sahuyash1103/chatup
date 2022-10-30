@@ -24,13 +24,19 @@ class SenderMessageCard extends StatelessWidget {
         ),
         child: Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(8),
+              bottomRight: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+          ),
           color: senderMessageColor,
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Padding(
             padding: const EdgeInsets.only(
-              left: 5,
-              top: 5,
+              left: 15,
+              top: 10,
               right: 5,
               bottom: 5,
             ),

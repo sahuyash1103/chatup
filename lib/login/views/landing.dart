@@ -17,43 +17,46 @@ class LandingView extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: size.height * 0.1),
-            const Text(
-              'Welcome to WhatsApp',
-              style: TextStyle(
-                fontSize: 33,
-                fontWeight: FontWeight.w600,
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            children: [
+              SizedBox(height: size.height * 0.1),
+              const Text(
+                'Welcome to WhatsApp',
+                style: TextStyle(
+                  fontSize: 33,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.1),
-            Image.asset(
-              'assets/bg.png',
-              height: 340,
-              width: 340,
-              color: tabColor,
-            ),
-            SizedBox(height: size.height * 0.1),
-            Container(
-              padding: const EdgeInsets.only(right: 30),
-              child: const Text(
-                '''
-                Read our Privacy Policy. Tap "Agree and continue" to accept the Terms of Service.
-                ''',
-                style: TextStyle(color: greyColor),
-                textAlign: TextAlign.center,
+              SizedBox(height: size.height * 0.1),
+              Image.asset(
+                'assets/bg.png',
+                height: 340,
+                width: 340,
+                color: tabColor,
               ),
-            ),
-            SizedBox(height: size.height * 0.005),
-            SizedBox(
-              width: size.width * 0.75,
-              child: ThemedButton(
-                text: 'AGREE AND CONTINUE',
-                onPressed: () => navigateToLoginScreen(context),
+              SizedBox(height: size.height * 0.1),
+              Container(
+                padding: const EdgeInsets.only(right: 30),
+                child: const Text(
+                  '''
+                  Read our Privacy Policy. Tap "Agree and continue" to accept the Terms of Service.
+                  ''',
+                  style: TextStyle(color: greyColor),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: size.height * 0.005),
+              SizedBox(
+                width: size.width * 0.75,
+                child: ThemedButton(
+                  text: 'AGREE AND CONTINUE',
+                  onPressed: () => navigateToLoginScreen(context),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

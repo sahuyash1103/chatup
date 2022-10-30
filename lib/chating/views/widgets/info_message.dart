@@ -16,8 +16,11 @@ class InfoMessage extends StatelessWidget {
         child: Card(
           color: infomessageColor,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: Text(infoMessage),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(infoMessage),
+          ),
         ),
       ),
     );

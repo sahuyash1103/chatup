@@ -40,8 +40,9 @@ class _ChatListState extends State<ChatList> {
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
                 final timeStamp = formateTime(message.timeStamp);
-                final previousDay =
-                    formateDate(snapshot.data![index - 1].timeStamp);
+                final previousDay = index != 0
+                    ? formateDate(snapshot.data![index - 1].timeStamp)
+                    : '';
                 final newDay = formateDate(message.timeStamp);
 
                 return Column(

@@ -8,7 +8,9 @@ import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
 import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
 import 'package:unreal_whatsapp/var/colors.dart';
 import 'package:unreal_whatsapp/var/strings.dart';
+import 'package:unreal_whatsapp/widgets/custom_center_text.dart';
 import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
+import 'package:unreal_whatsapp/widgets/custom_loader.dart';
 
 class UserInformationView extends StatefulWidget {
   const UserInformationView({super.key});
@@ -40,37 +42,43 @@ class _UserInformationViewState extends State<UserInformationView> {
   }
 
   Future<void> storeUserData(String previousPic) async {
-    final result = await BlocProvider.of<FirebaseLoginCubit>(context)
-        .saveUserDataToFireStore(
+    await BlocProvider.of<FirebaseLoginCubit>(context).saveUserDataToFireStore(
       name: nameController.text.trim(),
       profilePic: image,
       previousPic: previousPic.isNotEmpty ? previousPic : null,
     );
-
-    if (result != null || !mounted) return;
-    await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
-
-    if (mounted) {
-      await Navigator.of(context).pushNamedAndRemoveUntil(
-        MobileView.routeName,
-        (route) => false,
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
-      listener: (context, state) {
-        if (state is FirebaseAuthLogedInState) {
-          nameController.text = state.appUser.name;
-        }
-      },
-      builder: (context, state) {
-        if (state is FirebaseAuthLogedInState) {
-          return Scaffold(
-            body: SafeArea(
+    return Scaffold(
+      body: BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+        listener: (context, state) async {
+          if (state is FirebaseAuthLogedInState) {
+            nameController.text = state.appUser.name;
+          }
+          if (state is FirebaseAuthSavedState) {
+            await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+            if (mounted) {
+              await Navigator.of(context).pushNamedAndRemoveUntil(
+                MobileView.routeName,
+                (route) => false,
+              );
+            }
+          }
+        },
+        builder: (context, state) {
+          if (state is FirebaseAuthSaveLoadingState) {
+            return const CustomLoadingIndicator();
+          }
+
+          if (state is FirebaseAuthSaveErrorState) {
+            return CustomCenteredText(text: state.error);
+          }
+
+          if (state is FirebaseAuthLogedInState) {
+            return SafeArea(
               child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(0, 50, 0, 10),
@@ -145,11 +153,11 @@ class _UserInformationViewState extends State<UserInformationView> {
                   ],
                 ),
               ),
-            ),
-          );
-        }
-        return const CircularProgressIndicator.adaptive();
-      },
+            );
+          }
+          return const CustomLoadingIndicator();
+        },
+      ),
     );
   }
 }
