@@ -5,10 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:chatup/app/app.dart';
+import 'package:chatup/bootstrap.dart';
+import 'package:chatup/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:unreal_whatsapp/app/app.dart';
-import 'package:unreal_whatsapp/bootstrap.dart';
-import 'package:unreal_whatsapp/firebase_options.dart';
 
 void main() async {
   await Firebase.initializeApp(

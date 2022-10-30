@@ -1,10 +1,10 @@
 import 'dart:developer';
 
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/select_contact/data/models/app_contact.dart';
+import 'package:chatup/select_contact/data/providers/select_contact_provider.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
-import 'package:unreal_whatsapp/select_contact/data/providers/select_contact_provider.dart';
 
 class SelectContactRepository {
   SelectContactRepository({required this.selectContactProvider});

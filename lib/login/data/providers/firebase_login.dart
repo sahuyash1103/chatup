@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/var/strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/var/strings.dart';
 
 class LoginProvider {
   LoginProvider({

@@ -1,6 +1,6 @@
+import 'package:chatup/var/colors.dart';
+import 'package:chatup/var/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/var/strings.dart';
 
 class CustomCircleAvatar extends StatelessWidget {
   const CustomCircleAvatar({

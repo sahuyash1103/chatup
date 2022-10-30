@@ -1,11 +1,9 @@
+import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/data/models/chat_contact.dart';
+import 'package:chatup/chating/data/models/message.dart';
+import 'package:chatup/login/data/models/app_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:unreal_whatsapp/chating/data/enums/message_enums.dart';
-import 'package:unreal_whatsapp/chating/data/models/chat_contact.dart';
-import 'package:unreal_whatsapp/chating/data/models/message.dart';
-
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatProvider {

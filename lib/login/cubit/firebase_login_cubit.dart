@@ -1,11 +1,10 @@
 import 'dart:io';
 
+import 'package:chatup/login/cubit/firebase_login_state.dart';
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/login/data/repositeries/firebase_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/login/data/repositeries/firebase_login.dart';
 
 class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
   FirebaseLoginCubit({

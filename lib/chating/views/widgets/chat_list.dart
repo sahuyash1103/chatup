@@ -1,12 +1,12 @@
+import 'package:chatup/chating/cubit/chat_cubit.dart';
+import 'package:chatup/chating/cubit/chat_state.dart';
+import 'package:chatup/chating/views/widgets/info_message.dart';
+import 'package:chatup/chating/views/widgets/sender_message_card.dart';
+import 'package:chatup/chating/views/widgets/user_message_card.dart';
+import 'package:chatup/common/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
-import 'package:unreal_whatsapp/chating/cubit/chat_state.dart';
-import 'package:unreal_whatsapp/chating/views/widgets/info_message.dart';
-import 'package:unreal_whatsapp/chating/views/widgets/sender_message_card.dart';
-import 'package:unreal_whatsapp/chating/views/widgets/user_message_card.dart';
-import 'package:unreal_whatsapp/common/utils/utils.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({

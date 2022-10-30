@@ -1,5 +1,5 @@
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/select_contact/data/models/app_contact.dart';
 
 abstract class SelectContactState {}
 

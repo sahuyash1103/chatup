@@ -1,8 +1,9 @@
 import 'dart:io';
+
+import 'package:chatup/login/views/landing.dart';
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:unreal_whatsapp/login/views/landing.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
 
 void showSnackBar({required BuildContext context, required String content}) {
   ScaffoldMessenger.of(context).showSnackBar(

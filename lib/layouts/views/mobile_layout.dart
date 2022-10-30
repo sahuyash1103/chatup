@@ -1,17 +1,17 @@
 import 'dart:developer';
 
+import 'package:chatup/chating/views/chating_view.dart';
+import 'package:chatup/common/utils/utils.dart';
+import 'package:chatup/layouts/views/tabs/chat_contact_list_tab.dart';
+import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/login/cubit/firebase_login_state.dart';
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/select_contact/views/select_contact.dart';
+import 'package:chatup/var/colors.dart';
+import 'package:chatup/widgets/custom_center_text.dart';
+import 'package:chatup/widgets/custom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/chating/views/chating_view.dart';
-import 'package:unreal_whatsapp/common/utils/utils.dart';
-import 'package:unreal_whatsapp/layouts/views/tabs/chat_contact_list_tab.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/select_contact/views/select_contact.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/widgets/custom_center_text.dart';
-import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
 class MobileView extends StatefulWidget {
   const MobileView({super.key});

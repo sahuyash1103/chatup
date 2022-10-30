@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:io';
+
+import 'package:chatup/common/utils/utils.dart';
+import 'package:chatup/layouts/views/mobile_layout.dart';
+import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/login/cubit/firebase_login_state.dart';
+import 'package:chatup/var/colors.dart';
+import 'package:chatup/var/strings.dart';
+import 'package:chatup/widgets/custom_center_text.dart';
+import 'package:chatup/widgets/custom_circle_avatar.dart';
+import 'package:chatup/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/common/utils/utils.dart';
-import 'package:unreal_whatsapp/layouts/views/mobile_layout.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/var/strings.dart';
-import 'package:unreal_whatsapp/widgets/custom_center_text.dart';
-import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
-import 'package:unreal_whatsapp/widgets/custom_loader.dart';
 
 class UserInformationView extends StatefulWidget {
   const UserInformationView({super.key});

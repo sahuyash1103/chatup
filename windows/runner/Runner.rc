@@ -90,11 +90,11 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example.verygoodcore.unreal-whatsapp" "\0"
-            VALUE "FileDescription", "unreal_whatsapp" "\0"
+            VALUE "FileDescription", "chatup" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "unreal_whatsapp" "\0"
+            VALUE "InternalName", "chatup" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example.verygoodcore.unreal-whatsapp. All rights reserved." "\0"
-            VALUE "OriginalFilename", "unreal_whatsapp.exe" "\0"
+            VALUE "OriginalFilename", "chatup.exe" "\0"
             VALUE "ProductName", "Unreal Whatsapp" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

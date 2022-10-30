@@ -1,14 +1,14 @@
 import 'dart:developer';
 
+import 'package:chatup/common/utils/utils.dart';
+import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/login/cubit/firebase_login_state.dart';
+import 'package:chatup/login/views/otp.dart';
+import 'package:chatup/var/colors.dart';
+import 'package:chatup/widgets/themed_button.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/common/utils/utils.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
-import 'package:unreal_whatsapp/login/views/otp.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/widgets/themed_button.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

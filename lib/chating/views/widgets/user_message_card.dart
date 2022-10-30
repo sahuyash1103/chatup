@@ -1,7 +1,7 @@
+import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/views/widgets/display_text_image_gif.dart';
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:unreal_whatsapp/chating/data/enums/message_enums.dart';
-import 'package:unreal_whatsapp/chating/views/widgets/display_text_image_gif.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
 
 class UserMessageCard extends StatelessWidget {
   const UserMessageCard({

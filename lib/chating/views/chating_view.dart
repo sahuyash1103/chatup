@@ -1,11 +1,11 @@
+import 'package:chatup/chating/views/widgets/bottom_chat_field.dart';
+import 'package:chatup/chating/views/widgets/chat_list.dart';
+import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/var/colors.dart';
+import 'package:chatup/widgets/custom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/chating/views/widgets/bottom_chat_field.dart';
-import 'package:unreal_whatsapp/chating/views/widgets/chat_list.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/widgets/custom_circle_avatar.dart';
 
 class ChatingView extends StatelessWidget {
   const ChatingView({

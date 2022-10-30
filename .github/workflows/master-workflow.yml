@@ -2,11 +2,9 @@ on:
   pull_request:
     branches:
       - master
-      - production
   push:
     branches:
       - master
-      - production
 name: "unreal whatsapp"
 jobs:
   build:
@@ -42,4 +40,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/*"
-          tag: v1.0.${{ github.run_number }}
+          tag: v1.0.${{ github.run_number }} BETA

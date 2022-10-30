@@ -1,5 +1,5 @@
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
 
 class InfoMessage extends StatelessWidget {
   const InfoMessage({super.key, required this.infoMessage});

@@ -1,7 +1,7 @@
+import 'package:chatup/login/views/login.dart';
+import 'package:chatup/var/colors.dart';
+import 'package:chatup/widgets/themed_button.dart';
 import 'package:flutter/material.dart';
-import 'package:unreal_whatsapp/login/views/login.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
-import 'package:unreal_whatsapp/widgets/themed_button.dart';
 
 class LandingView extends StatelessWidget {
   const LandingView({super.key});

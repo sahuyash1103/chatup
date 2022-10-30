@@ -1,10 +1,10 @@
+import 'package:chatup/chating/cubit/chat_cubit.dart';
+import 'package:chatup/chating/cubit/chat_state.dart';
+import 'package:chatup/common/utils/utils.dart';
+import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/chating/cubit/chat_cubit.dart';
-import 'package:unreal_whatsapp/chating/cubit/chat_state.dart';
-import 'package:unreal_whatsapp/common/utils/utils.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
 
 class BottomChatField extends StatefulWidget {
   const BottomChatField({

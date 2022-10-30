@@ -1,5 +1,5 @@
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
 
 class CustomLoadingIndicator extends StatelessWidget {
   const CustomLoadingIndicator({super.key});

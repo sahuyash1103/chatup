@@ -1,9 +1,9 @@
+import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/login/cubit/firebase_login_state.dart';
+import 'package:chatup/login/views/user_information.dart';
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_cubit.dart';
-import 'package:unreal_whatsapp/login/cubit/firebase_login_state.dart';
-import 'package:unreal_whatsapp/login/views/user_information.dart';
-import 'package:unreal_whatsapp/var/colors.dart';
 
 class OTPView extends StatelessWidget {
   const OTPView({

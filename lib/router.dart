@@ -1,11 +1,11 @@
+import 'package:chatup/chating/views/chating_view.dart';
+import 'package:chatup/layouts/views/mobile_layout.dart';
+import 'package:chatup/login/views/landing.dart';
+import 'package:chatup/login/views/login.dart';
+import 'package:chatup/login/views/otp.dart';
+import 'package:chatup/login/views/user_information.dart';
+import 'package:chatup/select_contact/views/select_contact.dart';
 import 'package:flutter/material.dart';
-import 'package:unreal_whatsapp/chating/views/chating_view.dart';
-import 'package:unreal_whatsapp/layouts/views/mobile_layout.dart';
-import 'package:unreal_whatsapp/login/views/landing.dart';
-import 'package:unreal_whatsapp/login/views/login.dart';
-import 'package:unreal_whatsapp/login/views/otp.dart';
-import 'package:unreal_whatsapp/login/views/user_information.dart';
-import 'package:unreal_whatsapp/select_contact/views/select_contact.dart';
 
 class AppRouter {
   Route<dynamic> generateRoute(RouteSettings settings) {

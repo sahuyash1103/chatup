@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/login/data/providers/firebase_login.dart';
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/login/data/providers/firebase_login.dart';
 
 class LoginRepository {
   LoginRepository({

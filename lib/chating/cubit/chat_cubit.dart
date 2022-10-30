@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 
-import 'package:unreal_whatsapp/chating/cubit/chat_state.dart';
-import 'package:unreal_whatsapp/chating/data/models/chat_contact.dart';
-import 'package:unreal_whatsapp/chating/data/models/message.dart';
-import 'package:unreal_whatsapp/chating/data/repositories/chat_repository.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
+import 'package:chatup/chating/cubit/chat_state.dart';
+import 'package:chatup/chating/data/models/chat_contact.dart';
+import 'package:chatup/chating/data/models/message.dart';
+import 'package:chatup/chating/data/repositories/chat_repository.dart';
+import 'package:chatup/login/data/models/app_user.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit({

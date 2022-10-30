@@ -6,7 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 // import 'package:flutter_test/flutter_test.dart';
-// import 'package:unreal_whatsapp/app/app.dart';
+// import 'package:chatup/app/app.dart';
 
 void main() {
 //   group('App', () {

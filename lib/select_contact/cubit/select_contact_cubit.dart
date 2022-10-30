@@ -1,9 +1,9 @@
 
 import 'package:bloc/bloc.dart';
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
-import 'package:unreal_whatsapp/select_contact/cubit/select_contact_state.dart';
-import 'package:unreal_whatsapp/select_contact/data/models/app_contact.dart';
-import 'package:unreal_whatsapp/select_contact/data/repositories/select_contact_repository.dart';
+import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/select_contact/cubit/select_contact_state.dart';
+import 'package:chatup/select_contact/data/models/app_contact.dart';
+import 'package:chatup/select_contact/data/repositories/select_contact_repository.dart';
 
 class SelectContactCubit extends Cubit<SelectContactState> {
   SelectContactCubit({required this.selectContactRepository})

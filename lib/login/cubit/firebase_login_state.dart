@@ -1,4 +1,4 @@
-import 'package:unreal_whatsapp/login/data/models/app_user.dart';
+import 'package:chatup/login/data/models/app_user.dart';
 
 abstract class FirebaseAuthState {}
 

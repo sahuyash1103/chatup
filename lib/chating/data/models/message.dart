@@ -1,4 +1,4 @@
-import 'package:unreal_whatsapp/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/data/enums/message_enums.dart';
 
 class Message {
   Message({

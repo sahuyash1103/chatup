@@ -1,4 +1,4 @@
-package com.example.verygoodcore.unreal_whatsapp
+package com.example.verygoodcore.chatup
 
 import io.flutter.embedding.android.FlutterActivity
 
