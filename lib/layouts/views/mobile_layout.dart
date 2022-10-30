@@ -63,7 +63,7 @@ class _MobileViewState extends State<MobileView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Unreal WhatsApp',
+                      'Chatup',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.grey,

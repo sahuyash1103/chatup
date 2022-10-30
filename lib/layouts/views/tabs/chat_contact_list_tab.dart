@@ -2,6 +2,7 @@ import 'package:chatup/chating/cubit/chat_cubit.dart';
 import 'package:chatup/chating/views/chating_view.dart';
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/var/colors.dart';
+import 'package:chatup/widgets/custom_center_text.dart';
 import 'package:chatup/widgets/custom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,8 +85,8 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
             },
           );
         } else {
-          return const Center(
-            child: Text('Your chat contact Will Show here.'),
+          return const CustomCenteredText(
+            text: 'Your chat contact Will Show here.',
           );
         }
       },

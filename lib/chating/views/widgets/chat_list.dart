@@ -4,6 +4,7 @@ import 'package:chatup/chating/views/widgets/info_message.dart';
 import 'package:chatup/chating/views/widgets/sender_message_card.dart';
 import 'package:chatup/chating/views/widgets/user_message_card.dart';
 import 'package:chatup/common/utils/utils.dart';
+import 'package:chatup/widgets/custom_center_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +34,9 @@ class _ChatListState extends State<ChatList> {
               .fetchMessages(contactID: widget.recieverUserId),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
-              return const Center(child: Text('Your chats will show here.'));
+              return const CustomCenteredText(
+                text: 'Your chats will show here.',
+              );
             }
             return ListView.builder(
               itemCount: snapshot.data!.length,

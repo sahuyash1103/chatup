@@ -1,6 +1,7 @@
 import 'package:chatup/select_contact/cubit/select_contact_cubit.dart';
 import 'package:chatup/select_contact/cubit/select_contact_state.dart';
 import 'package:chatup/select_contact/data/models/app_contact.dart';
+import 'package:chatup/widgets/custom_center_text.dart';
 import 'package:chatup/widgets/custom_circle_avatar.dart';
 import 'package:chatup/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
@@ -71,14 +72,8 @@ class _SelectContactsViewState extends State<SelectContactsView> {
             final contactList = state.contacts;
 
             if (contactList.isEmpty) {
-              return const Center(
-                child: Text(
-                  'Your friends are not using unreal whatsapp',
-                  style: TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontSize: 16,
-                  ),
-                ),
+              return const CustomCenteredText(
+                text: 'Your friends are not using chatup',
               );
             }
 
