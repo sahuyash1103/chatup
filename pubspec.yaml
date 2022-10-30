@@ -1,5 +1,5 @@
 name: chatup
-description: A Very Good compatitor for whatsapp.
+description: A Very Good chating app.
 version: 1.0.0+1
 publish_to: none
 
@@ -9,21 +9,21 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
-  cloud_firestore: ^3.5.1
-  country_picker: ^2.0.15
+  cloud_firestore: ^4.0.3
+  country_picker: ^2.0.16
 
-  firebase_auth: ^3.11.2
-  firebase_core: ^1.24.0
-  firebase_storage: ^10.3.11
+  firebase_auth: ^4.1.0
+  firebase_core: ^2.1.1
+  firebase_storage: ^11.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
-  flutter_contacts: ^1.1.5
+  flutter_contacts: ^1.1.5+1
   flutter_localizations:
     sdk: flutter
   image_picker: ^0.8.6
   intl: ^0.17.0
-  permission_handler: ^10.1.0
+  permission_handler: ^10.2.0
   uuid: ^3.0.6
 
 dev_dependencies:
