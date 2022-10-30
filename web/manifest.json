@@ -1,6 +1,6 @@
 {
-    "name": "Unreal Whatsapp",
-    "short_name": "Unreal Whatsapp",
+    "name": "chatup",
+    "short_name": "chatup",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -51,23 +51,23 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBUabafU3vl-rmWD-CDZ1cr9CEV-Na9Bo8',
-    appId: '1:594052844146:android:aae70a0f514f5ed1c1d0eb',
-    messagingSenderId: '594052844146',
-    projectId: 'unreal-whatsapp-backend',
-    storageBucket: 'unreal-whatsapp-backend.appspot.com',
+    apiKey: 'AIzaSyBJWwqK1oHGMWV3H-7SY0NEpsr7i5MyHW4',
+    appId: '1:163380633587:android:4713e13486be44e8e9bc86',
+    messagingSenderId: '163380633587',
+    projectId: 'chatup-backend-48ce4',
+    storageBucket: 'chatup-backend-48ce4.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDiaFRvrHOmTbS04uNWDVvpSQJwpsmpZx8',
-    appId: '1:594052844146:ios:82b11438c44c0da1c1d0eb',
-    messagingSenderId: '594052844146',
-    projectId: 'unreal-whatsapp-backend',
-    storageBucket: 'unreal-whatsapp-backend.appspot.com',
+    apiKey: 'AIzaSyC4Fol03m-VsQm3Qt5FLaGNzZybFGRFBz0',
+    appId: '1:163380633587:ios:5d551cb8bc8f0b27e9bc86',
+    messagingSenderId: '163380633587',
+    projectId: 'chatup-backend-48ce4',
+    storageBucket: 'chatup-backend-48ce4.appspot.com',
     androidClientId:
-        '594052844146-unfqvr3u8k8i4s6281h5fnfaekfepef2.apps.googleusercontent.com',
+        '163380633587-a6uc9qq1hrhriocnklflh0ps6ng8nqmt.apps.googleusercontent.com',
     iosClientId:
-        '594052844146-edqukeeklmkmam5ffhch61v6chei94vb.apps.googleusercontent.com',
-    iosBundleId: 'com.example.verygoodcore.unreal-whatsapp',
+        '163380633587-lbe5dgc5e2ser32tje65vg86n39h6olo.apps.googleusercontent.com',
+    iosBundleId: 'com.chatup',
   );
 }
