@@ -7,64 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:163380633587:android:25e0a91509798a06e9bc86",
+        "mobilesdk_app_id": "1:163380633587:android:f149ba27277d0304e9bc86",
         "android_client_info": {
           "package_name": "com.unreal.chatup"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "163380633587-n7oinmo1uj442a6bp5navc0t1pr3anm4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBJWwqK1oHGMWV3H-7SY0NEpsr7i5MyHW4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "163380633587-n7oinmo1uj442a6bp5navc0t1pr3anm4.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "163380633587-il4f4i8nv2md6nl3i13jg90ukq4u31f0.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.unreal.chatup"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:163380633587:android:121cb87ff2d81cd3e9bc86",
-        "android_client_info": {
-          "package_name": "com.unreal.chatup"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "163380633587-eaklkvvskgp3vp2onodgu2t8l9cvp7uu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.unreal.chatup",
-            "certificate_hash": "b949ef06e113f18518a7e908d83c723821a76b14"
-          }
-        },
-        {
-          "client_id": "163380633587-jqj5c2pikufas8l2a81frft8vgib99rf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.unreal.chatup",
-            "certificate_hash": "98ee717a18eb425fa79f0e2df305bc4813de7e2f"
-          }
-        },
         {
           "client_id": "163380633587-n7oinmo1uj442a6bp5navc0t1pr3anm4.apps.googleusercontent.com",
           "client_type": 3

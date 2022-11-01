@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart'
 /// Example:
 /// ```dart
 /// import 'firebase_options.dart';
-/// 
+/// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBJWwqK1oHGMWV3H-7SY0NEpsr7i5MyHW4',
-    appId: '1:163380633587:android:25e0a91509798a06e9bc86',
+    appId: '1:163380633587:android:f149ba27277d0304e9bc86',
     messagingSenderId: '163380633587',
     projectId: 'chatup-backend-48ce4',
     storageBucket: 'chatup-backend-48ce4.appspot.com',
@@ -60,14 +60,14 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC4Fol03m-VsQm3Qt5FLaGNzZybFGRFBz0',
-    appId: '1:163380633587:ios:7a15dbc8669d67dbe9bc86',
+    appId: '1:163380633587:ios:138c4f3b6d6deaa5e9bc86',
     messagingSenderId: '163380633587',
     projectId: 'chatup-backend-48ce4',
     storageBucket: 'chatup-backend-48ce4.appspot.com',
     androidClientId:
         '163380633587-1l7jb65uu3ksptpv5l0gl6r7tu3bf572.apps.googleusercontent.com',
     iosClientId:
-        '163380633587-lbe5dgc5e2ser32tje65vg86n39h6olo.apps.googleusercontent.com',
+        '163380633587-il4f4i8nv2md6nl3i13jg90ukq4u31f0.apps.googleusercontent.com',
     iosBundleId: 'com.unreal.chatup',
   );
 }
