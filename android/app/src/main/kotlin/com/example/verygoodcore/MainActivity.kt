@@ -1,4 +1,4 @@
-package com.chatup
+package com.unreal.chatup
 
 import io.flutter.embedding.android.FlutterActivity
 

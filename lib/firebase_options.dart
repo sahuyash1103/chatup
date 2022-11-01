@@ -68,6 +68,6 @@ class DefaultFirebaseOptions {
         '163380633587-1l7jb65uu3ksptpv5l0gl6r7tu3bf572.apps.googleusercontent.com',
     iosClientId:
         '163380633587-lbe5dgc5e2ser32tje65vg86n39h6olo.apps.googleusercontent.com',
-    iosBundleId: 'com.chatup',
+    iosBundleId: 'com.unreal.chatup',
   );
 }
