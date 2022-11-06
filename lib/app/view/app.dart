@@ -8,6 +8,7 @@ import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/data/providers/firebase_login.dart';
 import 'package:chatup/login/data/repositeries/firebase_login.dart';
 import 'package:chatup/login/views/landing.dart';
+import 'package:chatup/login/views/user_information.dart';
 import 'package:chatup/router.dart';
 import 'package:chatup/select_contact/cubit/select_contact_cubit.dart';
 import 'package:chatup/select_contact/data/providers/select_contact_provider.dart';
@@ -106,9 +107,19 @@ class _LoadingViewState extends State<LoadingView> {
       final user =
           await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
       if (user != null && mounted) {
-        await Navigator.pushReplacementNamed(context, MobileView.routeName);
+        if (user.name.isEmpty) {
+          await Navigator.pushReplacementNamed(
+            context,
+            UserInformationView.routeName,
+          );
+        } else {
+          await Navigator.pushReplacementNamed(context, MobileView.routeName);
+        }
       } else if (user == null && mounted) {
-        await Navigator.pushReplacementNamed(context, LandingView.routeName);
+        await Navigator.pushReplacementNamed(
+          context,
+          LandingView.routeName,
+        );
       }
     } catch (e) {
       showSnackBar(

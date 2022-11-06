@@ -10,11 +10,12 @@ class OTPView extends StatelessWidget {
     super.key,
     required this.phoneNumber,
   });
-  static const String routeName = '/Login-view/OTP-view';
+  static const String routeName = '/OTP-view';
   final String phoneNumber;
 
   void verifyOTP(BuildContext context, String userOTP) {
     BlocProvider.of<FirebaseLoginCubit>(context).verifyOTP(userOTP);
+    // BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
     navigateToUserInfoView(context);
   }
 
@@ -45,11 +46,7 @@ class OTPView extends StatelessWidget {
               'We have sent an SMS with a code on $phoneNumber.',
             ),
             BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
-              listener: (context, state) {
-                if (state is FirebaseAuthLogedInState) {
-                  navigateToUserInfoView(context);
-                }
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 return SizedBox(
                   width: size.width * 0.5,

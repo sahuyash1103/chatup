@@ -1,4 +1,5 @@
 import 'package:chatup/chating/views/chating_view.dart';
+import 'package:chatup/common/views/error_view.dart';
 import 'package:chatup/layouts/views/mobile_layout.dart';
 import 'package:chatup/login/views/landing.dart';
 import 'package:chatup/login/views/login.dart';
@@ -37,6 +38,9 @@ class AppRouter {
         );
       case SelectContactsView.routeName:
         return MaterialPageRoute(builder: (_) => const SelectContactsView());
+      case ErrorView.routeName:
+        final error = settings.arguments.toString();
+        return MaterialPageRoute(builder: (_) => ErrorView(error: error));
       default:
         final error = settings.arguments;
         return MaterialPageRoute(

@@ -40,12 +40,12 @@ class _BottomChatFieldState extends State<BottomChatField> {
             maxLines: 10,
             minLines: 1,
             onChanged: (value) {
-              if (value.isEmpty) {
+              setState(() {
                 isTyping = false;
-              } else {
-                isTyping = true;
-              }
-              setState(() {});
+                if (_textEditingControllerMessage.text.isNotEmpty) {
+                  isTyping = true;
+                }
+              });
             },
             decoration: InputDecoration(
               filled: true,
@@ -137,10 +137,11 @@ class _BottomChatFieldState extends State<BottomChatField> {
   Future<void> sendTextMessage() async {
     final sender =
         await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
-    if (mounted && sender != null) {
-      final textMessage = _textEditingControllerMessage.text.trim();
-      _textEditingControllerMessage.text = '';
-      setState(() {});
+    final textMessage = _textEditingControllerMessage.text.trim();
+    _textEditingControllerMessage.text = '';
+    isTyping = false;
+    setState(() {});
+    if (mounted && sender != null && textMessage.isNotEmpty) {
       await BlocProvider.of<ChatCubit>(context).sendTextMessage(
         text: textMessage,
         recieverID: widget.recieverUserId,

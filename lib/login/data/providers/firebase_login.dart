@@ -65,9 +65,10 @@ class LoginProvider {
   }
 
   Future<AppUser?> getCurrentUserData() async {
+    if (firebaseAuth.currentUser == null) return null;
     final userData = await firestore
         .collection('users')
-        .doc(firebaseAuth.currentUser?.uid)
+        .doc(firebaseAuth.currentUser!.uid)
         .get();
 
     AppUser? user;

@@ -21,10 +21,16 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+def releasekeystoreProperties = new Properties()
+def releasekeystorePropertiesFile = rootProject.file('release_key.properties')
+if (releasekeystorePropertiesFile.exists()) {
+    releasekeystoreProperties.load(new FileInputStream(releasekeystorePropertiesFile))
+}
+
+def debugkeystoreProperties = new Properties()
+def debugkeystorePropertiesFile = rootProject.file('debug_key.properties')
+if (debugkeystorePropertiesFile.exists()) {
+    debugkeystoreProperties.load(new FileInputStream(debugkeystorePropertiesFile))
 }
 
 
@@ -52,7 +58,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.unreal.chatup"
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
@@ -62,19 +67,34 @@ android {
     }
 
     signingConfigs {
-        if (System.getenv("ANDROID_KEYSTORE_PATH")) {
+        if (System.getenv("CHATUP_RELEASE_KEYSTORE_PATH")) {
             release {
-                storeFile file(System.getenv("ANDROID_KEYSTORE_PATH"))
-                keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
-                keyPassword System.getenv("ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
-                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                storeFile file(System.getenv("CHATUP_RELEASE_KEYSTORE_PATH"))
+                keyAlias System.getenv("RELEASE_KEYSTORE_ALIAS")
+                keyPassword System.getenv("RELEASE_KEYSTORE_PRIVATE_KEY_PASSWORD")
+                storePassword System.getenv("RELEASE_KEYSTORE_PASSWORD")
             }
         } else {
          release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
+           keyAlias releasekeystoreProperties['keyAlias']
+           keyPassword releasekeystoreProperties['keyPassword']
+           storeFile releasekeystoreProperties['storeFile'] ? file(releasekeystoreProperties['storeFile']) : null
+           storePassword releasekeystoreProperties['storePassword']
+       }
+       }
+        if (System.getenv("CHATUP_DEBUG_KEYSTORE_PATH")) {
+            customDebug {
+                storeFile file(System.getenv("CHATUP_DEBUG_KEYSTORE_PATH"))
+                keyAlias System.getenv("DEBUG_KEYSTORE_ALIAS")
+                keyPassword System.getenv("DEBUG_KEYSTORE_PRIVATE_KEY_PASSWORD")
+                storePassword System.getenv("DEBUG_KEYSTORE_PASSWORD")
+            }
+        } else {
+         customDebug {
+           keyAlias debugkeystoreProperties['keyAlias']
+           keyPassword debugkeystoreProperties['keyPassword']
+           storeFile debugkeystoreProperties['storeFile'] ? file(debugkeystoreProperties['storeFile']) : null
+           storePassword debugkeystoreProperties['storePassword']
        }
        }
     }
@@ -85,6 +105,11 @@ android {
             dimension "default"
             applicationIdSuffix ""
             manifestPlaceholders = [appName: "chatup"]
+        }
+        custom_debug {
+            dimension "default"
+            applicationIdSuffix ""
+            manifestPlaceholders = [appName: "[custom debug] chatup"]
         }
         staging {
             dimension "default"
@@ -102,6 +127,11 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+        customDebug {
+            signingConfig signingConfigs.customDebug
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
         debug {

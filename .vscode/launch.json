@@ -17,6 +17,18 @@
       ]
     },
     {
+      "name": "Launch custom development",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "--flavor",
+        "custom_debug",
+        "--target",
+        "lib/main.dart",
+      ]
+    },
+    {
       "name": "Launch staging",
       "request": "launch",
       "type": "dart",

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chatup/common/utils/utils.dart';
@@ -58,6 +59,7 @@ class _UserInformationViewState extends State<UserInformationView> {
         listener: (context, state) async {
           if (state is FirebaseAuthLogedInState) {
             nameController.text = state.appUser.name;
+            log('APP USER NAME: ${state.appUser.name}');
           }
           if (state is FirebaseAuthSavedState) {
             await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
@@ -67,6 +69,16 @@ class _UserInformationViewState extends State<UserInformationView> {
                 (route) => false,
               );
             }
+          }
+          if (state is FirebaseAuthSaveErrorState) {
+            await Future.delayed(
+              const Duration(
+                seconds: 3,),
+                () => BlocProvider.of<FirebaseLoginCubit>(context).reset(),
+            );
+          }
+          if (state is FirebaseAuthLogedOutState && mounted) {
+            await afterLoggedOut(context);
           }
         },
         builder: (context, state) {
