@@ -16,7 +16,6 @@ class OTPView extends StatelessWidget {
 
   void verifyOTP(BuildContext context, String userOTP) {
     BlocProvider.of<FirebaseLoginCubit>(context).verifyOTP(userOTP);
-    // BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
     navigateToUserInfoView(context);
   }
 

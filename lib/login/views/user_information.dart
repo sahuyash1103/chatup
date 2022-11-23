@@ -28,7 +28,6 @@ class _UserInformationViewState extends State<UserInformationView> {
 
   @override
   void initState() {
-    setState(() {});
     super.initState();
   }
 

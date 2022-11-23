@@ -27,13 +27,6 @@ if (releasekeystorePropertiesFile.exists()) {
     releasekeystoreProperties.load(new FileInputStream(releasekeystorePropertiesFile))
 }
 
-def debugkeystoreProperties = new Properties()
-def debugkeystorePropertiesFile = rootProject.file('debug_key.properties')
-if (debugkeystorePropertiesFile.exists()) {
-    debugkeystoreProperties.load(new FileInputStream(debugkeystorePropertiesFile))
-}
-
-
 apply plugin: 'com.android.application'
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
@@ -82,21 +75,6 @@ android {
            storePassword releasekeystoreProperties['storePassword']
        }
        }
-        if (System.getenv("CHATUP_DEBUG_KEYSTORE_PATH")) {
-            customDebug {
-                storeFile file(System.getenv("CHATUP_DEBUG_KEYSTORE_PATH"))
-                keyAlias System.getenv("DEBUG_KEYSTORE_ALIAS")
-                keyPassword System.getenv("DEBUG_KEYSTORE_PRIVATE_KEY_PASSWORD")
-                storePassword System.getenv("DEBUG_KEYSTORE_PASSWORD")
-            }
-        } else {
-         customDebug {
-           keyAlias debugkeystoreProperties['keyAlias']
-           keyPassword debugkeystoreProperties['keyPassword']
-           storeFile debugkeystoreProperties['storeFile'] ? file(debugkeystoreProperties['storeFile']) : null
-           storePassword debugkeystoreProperties['storePassword']
-       }
-       }
     }
 
     flavorDimensions "default"
@@ -105,11 +83,6 @@ android {
             dimension "default"
             applicationIdSuffix ""
             manifestPlaceholders = [appName: "chatup"]
-        }
-        custom_debug {
-            dimension "default"
-            applicationIdSuffix ""
-            manifestPlaceholders = [appName: "[custom debug] chatup"]
         }
         staging {
             dimension "default"
@@ -127,11 +100,6 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
-        }
-        customDebug {
-            signingConfig signingConfigs.customDebug
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
         debug {

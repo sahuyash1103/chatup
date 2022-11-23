@@ -67,8 +67,11 @@ unlinked_spec.ds
 **/android/key.properties
 **/android/.idea/
 *.jks
+*.keystore
 **/android/secrets/
-**/android/key.properties
+**/android/release_key.properties
+**/android/debug_key.properties
+
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
