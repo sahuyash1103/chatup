@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBJWwqK1oHGMWV3H-7SY0NEpsr7i5MyHW4',
-    appId: '1:163380633587:android:f149ba27277d0304e9bc86',
+    appId: '1:163380633587:android:9717a7a3929833cce9bc86',
     messagingSenderId: '163380633587',
     projectId: 'chatup-backend-48ce4',
     storageBucket: 'chatup-backend-48ce4.appspot.com',
@@ -60,7 +60,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC4Fol03m-VsQm3Qt5FLaGNzZybFGRFBz0',
-    appId: '1:163380633587:ios:138c4f3b6d6deaa5e9bc86',
+    appId: '1:163380633587:ios:69722943d0fe65ffe9bc86',
     messagingSenderId: '163380633587',
     projectId: 'chatup-backend-48ce4',
     storageBucket: 'chatup-backend-48ce4.appspot.com',

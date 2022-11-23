@@ -147,7 +147,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
         recieverID: widget.recieverUserId,
         sender: sender,
       );
-      showSnackBar(context: context, content: 'Message sent');
+      // showSnackBar(context: context, content: 'Message sent');
     } else {
       showSnackBar(context: context, content: 'Unable to send message');
     }

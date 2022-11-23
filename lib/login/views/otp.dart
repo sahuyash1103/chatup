@@ -1,3 +1,4 @@
+import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/cubit/firebase_login_state.dart';
 import 'package:chatup/login/views/user_information.dart';
@@ -46,7 +47,11 @@ class OTPView extends StatelessWidget {
               'We have sent an SMS with a code on $phoneNumber.',
             ),
             BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                if (state is FirebaseAuthCodeSentState) {
+                  showSnackBar(context: context, content: 'OTP sent');
+                }
+              },
               builder: (context, state) {
                 return SizedBox(
                   width: size.width * 0.5,
