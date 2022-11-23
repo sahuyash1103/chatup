@@ -63,7 +63,7 @@ class _MobileViewState extends State<MobileView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Chatup',
+                      'ChatUP',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.grey,
@@ -85,7 +85,12 @@ class _MobileViewState extends State<MobileView>
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.search, color: Colors.grey),
-                    onPressed: () {},
+                    onPressed: () {
+                      showSnackBar(
+                        context: context,
+                        content: 'testing snackbar design',
+                      );
+                    },
                   ),
                   BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
                     listener: (context, state) {},

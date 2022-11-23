@@ -8,18 +8,23 @@ import 'package:image_picker/image_picker.dart';
 void showSnackBar({required BuildContext context, required String content}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(
-        content,
-        style: const TextStyle(fontSize: 14, color: Colors.white),
+      content: SizedBox(
+        height: 18,
+        child: Center(
+          child: Text(
+            content,
+            style: const TextStyle(fontSize: 14, color: Colors.white),
+          ),
+        ),
       ),
-      backgroundColor: backgroundColor,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      backgroundColor: tabColor,
+      // behavior: SnackBarBehavior.floating,
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
       elevation: 5,
-      margin: const EdgeInsets.all(50),
-      duration: const Duration(seconds: 1),
+      // margin: const EdgeInsets.only(left: 10, right: 10),
+      duration: const Duration(seconds: 2),
     ),
   );
 }

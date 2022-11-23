@@ -84,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
             padding: const EdgeInsets.all(18),
             child: Column(
               children: [
-                const Text('WhatsApp will need to verify your phone number.'),
+                const Text('ChatUP will need to verify your phone number.'),
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: pickCountry,

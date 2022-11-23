@@ -23,7 +23,7 @@ class LandingView extends StatelessWidget {
             children: [
               SizedBox(height: size.height * 0.1),
               const Text(
-                'Welcome to WhatsApp',
+                'Welcome to CHATUP',
                 style: TextStyle(
                   fontSize: 33,
                   fontWeight: FontWeight.w600,
