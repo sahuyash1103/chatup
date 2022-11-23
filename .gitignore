@@ -71,6 +71,7 @@ unlinked_spec.ds
 **/android/secrets/
 **/android/release_key.properties
 **/android/debug_key.properties
+*.properties
 
 
 # iOS/XCode related
