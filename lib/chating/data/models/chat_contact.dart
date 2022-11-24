@@ -5,6 +5,7 @@ class ChatContact {
     required this.profilePic,
     required this.contactId,
     required this.lastMessage,
+    // required this.isOnline,
     required this.timeStamp,
   });
 
@@ -14,6 +15,7 @@ class ChatContact {
       profilePic: map['profilePic'] as String,
       contactId: map['contactId'] as String,
       lastMessage: map['lastMessage'] as String,
+      // isOnline: map['isOnline'] as bool,
       timeStamp: DateTime.fromMillisecondsSinceEpoch(map['timeStamp'] as int),
     );
   }
@@ -22,6 +24,7 @@ class ChatContact {
   final String profilePic;
   final String contactId;
   final String lastMessage;
+  // final bool isOnline;
   final DateTime timeStamp;
 
   Map<String, dynamic> toMap() {
@@ -30,6 +33,7 @@ class ChatContact {
       'profilePic': profilePic,
       'contactId': contactId,
       'lastMessage': lastMessage,
+      // 'isOnline': isOnline,
       'timeStamp': timeStamp.millisecondsSinceEpoch,
     };
   }
