@@ -54,11 +54,14 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
 
 String formateDate(DateTime dateTime) {
   final now = DateTime.now();
-  final difference = now.difference(dateTime);
 
-  if (difference.inHours < 24) {
+  if (dateTime.day == now.day &&
+      dateTime.month == now.month &&
+      dateTime.year == now.year) {
     return 'Today';
-  } else if (difference.inDays == 1) {
+  } else if (dateTime.day == now.day - 1 &&
+      dateTime.month == now.month &&
+      dateTime.year == now.year) {
     return 'Yesterday';
   } else {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';

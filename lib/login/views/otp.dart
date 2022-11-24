@@ -3,10 +3,11 @@ import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/cubit/firebase_login_state.dart';
 import 'package:chatup/login/views/user_information.dart';
 import 'package:chatup/var/colors.dart';
+import 'package:chatup/widgets/themed_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class OTPView extends StatelessWidget {
+class OTPView extends StatefulWidget {
   const OTPView({
     super.key,
     required this.phoneNumber,
@@ -14,9 +15,19 @@ class OTPView extends StatelessWidget {
   static const String routeName = '/OTP-view';
   final String phoneNumber;
 
-  void verifyOTP(BuildContext context, String userOTP) {
-    BlocProvider.of<FirebaseLoginCubit>(context).verifyOTP(userOTP);
-    navigateToUserInfoView(context);
+  @override
+  State<OTPView> createState() => _OTPViewState();
+}
+
+class _OTPViewState extends State<OTPView> {
+  final TextEditingController _otpController = TextEditingController();
+
+  Future<void> verifyOTP(BuildContext context, String userOTP) async {
+    final isLoggedIn =
+        await BlocProvider.of<FirebaseLoginCubit>(context).verifyOTP(userOTP);
+    if (isLoggedIn && mounted) {
+      navigateToUserInfoView(context);
+    }
   }
 
   void navigateToUserInfoView(BuildContext context) {
@@ -38,41 +49,50 @@ class OTPView extends StatelessWidget {
         elevation: 0,
         backgroundColor: backgroundColor,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'We have sent an SMS with a code on $phoneNumber.',
-            ),
-            BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
-              listener: (context, state) {
-                if (state is FirebaseAuthCodeSentState) {
-                  showSnackBar(context: context, content: 'OTP sent');
-                }
-              },
-              builder: (context, state) {
-                return SizedBox(
-                  width: size.width * 0.5,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
-                      hintText: '- - - - - -',
-                      hintStyle: TextStyle(
-                        fontSize: 30,
-                      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Text(
+                'We have sent an SMS with a code on ${widget.phoneNumber}.',
+              ),
+              SizedBox(
+                width: size.width * 0.5,
+                child: TextField(
+                  controller: _otpController,
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    hintText: '- - - - - -',
+                    hintStyle: TextStyle(
+                      fontSize: 30,
                     ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      if (value.length == 6) {
-                        verifyOTP(context, value.trim());
-                      }
-                    },
                   ),
-                );
-              },
-            ),
-          ],
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SizedBox(height: size.height * 0.65),
+              BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+                listener: (context, state) {
+                  if (state is FirebaseAuthCodeSentState) {
+                    showSnackBar(context: context, content: 'OTP sent');
+                  }
+                },
+                builder: (context, state) {
+                  return SizedBox(
+                    width: size.width * 0.3,
+                    child: ThemedButton(
+                      text: 'Verify',
+                      onPressed: () =>
+                          _otpController.text.length == 6
+                              ? verifyOTP(context, _otpController.text)
+                              : null,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/login/data/providers/firebase_login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginRepository {
   LoginRepository({
@@ -27,23 +27,15 @@ class LoginRepository {
     await firebaseLoginProvider.logOut();
   }
 
-  Future<String?> saveUserDataToFireStore({
-    required String name,
-    File? profilePic,
-    String? previousPic,
-  }) async {
-    return firebaseLoginProvider.saveUserDataToFireStore(
-      name: name,
-      profilePic: profilePic,
-      previousPic: previousPic,
-    );
-  }
-
   Future<AppUser?> getCurrentUser() {
     return firebaseLoginProvider.getCurrentUserData();
   }
 
   Stream<AppUser> getUserByUID(String uid) {
     return firebaseLoginProvider.userData(uid);
+  }
+
+  Future<UserCredential> signInWithCredential(PhoneAuthCredential credential) {
+    return firebaseLoginProvider.signInWithCredential(credential);
   }
 }

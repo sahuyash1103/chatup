@@ -85,12 +85,7 @@ class _MobileViewState extends State<MobileView>
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.search, color: Colors.grey),
-                    onPressed: () {
-                      showSnackBar(
-                        context: context,
-                        content: 'testing snackbar design',
-                      );
-                    },
+                    onPressed: () {},
                   ),
                   BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
                     listener: (context, state) {},

@@ -5,8 +5,11 @@ import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/l10n/l10n.dart';
 import 'package:chatup/layouts/views/mobile_layout.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
+import 'package:chatup/login/cubit/firestore_cubit.dart';
 import 'package:chatup/login/data/providers/firebase_login.dart';
+import 'package:chatup/login/data/providers/firestore_provider.dart';
 import 'package:chatup/login/data/repositeries/firebase_login.dart';
+import 'package:chatup/login/data/repositeries/firestore_repository.dart';
 import 'package:chatup/login/views/landing.dart';
 import 'package:chatup/login/views/user_information.dart';
 import 'package:chatup/router.dart';
@@ -24,6 +27,29 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
+
+  Widget materialApp(AppRouter appRouter) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: backgroundColor,
+          appBarTheme: const AppBarTheme(
+            color: appBarColor,
+          ),
+          colorScheme: const ColorScheme.dark().copyWith(
+            primary: tabColor,
+            secondary: backgroundColor,
+          ),
+        ),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        onGenerateRoute: appRouter.generateRoute,
+        home: const LoadingView(),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +72,14 @@ class App extends StatelessWidget {
         firestore: FirebaseFirestore.instance,
       ),
     );
+
+    final firestoreRepository = FirestoreRepository(
+      firestoreProvider: FirestoreProvider(
+        firestore: FirebaseFirestore.instance,
+        firebaseStorage: FirebaseStorage.instance,
+        firebaseAuth: FirebaseAuth.instance,
+      ),
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -63,27 +97,12 @@ class App extends StatelessWidget {
             chatRepository: chatRepository,
           ),
         ),
+        BlocProvider(
+          create: (context) =>
+              FirestoreCubit(firestoreRepository: firestoreRepository),
+        )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: backgroundColor,
-          appBarTheme: const AppBarTheme(
-            color: appBarColor,
-          ),
-          colorScheme: const ColorScheme.dark().copyWith(
-            primary: tabColor,
-            secondary: backgroundColor,
-          ),
-        ),
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        onGenerateRoute: appRouter.generateRoute,
-        home: const LoadingView(),
-      ),
+      child: materialApp(appRouter),
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/widgets/custom_center_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatList extends StatefulWidget {
@@ -24,6 +25,8 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
+  final _messageScrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatCubit, ChatState>(
@@ -38,7 +41,12 @@ class _ChatListState extends State<ChatList> {
                 text: 'Your chats will show here.',
               );
             }
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              _messageScrollController
+                  .jumpTo(_messageScrollController.position.maxScrollExtent);
+            });
             return ListView.builder(
+              controller: _messageScrollController,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];

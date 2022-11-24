@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:chatup/login/cubit/firebase_login_state.dart';
 import 'package:chatup/login/data/models/app_user.dart';
@@ -51,48 +50,32 @@ class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
     }
   }
 
-  Future<void> verifyOTP(String otp) async {
+  Future<bool> verifyOTP(String otp) async {
     emit(FirebaseAuthLoadingState());
     final credential = PhoneAuthProvider.credential(
       verificationId: _verificationId!,
       smsCode: otp,
     );
-    await signInWithCredential(credential);
+    return signInWithCredential(credential);
   }
 
-  Future<void> signInWithCredential(PhoneAuthCredential credential) async {
+  Future<bool> signInWithCredential(PhoneAuthCredential credential) async {
     emit(FirebaseAuthLoadingState());
     try {
-      final userCredential = await firebaseLoginRepository
-          .firebaseLoginProvider.firebaseAuth
-          .signInWithCredential(credential);
+      final userCredential =
+          await firebaseLoginRepository.signInWithCredential(credential);
       if (userCredential.user != null) {
         emit(
           FirebaseAuthLogedInState(
             appUser: AppUser.fromFirebaseUser(userCredential.user!),
           ),
         );
+        return true;
       }
+      return false;
     } on FirebaseAuthException catch (e) {
       emit(FirebaseAuthErrorState(error: e.message.toString()));
-    }
-  }
-
-  Future<void> saveUserDataToFireStore({
-    required String name,
-    File? profilePic,
-    String? previousPic,
-  }) async {
-    emit(FirebaseAuthSaveLoadingState());
-    final error = await firebaseLoginRepository.saveUserDataToFireStore(
-      name: name,
-      profilePic: profilePic,
-      previousPic: previousPic,
-    );
-    if (error == null) {
-      emit(FirebaseAuthSavedState());
-    } else {
-      emit(FirebaseAuthSaveErrorState(error: 'user data can not be uploaded'));
+      return false;
     }
   }
 

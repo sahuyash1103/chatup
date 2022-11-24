@@ -27,6 +27,7 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
 
   @override
   Widget build(BuildContext context) {
+    const isOnline = true;
     return StreamBuilder(
       stream: BlocProvider.of<ChatCubit>(context).fetchChatContacts(),
       builder: (context, snapshot) {
@@ -72,12 +73,23 @@ class _ChatContactListTabState extends State<ChatContactListTab> {
                       profilePicURL: chatContact.profilePic,
                       radius: 30,
                     ),
-                    trailing: Text(
-                      formatDateTime(chatContact.timeStamp),
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13,
-                      ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.circle,
+                          size: 15,
+                          color: isOnline ? Colors.green : Colors.grey,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          formatDateTime(chatContact.timeStamp),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
