@@ -30,32 +30,32 @@ class App extends StatelessWidget {
 
   Widget materialApp(AppRouter appRouter) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: backgroundColor,
-          appBarTheme: const AppBarTheme(
-            color: appBarColor,
-          ),
-          colorScheme: const ColorScheme.dark().copyWith(
-            primary: tabColor,
-            secondary: backgroundColor,
-          ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: backgroundColor,
+        appBarTheme: const AppBarTheme(
+          color: appBarColor,
         ),
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        onGenerateRoute: appRouter.generateRoute,
-        home: const LoadingView(),
-      );
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: tabColor,
+          secondary: backgroundColor,
+        ),
+      ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      onGenerateRoute: appRouter.generateRoute,
+      home: const LoadingView(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final appRouter = AppRouter();
-    final firebaseLoginRepository = LoginRepository(
-      firebaseLoginProvider: LoginProvider(
+    final firebaseLoginRepository = FirebaseAuthRepository(
+      firebaseLoginProvider: FirebaseAuthProvider(
         firebaseAuth: FirebaseAuth.instance,
         firestore: FirebaseFirestore.instance,
         firebaseStorage: FirebaseStorage.instance,
@@ -83,7 +83,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => FirebaseLoginCubit(
+          create: (context) => FirebaseAuthCubit(
             firebaseLoginRepository: firebaseLoginRepository,
           ),
         ),
@@ -124,7 +124,7 @@ class _LoadingViewState extends State<LoadingView> {
   Future<void> autoLogin() async {
     try {
       final user =
-          await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+          await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
       if (user != null && mounted) {
         if (user.name.isEmpty) {
           await Navigator.pushReplacementNamed(

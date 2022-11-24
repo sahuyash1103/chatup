@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class LoginProvider {
-  LoginProvider({
+class FirebaseAuthProvider {
+  FirebaseAuthProvider({
     required this.firebaseAuth,
     required this.firestore,
     required this.firebaseStorage,
@@ -56,5 +56,14 @@ class LoginProvider {
 
   Future<UserCredential> signInWithCredential(PhoneAuthCredential credential) {
     return firebaseAuth.signInWithCredential(credential);
+  }
+
+  Future<void> setUserOnlineStatus({required bool isOnline}) async {
+    await firestore
+        .collection('users')
+        .doc(firebaseAuth.currentUser!.uid)
+        .update({
+      'isOnline': isOnline,
+    });
   }
 }

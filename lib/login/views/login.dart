@@ -52,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
     if (_country != null && phoneNum.isNotEmpty) {
       phoneNumber = '+${_country!.phoneCode}$phoneNum';
       if (phoneNumber != null) {
-        BlocProvider.of<FirebaseLoginCubit>(context)
+        BlocProvider.of<FirebaseAuthCubit>(context)
             .verifyPhoneNumber(phoneNumber!);
         Navigator.pushNamed(
           context,
@@ -117,14 +117,14 @@ class _LoginViewState extends State<LoginView> {
                   ],
                 ),
                 SizedBox(height: size.height * 0.6),
-                BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+                BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state is FirebaseAuthLoadingState) {
                       return const CircularProgressIndicator.adaptive();
                     } else if (state is FirebaseAuthErrorState) {
                       log(state.error);
-                      BlocProvider.of<FirebaseLoginCubit>(context).reset();
+                      BlocProvider.of<FirebaseAuthCubit>(context).reset();
                     }
                     return SizedBox(
                       width: 90,

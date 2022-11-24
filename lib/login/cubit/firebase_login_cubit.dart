@@ -1,16 +1,15 @@
-
 import 'package:chatup/login/cubit/firebase_login_state.dart';
 import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/login/data/repositeries/firebase_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
-  FirebaseLoginCubit({
+class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
+  FirebaseAuthCubit({
     required this.firebaseLoginRepository,
   }) : super(FirebaseAuthInitialState());
 
-  final LoginRepository firebaseLoginRepository;
+  final FirebaseAuthRepository firebaseLoginRepository;
   late String? _verificationId;
 
   Future<AppUser?> getCurrentUser() async {
@@ -77,6 +76,10 @@ class FirebaseLoginCubit extends Cubit<FirebaseAuthState> {
       emit(FirebaseAuthErrorState(error: e.message.toString()));
       return false;
     }
+  }
+
+  Future<void> setOnlineStatus({required bool isOnline}) async {
+    await firebaseLoginRepository.setUserOnlineStatus(isOnline: isOnline);
   }
 
   void logOut() {

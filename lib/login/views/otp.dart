@@ -24,14 +24,14 @@ class _OTPViewState extends State<OTPView> {
 
   Future<void> verifyOTP(BuildContext context, String userOTP) async {
     final isLoggedIn =
-        await BlocProvider.of<FirebaseLoginCubit>(context).verifyOTP(userOTP);
+        await BlocProvider.of<FirebaseAuthCubit>(context).verifyOTP(userOTP);
     if (isLoggedIn && mounted) {
       navigateToUserInfoView(context);
     }
   }
 
   void navigateToUserInfoView(BuildContext context) {
-    BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+    BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
     Navigator.pop(context);
     Navigator.pushReplacementNamed(
       context,
@@ -72,7 +72,7 @@ class _OTPViewState extends State<OTPView> {
                 ),
               ),
               SizedBox(height: size.height * 0.65),
-              BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+              BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
                 listener: (context, state) {
                   if (state is FirebaseAuthCodeSentState) {
                     showSnackBar(context: context, content: 'OTP sent');
@@ -83,10 +83,9 @@ class _OTPViewState extends State<OTPView> {
                     width: size.width * 0.3,
                     child: ThemedButton(
                       text: 'Verify',
-                      onPressed: () =>
-                          _otpController.text.length == 6
-                              ? verifyOTP(context, _otpController.text)
-                              : null,
+                      onPressed: () => _otpController.text.length == 6
+                          ? verifyOTP(context, _otpController.text)
+                          : null,
                     ),
                   );
                 },

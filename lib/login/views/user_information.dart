@@ -56,7 +56,7 @@ class _UserInformationViewState extends State<UserInformationView> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+      body: BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
         listener: (context, state) async {
           if (state is FirebaseAuthLogedInState) {
             nameController.text = state.appUser.name;
@@ -71,7 +71,7 @@ class _UserInformationViewState extends State<UserInformationView> {
           return BlocConsumer<FirestoreCubit, FirestoreState>(
             listener: (context, state) async {
               if (state is FirestoreSavedState) {
-                await BlocProvider.of<FirebaseLoginCubit>(context1)
+                await BlocProvider.of<FirebaseAuthCubit>(context1)
                     .getCurrentUser();
                 if (mounted) {
                   await Navigator.of(context).pushNamedAndRemoveUntil(
@@ -85,7 +85,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                   const Duration(
                     seconds: 3,
                   ),
-                  () => BlocProvider.of<FirebaseLoginCubit>(context1).reset(),
+                  () => BlocProvider.of<FirebaseAuthCubit>(context1).reset(),
                 );
               }
             },

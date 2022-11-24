@@ -136,7 +136,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
 
   Future<void> sendTextMessage() async {
     final sender =
-        await BlocProvider.of<FirebaseLoginCubit>(context).getCurrentUser();
+        await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
     final textMessage = _textEditingControllerMessage.text.trim();
     _textEditingControllerMessage.text = '';
     isTyping = false;

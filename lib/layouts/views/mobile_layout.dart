@@ -37,14 +37,34 @@ class _MobileViewState extends State<MobileView>
     WidgetsBinding.instance.removeObserver(this);
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        setOnlineStatus(isOnline: true);
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.paused:
+        setOnlineStatus(isOnline: false);
+        break;
+    }
+  }
+
+  void setOnlineStatus({required bool isOnline}) {
+    BlocProvider.of<FirebaseAuthCubit>(context)
+        .setOnlineStatus(isOnline: isOnline);
+  }
+
   void logout() {
-    BlocProvider.of<FirebaseLoginCubit>(context).logOut();
+    BlocProvider.of<FirebaseAuthCubit>(context).logOut();
     afterLoggedOut(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+    return BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
       listener: (context, state) async {
         if (state is FirebaseAuthLogedOutState) {
           await afterLoggedOut(context);
@@ -87,7 +107,7 @@ class _MobileViewState extends State<MobileView>
                     icon: const Icon(Icons.search, color: Colors.grey),
                     onPressed: () {},
                   ),
-                  BlocConsumer<FirebaseLoginCubit, FirebaseAuthState>(
+                  BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
                     listener: (context, state) {},
                     builder: (context, state) {
                       return PopupMenuButton(

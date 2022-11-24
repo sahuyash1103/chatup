@@ -38,7 +38,7 @@ class ChatingView extends StatelessWidget {
               Text(name)
             else
               StreamBuilder<AppUser>(
-                stream: BlocProvider.of<FirebaseLoginCubit>(context)
+                stream: BlocProvider.of<FirebaseAuthCubit>(context)
                     .getUserByUID(uid),
                 builder: (context, snapshot) {
                   return Column(

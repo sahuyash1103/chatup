@@ -2,12 +2,12 @@ import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/login/data/providers/firebase_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginRepository {
-  LoginRepository({
+class FirebaseAuthRepository {
+  FirebaseAuthRepository({
     required this.firebaseLoginProvider,
   });
 
-  final LoginProvider firebaseLoginProvider;
+  final FirebaseAuthProvider firebaseLoginProvider;
 
   Stream<bool> isLoggedIn() {
     return firebaseLoginProvider
@@ -37,5 +37,9 @@ class LoginRepository {
 
   Future<UserCredential> signInWithCredential(PhoneAuthCredential credential) {
     return firebaseLoginProvider.signInWithCredential(credential);
+  }
+
+  Future<void> setUserOnlineStatus({required bool isOnline}) async {
+    return firebaseLoginProvider.setUserOnlineStatus(isOnline: isOnline);
   }
 }
