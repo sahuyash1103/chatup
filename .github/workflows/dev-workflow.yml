@@ -5,10 +5,10 @@ on:
   push:
     branches:
       - dev
-name: "chatup DEV"
+name: "DEV"
 jobs:
   build:
-    name: chatup DEV
+    name: DEV
     env:
       KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
       CHATUP_RELEASE_KEYSTORE_PATH: ${{secrets.CHATUP_RELEASE_KEYSTORE_PATH}}
@@ -40,4 +40,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/*"
-          tag: v1.0.${{ github.run_number }}-dev
+          tag: v0.0.${{ github.run_number }}-dev
