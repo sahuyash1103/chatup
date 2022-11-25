@@ -5,9 +5,9 @@ class NotificationService {
     return _notificationService;
   }
 
-  NotificationService._internal();
+  NotificationService._instance();
 
-  static final _notificationService = NotificationService._internal();
+  static final _notificationService = NotificationService._instance();
 
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -50,8 +50,8 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-      onDidReceiveBackgroundNotificationResponse:
-          onDidReceiveBackgroundNotificationResponse,
+      // onDidReceiveBackgroundNotificationResponse:
+      //     onDidReceiveBackgroundNotificationResponse,
     );
   }
 
