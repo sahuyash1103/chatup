@@ -37,4 +37,12 @@ class ChatCubit extends Cubit<ChatState> {
       emit(ChatErrorState(e.toString()));
     }
   }
+
+  Future<void> updateMessageStatus({required Message message}) async {
+    try {
+      await chatRepository.updateMessageStatus(message: message);
+    } catch (e) {
+      emit(ChatErrorState(e.toString()));
+    }
+  }
 }

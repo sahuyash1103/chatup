@@ -26,4 +26,8 @@ class ChatRepository {
   Stream<List<Message>> fetchMessages(String contactID) {
     return chatProvider.fetchMessages(contactID);
   }
+
+  Future<void> updateMessageStatus({required Message message}) async {
+    return chatProvider.updateMessageStatus(message: message);
+  }
 }

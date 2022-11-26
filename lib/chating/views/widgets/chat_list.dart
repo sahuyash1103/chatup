@@ -50,7 +50,6 @@ class _ChatListState extends State<ChatList> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
-                final timeStamp = formateTime(message.timeStamp);
                 final previousDay = index != 0
                     ? formateDate(snapshot.data![index - 1].timeStamp)
                     : '';
@@ -63,16 +62,17 @@ class _ChatListState extends State<ChatList> {
                     if (message.senderId ==
                         FirebaseAuth.instance.currentUser!.uid)
                       UserMessageCard(
-                        message: message.text,
-                        date: timeStamp,
-                        type: message.messageType,
-                        isSeen: message.isSeen,
+                        message: message,
                       )
                     else
                       SenderMessageCard(
-                        message: message.text,
-                        date: timeStamp,
-                        type: message.messageType,
+                        message: message,
+                        onVisibile: () {
+                          BlocProvider.of<ChatCubit>(context)
+                              .updateMessageStatus(
+                            message: message,
+                          );
+                        },
                       ),
                   ],
                 );

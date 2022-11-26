@@ -3,7 +3,7 @@ import 'package:chatup/chating/data/enums/message_enums.dart';
 class Message {
   Message({
     required this.senderId,
-    required this.recieverid,
+    required this.recieverId,
     required this.text,
     required this.messageType,
     required this.timeStamp,
@@ -17,7 +17,7 @@ class Message {
   factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
       senderId: map['senderId'] as String,
-      recieverid: map['recieverid'] as String,
+      recieverId: map['recieverid'] as String,
       text: map['text'] as String,
       messageType: (map['type'] as String).toEnum(),
       timeStamp: DateTime.fromMillisecondsSinceEpoch(map['timeStamp'] as int),
@@ -31,12 +31,12 @@ class Message {
   }
 
   final String senderId;
-  final String recieverid;
+  final String recieverId;
   final String text;
   final MessageEnum messageType;
   final DateTime timeStamp;
   final String messageId;
-  final bool isSeen;
+  bool isSeen;
   // final String repliedMessage;
   // final String repliedTo;
   // final MessageEnum repliedMessageType;
@@ -44,7 +44,7 @@ class Message {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'senderId': senderId,
-      'recieverid': recieverid,
+      'recieverid': recieverId,
       'text': text,
       'type': messageType.type,
       'timeStamp': timeStamp.millisecondsSinceEpoch,

@@ -26,6 +26,7 @@ dependencies:
   intl: ^0.17.0
   permission_handler: ^10.2.0
   uuid: ^3.0.6
+  visibility_detector: ^0.3.3
 
 dev_dependencies:
   bloc_test: ^9.1.0

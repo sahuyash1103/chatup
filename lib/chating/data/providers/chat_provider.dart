@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/data/models/chat_contact.dart';
 import 'package:chatup/chating/data/models/message.dart';
@@ -113,7 +115,7 @@ class ChatProvider {
   }) async {
     final message = Message(
       senderId: auth.currentUser!.uid,
-      recieverid: recieverUserId,
+      recieverId: recieverUserId,
       text: text,
       messageType: messageType,
       timeStamp: timeStamp,
@@ -159,5 +161,26 @@ class ChatProvider {
       }
       return messages;
     });
+  }
+
+  Future<void> updateMessageStatus({required Message message}) async {
+    log('message status updated');
+    await firestore
+        .collection('users')
+        .doc(message.senderId)
+        .collection('chats')
+        .doc(message.recieverId)
+        .collection('messages')
+        .doc(message.messageId)
+        .update({'isSeen': true});
+
+    await firestore
+        .collection('users')
+        .doc(message.recieverId)
+        .collection('chats')
+        .doc(message.senderId)
+        .collection('messages')
+        .doc(message.messageId)
+        .update({'isSeen': true});
   }
 }

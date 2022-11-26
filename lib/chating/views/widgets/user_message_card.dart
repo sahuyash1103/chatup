@@ -1,5 +1,6 @@
-import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/data/models/message.dart';
 import 'package:chatup/chating/views/widgets/display_text_image_gif.dart';
+import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -7,14 +8,8 @@ class UserMessageCard extends StatelessWidget {
   const UserMessageCard({
     super.key,
     required this.message,
-    required this.date,
-    required this.type,
-    required this.isSeen,
   });
-  final String message;
-  final String date;
-  final MessageEnum type;
-  final bool isSeen;
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +41,14 @@ class UserMessageCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DisplayTextImageGIF(
-                  message: message,
-                  type: type,
+                  message: message.text,
+                  type: message.messageType,
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      date,
+                      formateTime(message.timeStamp),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white60,
@@ -61,9 +56,9 @@ class UserMessageCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Icon(
-                      isSeen ? Icons.done_all : Icons.done,
+                      message.isSeen ? Icons.done_all : Icons.done,
                       size: 20,
-                      color: isSeen ? Colors.blue : Colors.white60,
+                      color: message.isSeen ? Colors.blue : Colors.white60,
                     ),
                   ],
                 ),
