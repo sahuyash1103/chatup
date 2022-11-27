@@ -62,7 +62,6 @@ class _UserInformationViewState extends State<UserInformationView> {
         listener: (context, state) async {
           if (state is FirebaseAuthLogedInState) {
             nameController.text = state.appUser.name;
-            log('APP USER NAME: ${state.appUser.name}');
           }
 
           if (state is FirebaseAuthLogedOutState && mounted) {
