@@ -25,13 +25,12 @@ class _OTPViewState extends State<OTPView> {
   Future<void> verifyOTP(BuildContext context, String userOTP) async {
     final isLoggedIn =
         await BlocProvider.of<FirebaseAuthCubit>(context).verifyOTP(userOTP);
-    if (isLoggedIn && mounted) {
-      navigateToUserInfoView(context);
-    }
+    if (isLoggedIn && mounted) navigateToUserInfoView(context);
   }
 
   void navigateToUserInfoView(BuildContext context) {
     BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
+
     Navigator.pop(context);
     Navigator.pushReplacementNamed(
       context,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chatup/chating/views/chating_view.dart';
+import 'package:chatup/common/utils/notification_service.dart';
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/layouts/views/tabs/chat_contact_list_tab.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
@@ -105,7 +106,10 @@ class _MobileViewState extends State<MobileView>
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.search, color: Colors.grey),
-                    onPressed: () {},
+                    onPressed: () {
+                      NotificationService()
+                          .showNotification('testing', 'body', 'payload');
+                    },
                   ),
                   BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
                     listener: (context, state) {},

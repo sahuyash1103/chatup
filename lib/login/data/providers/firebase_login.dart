@@ -29,7 +29,6 @@ class FirebaseAuthProvider {
         .collection('users')
         .doc(firebaseAuth.currentUser!.uid)
         .get();
-
     AppUser? user;
     if (userData.data() != null) {
       user = AppUser.fromMap(userData.data()!);

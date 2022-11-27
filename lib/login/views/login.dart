@@ -118,14 +118,13 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 SizedBox(height: size.height * 0.6),
                 BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    if (state is FirebaseAuthLoadingState) {
-                      return const CircularProgressIndicator.adaptive();
-                    } else if (state is FirebaseAuthErrorState) {
+                  listener: (context, state) {
+                    if (state is FirebaseAuthErrorState) {
                       log(state.error);
                       BlocProvider.of<FirebaseAuthCubit>(context).reset();
                     }
+                  },
+                  builder: (context, state) {
                     return SizedBox(
                       width: 90,
                       child: ThemedButton(

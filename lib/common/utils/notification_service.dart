@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
@@ -25,9 +27,9 @@ class NotificationService {
     presentSound: true,
   );
 
-  static int notificationId = 0;
-
   NotificationDetails? notificationDetails;
+
+  static int notificationId = 0;
 
   Future<void> init() async {
     const initializationSettingsAndroid =
@@ -42,16 +44,16 @@ class NotificationService {
       iOS: initializationSettingsIOS,
     );
 
-    notificationDetails = NotificationDetails(
-      android: androidNotificationDetails,
-      iOS: iosNotificationDetails,
-    );
-
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-      // onDidReceiveBackgroundNotificationResponse:
-      //     onDidReceiveBackgroundNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveBackgroundNotificationResponse,
+    );
+
+    notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: iosNotificationDetails,
     );
   }
 
@@ -60,15 +62,22 @@ class NotificationService {
     String? title,
     String? body,
     String? payload,
-  ) {}
+  ) {
+    log('$id\n$title\n$body\n$payload');
+  }
 
   void onDidReceiveNotificationResponse(
     NotificationResponse? notificationResponse,
-  ) {}
+  ) {
+    log('${notificationResponse?.actionId}\n${notificationResponse?.payload}\n'
+        '${notificationResponse?.input}\n${notificationResponse?.id}');
+  }
 
-  void onDidReceiveBackgroundNotificationResponse(
+  static void onDidReceiveBackgroundNotificationResponse(
     NotificationResponse? notificationResponse,
-  ) {}
+  ) {
+    
+  }
 
   void showNotification(String title, String body, String payload) {
     flutterLocalNotificationsPlugin.show(

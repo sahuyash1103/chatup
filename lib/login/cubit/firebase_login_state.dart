@@ -15,6 +15,10 @@ class FirebaseAuthLogedInState extends FirebaseAuthState {
   final AppUser appUser;
 }
 
+class FirebaseAuthFetchedUserState extends FirebaseAuthLogedInState {
+  FirebaseAuthFetchedUserState({required super.appUser});
+}
+
 class FirebaseAuthLogedOutState extends FirebaseAuthState {}
 
 class FirebaseAuthErrorState extends FirebaseAuthState {

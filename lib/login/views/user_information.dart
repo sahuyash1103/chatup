@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:chatup/common/utils/custom_image_picker.dart';
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/layouts/views/mobile_layout.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
@@ -40,11 +41,12 @@ class _UserInformationViewState extends State<UserInformationView> {
   }
 
   Future<void> selectImage() async {
-    image = await pickImageFromGallery(context);
+    image = await pickImage(context);
     setState(() {});
   }
 
   Future<void> storeUserData(String previousPic) async {
+    if (nameController.text.trim().length < 4) return;
     await BlocProvider.of<FirestoreCubit>(context).saveUserDataToFireStore(
       name: nameController.text.trim(),
       profilePic: image,
@@ -81,6 +83,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                 }
               }
               if (state is FirestoreSaveErrorState) {
+                log(state.error);
                 await Future.delayed(
                   const Duration(
                     seconds: 3,

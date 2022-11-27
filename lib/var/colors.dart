@@ -12,6 +12,6 @@ const searchBarColor = Color.fromARGB(255, 32, 44, 51);
 const dividerColor = Color.fromARGB(255, 32, 44, 51);
 const chatBarMessage = Color.fromARGB(255, 32, 44, 51);
 const mobileChatBoxColor = Color.fromARGB(255, 42, 57, 66);
-const buttonColor = Color.fromARGB(255, 0, 92, 75);
+const buttonColor = tabColor; // Color.fromARGB(255, 0, 92, 75);
 const greyColor = Color.fromARGB(255, 150, 150, 150);
 const blackColor = Colors.black;

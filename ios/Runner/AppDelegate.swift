@@ -11,6 +11,9 @@ import Flutter
         GeneratedPluginRegistrant.register(with: registry)
     }
 
+    let providerFactory = AppCheckDebugProviderFactory()
+    AppCheck.setAppCheckProviderFactory(providerFactory)
+
     if   #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }
