@@ -20,7 +20,7 @@ class OTPView extends StatefulWidget {
 }
 
 class _OTPViewState extends State<OTPView> {
-  final TextEditingController _otpController = TextEditingController();
+  final _otpController = TextEditingController();
 
   Future<void> verifyOTP(BuildContext context, String userOTP) async {
     final isLoggedIn =
@@ -36,6 +36,12 @@ class _OTPViewState extends State<OTPView> {
       context,
       UserInformationView.routeName,
     );
+  }
+
+  @override
+  void dispose() {
+    _otpController.dispose();
+    super.dispose();
   }
 
   @override

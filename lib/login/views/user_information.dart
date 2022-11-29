@@ -26,7 +26,7 @@ class UserInformationView extends StatefulWidget {
 }
 
 class _UserInformationViewState extends State<UserInformationView> {
-  final TextEditingController nameController = TextEditingController();
+  final nameController = TextEditingController();
   File? image;
 
   @override
@@ -36,8 +36,8 @@ class _UserInformationViewState extends State<UserInformationView> {
 
   @override
   void dispose() {
-    super.dispose();
     nameController.dispose();
+    super.dispose();
   }
 
   Future<void> selectImage() async {

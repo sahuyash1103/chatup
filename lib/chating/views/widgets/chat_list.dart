@@ -28,6 +28,12 @@ class _ChatListState extends State<ChatList> {
   final _messageScrollController = ScrollController();
 
   @override
+  void dispose() {
+    _messageScrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatCubit, ChatState>(
       listener: (context, state) {},

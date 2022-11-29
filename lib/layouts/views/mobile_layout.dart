@@ -8,6 +8,7 @@ import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/cubit/firebase_login_state.dart';
 import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/select_contact/views/select_contact.dart';
+import 'package:chatup/settings/views/your_account_view.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:chatup/widgets/custom_center_text.dart';
 import 'package:chatup/widgets/custom_circle_avatar.dart';
@@ -34,8 +35,9 @@ class _MobileViewState extends State<MobileView>
 
   @override
   void dispose() {
-    super.dispose();
+    tabBarController.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -99,8 +101,13 @@ class _MobileViewState extends State<MobileView>
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.all(5),
-                  child: CustomCircleAvatar(
-                    profilePicURL: state.appUser.profilePic,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, YourAccountInfo.routeName);
+                    },
+                    child: CustomCircleAvatar(
+                      profilePicURL: state.appUser.profilePic,
+                    ),
                   ),
                 ),
                 actions: [

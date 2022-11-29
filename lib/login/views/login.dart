@@ -20,7 +20,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final phoneController = TextEditingController();
-  final CountryService _countryService = CountryService();
+  final _countryService = CountryService();
   Country? _country;
   String? phoneNumber;
 
@@ -32,8 +32,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void dispose() {
-    super.dispose();
     phoneController.dispose();
+    super.dispose();
   }
 
   void pickCountry() {

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:chatup/var/strings.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,17 @@ class CustomCircleAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return profilePicURL != defaultProfilePath
-        ? CircleAvatar(
-            backgroundImage: NetworkImage(profilePicURL),
-            backgroundColor: appBarColor,
-            radius: radius,
+        ? CachedNetworkImage(
+            imageUrl: profilePicURL,
+            imageBuilder: (context, imageProvider) {
+              return CircleAvatar(
+                radius: radius,
+                backgroundColor: appBarColor,
+                backgroundImage: imageProvider,
+              );
+            },
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           )
         : CircleAvatar(
             backgroundColor: appBarColor,

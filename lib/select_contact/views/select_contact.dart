@@ -7,22 +7,16 @@ import 'package:chatup/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectContactsView extends StatefulWidget {
+class SelectContactsView extends StatelessWidget {
   const SelectContactsView({super.key});
   static const String routeName = '/select-contact';
 
-  @override
-  State<SelectContactsView> createState() => _SelectContactsViewState();
-}
-
-class _SelectContactsViewState extends State<SelectContactsView> {
-  Future<void> selectContact(AppContact contact) async {
-    final user = await BlocProvider.of<SelectContactCubit>(context)
-        .selectContact(contact: contact);
-
-    if (user != null && mounted) {
+  void selectContact(AppContact contact, BuildContext context) {
+    BlocProvider.of<SelectContactCubit>(context)
+        .selectContact(contact: contact)
+        .then((user) {
       Navigator.pop(context, user);
-    }
+    });
   }
 
   @override
@@ -82,7 +76,7 @@ class _SelectContactsViewState extends State<SelectContactsView> {
               itemBuilder: (context, index) {
                 final contact = contactList[index];
                 return InkWell(
-                  onTap: () => selectContact(contact),
+                  onTap: () => selectContact(contact, context),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(2, 5, 2, 5),
                     child: ListTile(

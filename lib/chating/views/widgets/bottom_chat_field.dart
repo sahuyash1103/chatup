@@ -20,7 +20,7 @@ class BottomChatField extends StatefulWidget {
 }
 
 class _BottomChatFieldState extends State<BottomChatField> {
-  final TextEditingController _textEditingControllerMessage =
+  final _textEditingControllerMessage =
       TextEditingController();
   bool isTyping = false;
 
