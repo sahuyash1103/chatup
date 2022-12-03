@@ -38,8 +38,4 @@ class FirebaseAuthRepository {
   Future<UserCredential> signInWithCredential(PhoneAuthCredential credential) {
     return firebaseLoginProvider.signInWithCredential(credential);
   }
-
-  Future<void> setUserOnlineStatus({required bool isOnline}) async {
-    return firebaseLoginProvider.setUserOnlineStatus(isOnline: isOnline);
-  }
 }

@@ -29,4 +29,13 @@ class FirestoreCubit extends Cubit<FirestoreState> {
       emit(FirestoreSaveErrorState(error: 'user data can not be uploaded'));
     }
   }
+
+  
+  Future<void> setOnlineStatus({required bool isOnline}) async {
+    await firestoreRepository.setUserOnlineStatus(isOnline: isOnline);
+  }
+
+  Future<void> updateFcmToken({required String fcmToken}) async {
+    await firestoreRepository.updateFcmToken(fcmToken: fcmToken);
+  }
 }

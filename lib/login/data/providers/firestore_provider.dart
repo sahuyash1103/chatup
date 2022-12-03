@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:chatup/common/services/firebase_messaging_service.dart';
 import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/var/strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,8 +18,8 @@ class FirestoreProvider {
   final FirebaseFirestore firestore;
   final FirebaseStorage firebaseStorage;
 
-  Future<String> storeFileToFirebase(String ref, File file) async {
-    final uploadTask = firebaseStorage.ref().child(ref).putFile(file);
+  Future<String> storeFileToFirebase(String path, File file) async {
+    final uploadTask = firebaseStorage.ref().child(path).putFile(file);
     final snap = await uploadTask;
     return snap.ref.getDownloadURL();
   }
@@ -38,6 +40,10 @@ class FirestoreProvider {
         );
       }
 
+      final fcmToken = FirebaseMessagingService.fcmToken;
+
+      log(fcmToken.toString());
+
       final user = AppUser(
         name: name,
         uid: uid,
@@ -45,6 +51,7 @@ class FirestoreProvider {
         isOnline: true,
         email: firebaseAuth.currentUser!.email ?? '',
         number: firebaseAuth.currentUser!.phoneNumber!,
+        fcmToken: fcmToken ?? '',
         groupId: [],
       );
 
@@ -53,5 +60,19 @@ class FirestoreProvider {
     } catch (e) {
       return e.toString();
     }
+  }
+
+  Future<void> setUserOnlineStatus({required bool isOnline}) async {
+    final uid = firebaseAuth.currentUser!.uid;
+    await firestore.collection('users').doc(uid).update({
+      'isOnline': isOnline,
+    });
+  }
+
+  Future<void> updateFcmToken({required String fcmToken}) async {
+    final uid = firebaseAuth.currentUser!.uid;
+    await firestore.collection('users').doc(uid).update({
+      'fcmToken': fcmToken,
+    });
   }
 }

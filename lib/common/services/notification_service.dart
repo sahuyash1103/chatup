@@ -75,11 +75,13 @@ class NotificationService {
 
   static void onDidReceiveBackgroundNotificationResponse(
     NotificationResponse? notificationResponse,
-  ) {
-    
-  }
+  ) {}
 
-  void showNotification(String title, String body, String payload) {
+  void showNotification({
+    required String title,
+    required String body,
+    required String payload,
+  }) {
     flutterLocalNotificationsPlugin.show(
       notificationId++,
       title,

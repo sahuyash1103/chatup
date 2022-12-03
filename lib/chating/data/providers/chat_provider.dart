@@ -1,11 +1,14 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/data/models/chat_contact.dart';
 import 'package:chatup/chating/data/models/message.dart';
 import 'package:chatup/login/data/models/app_user.dart';
+import 'package:chatup/login/data/providers/firestore_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatProvider {
@@ -13,6 +16,7 @@ class ChatProvider {
 
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   Stream<List<ChatContact>> fetchChatContacts() {
     return firestore
@@ -59,6 +63,76 @@ class ChatProvider {
         text: text,
         timeStamp: timeStamp,
         messageType: MessageEnum.text,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> sendFileMessage({
+    required File file,
+    required String recieverUserId,
+    required AppUser senderUserData,
+    required MessageEnum messageEnum,
+    bool isGroupChat = false,
+  }) async {
+    try {
+      final timeSent = DateTime.now();
+      final messageId = const Uuid().v1();
+
+      final imageUrl = await FirestoreProvider(
+        firebaseAuth: auth,
+        firestore: firestore,
+        firebaseStorage: firebaseStorage,
+      ).storeFileToFirebase(
+        'messageImages/$messageId',
+        file,
+      );
+
+      AppUser? recieverUserData;
+      if (!isGroupChat) {
+        final userDataMap =
+            await firestore.collection('users').doc(recieverUserId).get();
+        recieverUserData = AppUser.fromMap(userDataMap.data()!);
+      }
+
+      String contactMsg;
+
+      switch (messageEnum) {
+        case MessageEnum.image:
+          contactMsg = '📷 Photo';
+          break;
+        case MessageEnum.video:
+          contactMsg = '📸 Video';
+          break;
+        case MessageEnum.audio:
+          contactMsg = '🎵 Audio';
+          break;
+        case MessageEnum.gif:
+          contactMsg = 'GIF';
+          break;
+        case MessageEnum.file:
+          contactMsg = '📁 File';
+          break;
+        case MessageEnum.text:
+          contactMsg = '📝 Text';
+          break;
+      }
+      await _saveDataToContactSubCollection(
+        sender: senderUserData,
+        reciever: recieverUserData!,
+        text: contactMsg,
+        timeStamp: timeSent,
+      );
+
+      await _saveMessageToMessageSubCollection(
+        recieverUserId: recieverUserId,
+        text: imageUrl,
+        timeStamp: timeSent,
+        messageType: messageEnum,
+        messageID: messageId,
+        senderUserName: senderUserData.name,
+        recieverUserName: recieverUserData.name,
       );
     } catch (e) {
       rethrow;

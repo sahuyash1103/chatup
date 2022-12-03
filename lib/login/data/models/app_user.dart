@@ -7,6 +7,7 @@ class AppUser {
     required this.email,
     required this.number,
     required this.profilePic,
+    required this.fcmToken,
     this.groupId = const [],
     this.isOnline = false,
   });
@@ -18,6 +19,7 @@ class AppUser {
       profilePic: map['profilePic'] as String,
       number: map['phoneNumber'] as String,
       email: map['email'] != null ? map['email'] as String : '',
+      fcmToken: map['fcmToken'] != null ? map['fcmToken'] as String : '',
       groupId: List<String>.from(map['groupId'] as List),
       isOnline: map['isOnline'] as bool,
     );
@@ -29,6 +31,7 @@ class AppUser {
       name: user.displayName ?? '',
       email: user.email ?? '',
       profilePic: user.photoURL ?? '',
+      fcmToken: '',
       number: user.phoneNumber ?? '',
     );
   }
@@ -37,6 +40,7 @@ class AppUser {
   String email;
   String number;
   String profilePic;
+  String fcmToken;
   List<dynamic> groupId;
   bool isOnline;
 
@@ -48,6 +52,8 @@ class AppUser {
       'isOnline': isOnline,
       'phoneNumber': number,
       'groupId': groupId,
+      'email': email,
+      'fcmToken': fcmToken,
     };
   }
 }

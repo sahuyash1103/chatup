@@ -78,10 +78,6 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
     }
   }
 
-  Future<void> setOnlineStatus({required bool isOnline}) async {
-    await firebaseLoginRepository.setUserOnlineStatus(isOnline: isOnline);
-  }
-
   void logOut() {
     try {
       firebaseLoginRepository.logOut();

@@ -20,4 +20,12 @@ class FirestoreRepository {
       previousPic: previousPic,
     );
   }
+
+   Future<void> setUserOnlineStatus({required bool isOnline}) async {
+    return firestoreProvider.setUserOnlineStatus(isOnline: isOnline);
+  }
+
+  Future<void> updateFcmToken({required String fcmToken}) async {
+    return firestoreProvider.updateFcmToken(fcmToken: fcmToken);
+  }
 }

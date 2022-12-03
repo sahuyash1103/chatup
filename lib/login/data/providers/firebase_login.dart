@@ -47,13 +47,4 @@ class FirebaseAuthProvider {
   Future<UserCredential> signInWithCredential(PhoneAuthCredential credential) {
     return firebaseAuth.signInWithCredential(credential);
   }
-
-  Future<void> setUserOnlineStatus({required bool isOnline}) async {
-    await firestore
-        .collection('users')
-        .doc(firebaseAuth.currentUser!.uid)
-        .update({
-      'isOnline': isOnline,
-    });
-  }
 }
