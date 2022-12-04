@@ -4,7 +4,10 @@ enum MessageEnum {
   audio('audio'),
   video('video'),
   gif('gif'),
-  file('file');
+  file('file'),
+  location('location'),
+  contact('contact'),
+  sticker('sticker');
 
   const MessageEnum(this.type);
 
@@ -26,6 +29,12 @@ extension ConvertMessage on String {
         return MessageEnum.video;
       case 'file':
         return MessageEnum.file;
+      case 'location':
+        return MessageEnum.location;
+      case 'contact':
+        return MessageEnum.contact;
+      case 'sticker':
+        return MessageEnum.sticker;
       default:
         return MessageEnum.text;
     }

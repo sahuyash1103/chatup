@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:chatup/common/services/firebase_messaging_service.dart';
@@ -41,8 +40,6 @@ class FirestoreProvider {
       }
 
       final fcmToken = FirebaseMessagingService.fcmToken;
-
-      log(fcmToken.toString());
 
       final user = AppUser(
         name: name,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:chatup/chating/views/chating_view.dart';
 import 'package:chatup/common/services/firebase_messaging_service.dart';
@@ -36,7 +35,7 @@ class _MobileViewState extends State<MobileView>
     WidgetsBinding.instance.addObserver(this);
 
     FirebaseMessagingService.instance.onTokenRefresh(updateFcmToken);
-    FirebaseMessagingService.instance.getInitialMessage();
+    FirebaseMessagingService.instance.getInitialMessage(context);
     FirebaseMessagingService.instance.onMessage();
     FirebaseMessagingService.instance.onMessageOpenedApp();
   }
@@ -200,8 +199,6 @@ class _MobileViewState extends State<MobileView>
                             'uid': user.uid,
                           },
                         );
-                      } else {
-                        log(user.toString());
                       }
                     },
                     backgroundColor: buttonColor,

@@ -1,7 +1,9 @@
-import 'dart:developer';
 
+import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/views/chating_view.dart';
 import 'package:chatup/common/services/notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 
 class FirebaseMessagingService {
   factory FirebaseMessagingService() => instance;
@@ -14,7 +16,6 @@ class FirebaseMessagingService {
   static String? fcmToken;
 
   Future<void> init() async {
-    log('FirebaseMessagingService init');
     await firebaseMessaging.requestPermission();
     await firebaseMessaging.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -23,23 +24,28 @@ class FirebaseMessagingService {
     );
 
     fcmToken = await FirebaseMessaging.instance.getToken();
-    log('FirebaseMessagingService fcmToken: $fcmToken');
   }
 
   Future<void> onTokenRefresh(void Function(String token) refreshToken) async {
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
-      log('onTokenRefresh: $token');
       fcmToken = token;
       refreshToken(token);
     });
   }
 
-  Future<void> getInitialMessage() async {
+  Future<void> getInitialMessage(BuildContext context) async {
     await FirebaseMessaging.instance.getInitialMessage().then(
       (message) {
         if (message != null) {
-          if (message.data['_id'] != null) {
-            log('getInitialMessage New Notification: ${message.data}');
+          if (message.data['sender'] != null) {
+            Navigator.of(context).pushNamed(
+              ChatingView.routeName,
+              arguments: {
+                'name': message.data['name'],
+                'profilePic': message.data['senderProfilePic'],
+                'uid': message.data['senderId'],
+              },
+            );
           }
         }
       },
@@ -50,14 +56,7 @@ class FirebaseMessagingService {
     FirebaseMessaging.onMessage.listen(
       (message) {
         if (message.notification != null) {
-          NotificationService().showNotification(
-            title: message.notification!.title ?? 'chatup Error:',
-            body: message.notification!.body ??
-                'Notification service is not working properly',
-            payload: message.data['sender'] != null
-                ? message.data['sender'] as String
-                : 'server',
-          );
+          showNotification(message);
         }
       },
     );
@@ -67,17 +66,7 @@ class FirebaseMessagingService {
     FirebaseMessaging.onMessageOpenedApp.listen(
       (message) {
         if (message.notification != null) {
-          log('onMessageOpenedApp ${message.notification!.title}');
-          log('onMessageOpenedApp ${message.notification!.body}');
-          log('onMessageOpenedApp message.data22 ${message.data}');
-          NotificationService().showNotification(
-            title: message.notification!.title ?? 'chatup Error:',
-            body: message.notification!.body ??
-                'Notification service is not working properly',
-            payload: message.data['sender'] != null
-                ? message.data['sender'] as String
-                : 'server',
-          );
+          showNotification(message);
         }
       },
     );
@@ -87,19 +76,48 @@ class FirebaseMessagingService {
     FirebaseMessaging.onBackgroundMessage(
       (message) async {
         if (message.notification != null) {
-          log('onBackgroundMessage ${message.notification!.title}');
-          log('onBackgroundMessage ${message.notification!.body}');
-          log('onBackgroundMessage message.data33 ${message.data}');
-          NotificationService().showNotification(
-            title: message.notification!.title ?? 'chatup Error:',
-            body: message.notification!.body ??
-                'Notification service is not working properly',
-            payload: message.data['sender'] != null
-                ? message.data['sender'] as String
-                : 'server',
-          );
+          showNotification(message);
         }
       },
     );
+  }
+}
+
+void showNotification(RemoteMessage message) {
+  var body = message.notification!.body ??
+      'Notification service is not working properly';
+  if (message.data['messageType'] != null) {
+    body = getBody(message.data['messageType'] as MessageEnum) ?? body;
+  }
+
+  NotificationService().showNotification(
+    title: message.notification!.title ?? 'chatup Error:',
+    body: body,
+    payload: message.data['sender'] != null
+        ? message.data['sender'] as String
+        : 'server',
+  );
+}
+
+String? getBody(MessageEnum messageType) {
+  switch (messageType) {
+    case MessageEnum.image:
+      return '📷 Photo';
+    case MessageEnum.video:
+      return '📸 Video';
+    case MessageEnum.audio:
+      return '🎵 Audio';
+    case MessageEnum.gif:
+      return 'GIF';
+    case MessageEnum.file:
+      return '📁 File';
+    case MessageEnum.sticker:
+      return '🎁 Sticker';
+    case MessageEnum.location:
+      return '📍 Location';
+    case MessageEnum.contact:
+      return '📞 Contact';
+    case MessageEnum.text:
+      return null;
   }
 }

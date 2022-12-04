@@ -36,19 +36,19 @@ class SenderMessageCard extends StatelessWidget {
             elevation: 1,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8),
-                bottomRight: Radius.circular(8),
-                topRight: Radius.circular(8),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+                topRight: Radius.circular(10),
               ),
             ),
             color: senderMessageColor,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Padding(
               padding: const EdgeInsets.only(
-                left: 15,
+                left: 10,
                 top: 10,
-                right: 5,
-                bottom: 5,
+                right: 8,
+                bottom: 8,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,9 +57,11 @@ class SenderMessageCard extends StatelessWidget {
                     message: message.text,
                     type: message.messageType,
                   ),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const SizedBox(width: 10),
                       Text(
                         formateTime(message.timeStamp),
                         style: const TextStyle(
@@ -67,6 +69,7 @@ class SenderMessageCard extends StatelessWidget {
                           color: Colors.white60,
                         ),
                       ),
+                      // const SizedBox(width: 5),
                     ],
                   ),
                 ],

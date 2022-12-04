@@ -23,19 +23,19 @@ class UserMessageCard extends StatelessWidget {
           elevation: 1,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              bottomRight: Radius.circular(8),
-              topLeft: Radius.circular(8),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+              topLeft: Radius.circular(10),
             ),
           ),
           color: messageColor,
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Padding(
             padding: const EdgeInsets.only(
-              left: 5,
+              left: 8,
               top: 10,
-              right: 15,
-              bottom: 5,
+              right: 10,
+              bottom: 8,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,9 +44,11 @@ class UserMessageCard extends StatelessWidget {
                   message: message.text,
                   type: message.messageType,
                 ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    const SizedBox(width: 10),
                     Text(
                       formateTime(message.timeStamp),
                       style: const TextStyle(
@@ -54,12 +56,13 @@ class UserMessageCard extends StatelessWidget {
                         color: Colors.white60,
                       ),
                     ),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 10),
                     Icon(
                       message.isSeen ? Icons.done_all : Icons.done,
                       size: 20,
                       color: message.isSeen ? Colors.blue : Colors.white60,
                     ),
+                    // const SizedBox(width: 5),
                   ],
                 ),
               ],

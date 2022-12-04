@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/data/models/chat_contact.dart';
 import 'package:chatup/chating/data/models/message.dart';
 import 'package:chatup/chating/data/providers/chat_provider.dart';
@@ -20,6 +23,20 @@ class ChatRepository {
       text: text,
       recieverID: recieverID,
       sender: sender,
+    );
+  }
+
+  Future<void> sendFileMessage({
+    required File file,
+    required String recieverID,
+    required AppUser sender,
+    required MessageEnum messageEnum,
+  }) async {
+    await chatProvider.sendFileMessage(
+      file: file,
+      recieverID: recieverID,
+      sender: sender,
+      messageEnum: messageEnum,
     );
   }
 

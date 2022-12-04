@@ -29,7 +29,7 @@ class _OTPViewState extends State<OTPView> {
   }
 
   void navigateToUserInfoView(BuildContext context) {
-    BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
+    BlocProvider.of<FirebaseAuthCubit>(context).refreshUser();
 
     Navigator.pop(context);
     Navigator.pushReplacementNamed(

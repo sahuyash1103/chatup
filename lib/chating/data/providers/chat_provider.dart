@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:chatup/chating/data/enums/message_enums.dart';
@@ -71,8 +70,8 @@ class ChatProvider {
 
   Future<void> sendFileMessage({
     required File file,
-    required String recieverUserId,
-    required AppUser senderUserData,
+    required String recieverID,
+    required AppUser sender,
     required MessageEnum messageEnum,
     bool isGroupChat = false,
   }) async {
@@ -85,14 +84,14 @@ class ChatProvider {
         firestore: firestore,
         firebaseStorage: firebaseStorage,
       ).storeFileToFirebase(
-        'messageImages/$messageId',
+        'chat/${messageEnum.type}/${sender.uid}/$recieverID/$messageId',
         file,
       );
 
       AppUser? recieverUserData;
       if (!isGroupChat) {
         final userDataMap =
-            await firestore.collection('users').doc(recieverUserId).get();
+            await firestore.collection('users').doc(recieverID).get();
         recieverUserData = AppUser.fromMap(userDataMap.data()!);
       }
 
@@ -117,21 +116,30 @@ class ChatProvider {
         case MessageEnum.text:
           contactMsg = '📝 Text';
           break;
+        case MessageEnum.sticker:
+          contactMsg = '🎁 Sticker';
+          break;
+        case MessageEnum.location:
+          contactMsg = '📍 Location';
+          break;
+        case MessageEnum.contact:
+          contactMsg = '📞 Contact';
+          break;
       }
       await _saveDataToContactSubCollection(
-        sender: senderUserData,
+        sender: sender,
         reciever: recieverUserData!,
         text: contactMsg,
         timeStamp: timeSent,
       );
 
       await _saveMessageToMessageSubCollection(
-        recieverUserId: recieverUserId,
+        recieverUserId: recieverID,
         text: imageUrl,
         timeStamp: timeSent,
         messageType: messageEnum,
         messageID: messageId,
-        senderUserName: senderUserData.name,
+        senderUserName: sender.name,
         recieverUserName: recieverUserData.name,
       );
     } catch (e) {
@@ -238,7 +246,6 @@ class ChatProvider {
   }
 
   Future<void> updateMessageStatus({required Message message}) async {
-    log('message status updated');
     await firestore
         .collection('users')
         .doc(message.senderId)

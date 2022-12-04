@@ -35,13 +35,9 @@ class SelectContactRepository {
       } else {
         log('Permission not granted');
       }
-      log(contacts.length.toString());
     } catch (e) {
-      log(contacts.length.toString());
-
       log('LOG: ${e.toString()}');
     }
-    log(contacts.length.toString());
     return contacts;
   }
 

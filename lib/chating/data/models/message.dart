@@ -17,7 +17,7 @@ class Message {
   factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
       senderId: map['senderId'] as String,
-      recieverId: map['recieverid'] as String,
+      recieverId: map['recieverId'] as String,
       text: map['text'] as String,
       messageType: (map['type'] as String).toEnum(),
       timeStamp: DateTime.fromMillisecondsSinceEpoch(map['timeStamp'] as int),
@@ -44,7 +44,7 @@ class Message {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'senderId': senderId,
-      'recieverid': recieverId,
+      'recieverId': recieverId,
       'text': text,
       'type': messageType.type,
       'timeStamp': timeStamp.millisecondsSinceEpoch,

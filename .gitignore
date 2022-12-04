@@ -101,6 +101,36 @@ unlinked_spec.ds
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
+# windows related
+**/windows/**/Generated Files/
+**/windows/**/packages/
+**/windows/**/App.g.cs
+**/windows/**/App.g.i.cs
+**/windows/**/AssemblyInfo.cs
+**/windows/**/MainWindow.g.cs
+**/windows/**/MainWindow.g.i.cs
+**/windows/**/obj/
+**/windows/**/Debug/
+**/windows/**/Release/
+**/windows/**/x64/
+**/windows/**/x86/
+**/windows/**/packages/
+**/windows/**/App.g.cs
+**/windows/**/App.g.i.cs
+**/windows/**/AssemblyInfo.cs
+**/windows/**/MainWindow.g.cs
+**/windows/**/MainWindow.g.i.cs
+**/windows/**/obj/
+**/windows/**/Debug/
+**/windows/**/Release/
+**/windows/**/x64/
+**/windows/**/x86/
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+windows/flutter/generated_plugins.cmake
+**/windows/flutter/ephemeral/
+**/windows/**
+
 # Coverage
 coverage/
 

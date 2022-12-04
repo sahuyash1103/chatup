@@ -124,7 +124,7 @@ class _LoadingViewState extends State<LoadingView> {
   Future<void> autoLogin() async {
     try {
       final user =
-          await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
+          await BlocProvider.of<FirebaseAuthCubit>(context).refreshUser();
       if (user != null && mounted) {
         if (user.name.isEmpty) {
           await Navigator.pushReplacementNamed(
