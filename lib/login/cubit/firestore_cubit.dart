@@ -22,7 +22,7 @@ class FirestoreCubit extends Cubit<FirestoreState> {
       profilePic: profilePic,
       previousPic: previousPic,
     );
-    
+
     if (error == null) {
       emit(FirestoreSavedState());
     } else {
@@ -30,12 +30,11 @@ class FirestoreCubit extends Cubit<FirestoreState> {
     }
   }
 
-  
-  Future<void> setOnlineStatus({required bool isOnline}) async {
-    await firestoreRepository.setUserOnlineStatus(isOnline: isOnline);
+  Future<void> updateProfilPic(File profilePic) async {
+    await firestoreRepository.updateProfilPic(profilePic);
   }
 
-  Future<void> updateFcmToken({required String fcmToken}) async {
-    await firestoreRepository.updateFcmToken(fcmToken: fcmToken);
+  Future<void> updateUser(Map<String, dynamic> user) async {
+    await firestoreRepository.updateUser(user);
   }
 }

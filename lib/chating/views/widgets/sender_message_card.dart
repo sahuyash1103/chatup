@@ -21,6 +21,7 @@ class SenderMessageCard extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.8,
+          minWidth: message.timeStamp.toString().length * 4.0,
         ),
         child: VisibilityDetector(
           key: Key(message.messageId),
@@ -43,22 +44,25 @@ class SenderMessageCard extends StatelessWidget {
             ),
             color: senderMessageColor,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 10,
-                top: 10,
-                right: 8,
-                bottom: 8,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DisplayTextImageGIF(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 5,
+                    bottom: 30,
+                    left: 8,
+                    top: 5,
+                  ),
+                  child: DisplayTextImageGIF(
                     message: message.text,
                     type: message.messageType,
                   ),
-                  const SizedBox(height: 10),
-                  Row(
+                ),
+                // const SizedBox(height: 10),
+                Positioned(
+                  bottom: 10,
+                  right: 10,
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(width: 10),
@@ -72,8 +76,8 @@ class SenderMessageCard extends StatelessWidget {
                       // const SizedBox(width: 5),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

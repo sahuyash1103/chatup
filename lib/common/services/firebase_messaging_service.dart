@@ -1,7 +1,6 @@
 
-import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/views/chating_view.dart';
-import 'package:chatup/common/services/notification_service.dart';
+import 'package:chatup/common/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -37,11 +36,11 @@ class FirebaseMessagingService {
     await FirebaseMessaging.instance.getInitialMessage().then(
       (message) {
         if (message != null) {
-          if (message.data['sender'] != null) {
+          if (message.data['senderId'] != null) {
             Navigator.of(context).pushNamed(
               ChatingView.routeName,
               arguments: {
-                'name': message.data['name'],
+                'name': message.data['senderName'],
                 'profilePic': message.data['senderProfilePic'],
                 'uid': message.data['senderId'],
               },
@@ -80,44 +79,5 @@ class FirebaseMessagingService {
         }
       },
     );
-  }
-}
-
-void showNotification(RemoteMessage message) {
-  var body = message.notification!.body ??
-      'Notification service is not working properly';
-  if (message.data['messageType'] != null) {
-    body = getBody(message.data['messageType'] as MessageEnum) ?? body;
-  }
-
-  NotificationService().showNotification(
-    title: message.notification!.title ?? 'chatup Error:',
-    body: body,
-    payload: message.data['sender'] != null
-        ? message.data['sender'] as String
-        : 'server',
-  );
-}
-
-String? getBody(MessageEnum messageType) {
-  switch (messageType) {
-    case MessageEnum.image:
-      return '📷 Photo';
-    case MessageEnum.video:
-      return '📸 Video';
-    case MessageEnum.audio:
-      return '🎵 Audio';
-    case MessageEnum.gif:
-      return 'GIF';
-    case MessageEnum.file:
-      return '📁 File';
-    case MessageEnum.sticker:
-      return '🎁 Sticker';
-    case MessageEnum.location:
-      return '📍 Location';
-    case MessageEnum.contact:
-      return '📞 Contact';
-    case MessageEnum.text:
-      return null;
   }
 }

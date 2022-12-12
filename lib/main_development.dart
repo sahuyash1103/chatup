@@ -1,9 +1,9 @@
-import 'dart:developer';
 
 import 'package:chatup/app/app.dart';
 import 'package:chatup/bootstrap.dart';
 import 'package:chatup/common/services/firebase_messaging_service.dart';
 import 'package:chatup/common/services/notification_service.dart';
+import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/firebase_options.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,12 +12,11 @@ import 'package:flutter/material.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  log('onBackgroundMessage');
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
   await NotificationService().init();
 
-  log(message.data.toString());
+  showNotification(message);
 }
 
 void main() async {
@@ -33,7 +32,7 @@ void main() async {
 
   await NotificationService().init();
   await FirebaseMessagingService.instance.init();
-  
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await bootstrap(() => const App());

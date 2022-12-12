@@ -6,6 +6,7 @@ import 'package:chatup/login/views/login.dart';
 import 'package:chatup/login/views/otp.dart';
 import 'package:chatup/login/views/user_information.dart';
 import 'package:chatup/select_contact/views/select_contact.dart';
+import 'package:chatup/settings/views/setting_view.dart';
 import 'package:chatup/settings/views/your_account_view.dart';
 import 'package:flutter/material.dart';
 
@@ -45,13 +46,16 @@ class AppRouter {
       case SelectContactsView.routeName:
         return MaterialPageRoute(builder: (_) => const SelectContactsView());
 
-      case YourAccountInfo.routeName:
-        return MaterialPageRoute(builder: (_) => const YourAccountInfo());
+      case SettinsView.routName:
+        return MaterialPageRoute(builder: (_) => const SettinsView());
+
+      case YourProfileView.routeName:
+        return MaterialPageRoute(builder: (_) => const YourProfileView());
 
       case ErrorView.routeName:
         final error = settings.arguments.toString();
         return MaterialPageRoute(builder: (_) => ErrorView(error: error));
-        
+
       default:
         final error = settings.arguments;
         return MaterialPageRoute(

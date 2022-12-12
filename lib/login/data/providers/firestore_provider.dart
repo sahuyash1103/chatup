@@ -59,17 +59,21 @@ class FirestoreProvider {
     }
   }
 
-  Future<void> setUserOnlineStatus({required bool isOnline}) async {
+  Future<void> updateProfilPic(File profilePic) async {
     final uid = firebaseAuth.currentUser!.uid;
+    final photoUrl = await storeFileToFirebase(
+      'profilePic/$uid',
+      profilePic,
+    );
     await firestore.collection('users').doc(uid).update({
-      'isOnline': isOnline,
+      'profilePic': photoUrl,
     });
   }
 
-  Future<void> updateFcmToken({required String fcmToken}) async {
-    final uid = firebaseAuth.currentUser!.uid;
-    await firestore.collection('users').doc(uid).update({
-      'fcmToken': fcmToken,
-    });
+  Future<void> updateUser({required Map<String, dynamic> user}) async {
+    await firestore
+        .collection('users')
+        .doc(firebaseAuth.currentUser!.uid)
+        .update(user);
   }
 }

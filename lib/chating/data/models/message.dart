@@ -19,7 +19,7 @@ class Message {
       senderId: map['senderId'] as String,
       recieverId: map['recieverId'] as String,
       text: map['text'] as String,
-      messageType: (map['type'] as String).toEnum(),
+      messageType: (map['type'] as String).toMessageEnum(),
       timeStamp: DateTime.fromMillisecondsSinceEpoch(map['timeStamp'] as int),
       messageId: map['messageId'] as String,
       isSeen: map['isSeen'] as bool,

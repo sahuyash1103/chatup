@@ -5,20 +5,16 @@ import 'package:flutter/material.dart';
 Future<void> attetchOptions({
   required BuildContext context,
   required VoidCallback onTapImage,
+  required VoidCallback onTapVideo,
 }) async {
   await showModalBottomSheet<void>(
     context: context,
     barrierColor: backgroundColor.withOpacity(0.2),
     backgroundColor: backgroundColor.withOpacity(0.2),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(25),
-        topRight: Radius.circular(25),
-      ),
-    ),
-    elevation: 10,
+    elevation: 5,
     builder: (context) => AttecthOptionsCard(
       onTapImage: onTapImage,
+      onTapVideo: onTapVideo,
     ),
   );
 }
@@ -44,7 +40,7 @@ class AttecthOptionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(10),
         color: appBarColor,
       ),
       margin: const EdgeInsets.fromLTRB(5, 5, 5, 60),
@@ -62,36 +58,49 @@ class AttecthOptionsCard extends StatelessWidget {
             icon: Icons.image,
             text: 'Image',
             onTap: () {
-              if (onTapImage != null) {
-                onTapImage!.call();
-              }
               Navigator.pop(context);
+              onTapImage?.call();
             },
           ),
           CustomIconButton(
             icon: Icons.video_call,
             text: 'Video',
-            onTap: onTapVideo ?? () {},
-          ),
-          CustomIconButton(
-            icon: Icons.location_on,
-            text: 'Location',
-            onTap: onTapLocation ?? () {},
-          ),
-          CustomIconButton(
-            icon: Icons.person,
-            text: 'Contact',
-            onTap: onTapContact ?? () {},
-          ),
-          CustomIconButton(
-            icon: Icons.file_copy,
-            text: 'Document',
-            onTap: onTapDocument ?? () {},
+            onTap: () {
+              Navigator.pop(context);
+              onTapVideo?.call();
+            },
           ),
           CustomIconButton(
             icon: Icons.mic,
             text: 'Audio',
-            onTap: onTapAudio ?? () {},
+            onTap: () {
+              Navigator.pop(context);
+              onTapAudio?.call();
+            },
+          ),
+          CustomIconButton(
+            icon: Icons.location_on,
+            text: 'Location',
+            onTap: () {
+              Navigator.pop(context);
+              onTapLocation?.call();
+            },
+          ),
+          CustomIconButton(
+            icon: Icons.person,
+            text: 'Contact',
+            onTap: () {
+              Navigator.pop(context);
+              onTapContact?.call();
+            },
+          ),
+          CustomIconButton(
+            icon: Icons.file_copy,
+            text: 'Document',
+            onTap: () {
+              Navigator.pop(context);
+              onTapDocument?.call();
+            },
           ),
         ],
       ),

@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/data/models/chat_contact.dart';
 import 'package:chatup/chating/data/models/message.dart';
+import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/login/data/providers/firestore_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -95,37 +97,8 @@ class ChatProvider {
         recieverUserData = AppUser.fromMap(userDataMap.data()!);
       }
 
-      String contactMsg;
-
-      switch (messageEnum) {
-        case MessageEnum.image:
-          contactMsg = '📷 Photo';
-          break;
-        case MessageEnum.video:
-          contactMsg = '📸 Video';
-          break;
-        case MessageEnum.audio:
-          contactMsg = '🎵 Audio';
-          break;
-        case MessageEnum.gif:
-          contactMsg = 'GIF';
-          break;
-        case MessageEnum.file:
-          contactMsg = '📁 File';
-          break;
-        case MessageEnum.text:
-          contactMsg = '📝 Text';
-          break;
-        case MessageEnum.sticker:
-          contactMsg = '🎁 Sticker';
-          break;
-        case MessageEnum.location:
-          contactMsg = '📍 Location';
-          break;
-        case MessageEnum.contact:
-          contactMsg = '📞 Contact';
-          break;
-      }
+      final contactMsg = getBody(messageEnum);
+      log('Contact Message: $contactMsg');
       await _saveDataToContactSubCollection(
         sender: sender,
         reciever: recieverUserData!,

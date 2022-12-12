@@ -19,7 +19,7 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
     }
     return user;
   }
-  
+
   Future<AppUser?> getCurrentUser() async {
     final user = await firebaseLoginRepository.getCurrentUser();
     return user;

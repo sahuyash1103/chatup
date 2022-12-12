@@ -15,7 +15,7 @@ enum MessageEnum {
 }
 
 extension ConvertMessage on String {
-  MessageEnum toEnum() {
+  MessageEnum toMessageEnum() {
     switch (this) {
       case 'audio':
         return MessageEnum.audio;

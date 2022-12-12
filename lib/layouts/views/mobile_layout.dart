@@ -1,4 +1,3 @@
-
 import 'package:chatup/chating/views/chating_view.dart';
 import 'package:chatup/common/services/firebase_messaging_service.dart';
 import 'package:chatup/common/utils/utils.dart';
@@ -9,6 +8,7 @@ import 'package:chatup/login/cubit/firestore_cubit.dart';
 import 'package:chatup/login/cubit/firestore_state.dart';
 import 'package:chatup/login/data/models/app_user.dart';
 import 'package:chatup/select_contact/views/select_contact.dart';
+import 'package:chatup/settings/views/setting_view.dart';
 import 'package:chatup/settings/views/your_account_view.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:chatup/widgets/custom_center_text.dart';
@@ -63,17 +63,21 @@ class _MobileViewState extends State<MobileView>
   }
 
   void setOnlineStatus({required bool isOnline}) {
-    BlocProvider.of<FirestoreCubit>(context)
-        .setOnlineStatus(isOnline: isOnline);
+    BlocProvider.of<FirestoreCubit>(context).updateUser({'isOnline': isOnline});
   }
 
   void updateFcmToken(String fcmToken) {
-    BlocProvider.of<FirestoreCubit>(context).updateFcmToken(fcmToken: fcmToken);
+    BlocProvider.of<FirestoreCubit>(context).updateUser({'fcmToken': fcmToken});
   }
 
   void logout() {
     BlocProvider.of<FirebaseAuthCubit>(context).logOut();
     afterLoggedOut(context);
+  }
+
+  Future<void> navigatToSettingView() async {
+    // Navigator.pop(context);
+    await Navigator.pushNamed(context, SettinsView.routName);
   }
 
   @override
@@ -119,7 +123,7 @@ class _MobileViewState extends State<MobileView>
                         onTap: () {
                           Navigator.pushNamed(
                             context,
-                            YourAccountInfo.routeName,
+                            YourProfileView.routeName,
                           );
                         },
                         child: CustomCircleAvatar(
@@ -137,12 +141,19 @@ class _MobileViewState extends State<MobileView>
                           Icons.more_vert,
                           color: Colors.grey,
                         ),
+                        color: appBarColor,
                         itemBuilder: (context) => <PopupMenuItem<Text>>[
                           PopupMenuItem(
                             child: const Text(
                               'Create Group',
                             ),
                             onTap: () {},
+                          ),
+                          PopupMenuItem(
+                            onTap: navigatToSettingView,
+                            child: const Text(
+                              'Settings',
+                            ),
                           ),
                           PopupMenuItem(
                             onTap: logout,

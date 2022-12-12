@@ -67,7 +67,7 @@ class _UserInformationViewState extends State<UserInformationView> {
             await afterLoggedOut(context);
           }
         },
-        builder: (context1, auhtState) {
+        builder: (context1, authState) {
           return BlocConsumer<FirestoreCubit, FirestoreState>(
             listener: (context, state) async {
               if (state is FirestoreSavedState) {
@@ -98,7 +98,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                 return CustomCenteredText(text: state.error);
               }
 
-              if (auhtState is FirebaseAuthLogedInState) {
+              if (authState is FirebaseAuthLogedInState) {
                 return SafeArea(
                   child: Container(
                     alignment: Alignment.center,
@@ -112,9 +112,9 @@ class _UserInformationViewState extends State<UserInformationView> {
                                 backgroundImage: FileImage(image!),
                                 radius: 64,
                               )
-                            else if (auhtState.appUser.profilePic.isNotEmpty)
+                            else if (authState.appUser.profilePic.isNotEmpty)
                               CustomCircleAvatar(
-                                profilePicURL: auhtState.appUser.profilePic,
+                                profilePicURL: authState.appUser.profilePic,
                                 radius: 70,
                               )
                             else
@@ -168,7 +168,7 @@ class _UserInformationViewState extends State<UserInformationView> {
                               ),
                               child: IconButton(
                                 onPressed: () =>
-                                    storeUserData(auhtState.appUser.profilePic),
+                                    storeUserData(authState.appUser.profilePic),
                                 icon: const Icon(
                                   Icons.done,
                                   color: Colors.white,

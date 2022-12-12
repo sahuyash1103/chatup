@@ -4,69 +4,50 @@ import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:chatup/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-Future<File?> pickImage(BuildContext context, {bool isCroped = true}) async {
-  File? image;
+Future<File?> pickVideo(BuildContext context) async {
+  File? video;
 
-  void selectImage(File? img) => image = img;
+  void selectVideo(File? vid) => video = vid;
   await showModalBottomSheet<void>(
     context: context,
     barrierColor: backgroundColor.withOpacity(0.2),
     backgroundColor: backgroundColor.withOpacity(0.2),
     elevation: 10,
-    builder: (context) => SelectImageOptionSheet(
-      selectImage: selectImage,
-      isCroped: isCroped,
+    builder: (context) => SelectVideoOptionSheet(
+      selectVideo: selectVideo,
     ),
   );
 
-  return image;
+  return video;
 }
 
-Future<File?> _pickImage(
+Future<File?> _pickVideo(
   BuildContext context,
-  ImageSource source, {
-  bool isCroped = true,
-}) async {
-  String? imagePath;
+  ImageSource source,
+) async {
+  String? videoPath;
   try {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedVideo = await ImagePicker().pickVideo(source: source);
 
-    if (pickedImage != null && isCroped) {
-      imagePath = await _cropImage(imageFile: File(pickedImage.path));
-    } else if (pickedImage != null) {
-      imagePath = pickedImage.path;
+    if (pickedVideo != null) {
+      videoPath = pickedVideo.path;
     }
   } catch (e) {
     showSnackBar(context: context, content: e.toString());
   }
-  if (imagePath == null) return null;
-  return File(imagePath);
+  if (videoPath == null) return null;
+  return File(videoPath);
 }
 
-Future<String?> _cropImage({required File imageFile}) async {
-  final croppedImage = await ImageCropper().cropImage(
-    sourcePath: imageFile.path,
-    maxHeight: 512,
-    maxWidth: 512,
-    compressQuality: 80,
-    aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-  );
-  if (croppedImage == null) return null;
-  return croppedImage.path;
-}
-
-class SelectImageOptionSheet extends StatelessWidget {
-  const SelectImageOptionSheet({
+class SelectVideoOptionSheet extends StatelessWidget {
+  const SelectVideoOptionSheet({
     super.key,
-    required this.selectImage,
-    this.isCroped = true,
+    required this.selectVideo,
   });
 
-  final void Function(File? img) selectImage;
-  final bool isCroped;
+  final void Function(File? vid) selectVideo;
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +64,9 @@ class SelectImageOptionSheet extends StatelessWidget {
         children: [
           CustomIconButton(
             onTap: () {
-              _pickImage(context, ImageSource.gallery, isCroped: isCroped)
-                  .then((img) {
-                if (img != null) {
-                  selectImage(img);
+              _pickVideo(context, ImageSource.gallery).then((video) {
+                if (video != null) {
+                  selectVideo(video);
                   Navigator.of(context).pop();
                 }
               });
@@ -105,15 +85,14 @@ class SelectImageOptionSheet extends StatelessWidget {
           ),
           CustomIconButton(
             onTap: () {
-              _pickImage(context, ImageSource.camera, isCroped: isCroped)
-                  .then((img) {
-                if (img != null) {
-                  selectImage(img);
+              _pickVideo(context, ImageSource.camera).then((video) {
+                if (video != null) {
+                  selectVideo(video);
                   Navigator.of(context).pop();
                 }
               });
             },
-            icon: Icons.camera_alt_outlined,
+            icon: Icons.video_camera_back_outlined,
             text: 'Use Camera',
             width: 150,
             fontSize: 14,

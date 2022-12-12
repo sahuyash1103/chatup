@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/views/widgets/custom_video_player.dart';
 import 'package:flutter/material.dart';
 
 class DisplayTextImageGIF extends StatelessWidget {
@@ -14,12 +15,15 @@ class DisplayTextImageGIF extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return type == MessageEnum.text
-        ? Text(
-            message,
-            style: const TextStyle(
-              fontSize: 16,
+        ? Padding(
+          padding: const EdgeInsets.only(left: 5, top: 2),
+          child: Text(
+              message,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
-          )
+        )
         : type == MessageEnum.image
             ? CachedNetworkImage(
                 imageUrl: message,
@@ -31,11 +35,15 @@ class DisplayTextImageGIF extends StatelessWidget {
                       image: DecorationImage(
                         image: imageProvider,
                         fit: BoxFit.cover,
-                      ), 
+                      ),
                     ),
                   );
                 },
               )
-            : Text(type.toString());
+            : type == MessageEnum.video
+                ? CustomVideoPlayer(
+                    videoUrl: message,
+                  )
+                : Text(type.toString());
   }
 }

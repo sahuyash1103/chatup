@@ -1,3 +1,4 @@
+import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
@@ -21,13 +22,18 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
+      child: Container(
         width: width,
         height: 50,
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 3),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: tabColor.withOpacity(0.01),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: iconSize, color: Colors.grey),
+            Icon(icon, size: iconSize, color: Colors.white),
             const SizedBox(height: 5),
             Text(text, style: TextStyle(fontSize: fontSize)),
           ],

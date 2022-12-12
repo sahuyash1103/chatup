@@ -18,6 +18,7 @@ class UserMessageCard extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.8,
+          minWidth: message.timeStamp.toString().length * 5.0,
         ),
         child: Card(
           elevation: 1,
@@ -30,22 +31,25 @@ class UserMessageCard extends StatelessWidget {
           ),
           color: messageColor,
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 8,
-              top: 10,
-              right: 10,
-              bottom: 8,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DisplayTextImageGIF(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 8,
+                  bottom: 30,
+                  left: 5,
+                  top: 5,
+                ),
+                child: DisplayTextImageGIF(
                   message: message.text,
                   type: message.messageType,
                 ),
-                const SizedBox(height: 10),
-                Row(
+              ),
+              // const SizedBox(height: 10),
+              Positioned(
+                bottom: 5,
+                right: 5,
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(width: 10),
@@ -65,8 +69,8 @@ class UserMessageCard extends StatelessWidget {
                     // const SizedBox(width: 5),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

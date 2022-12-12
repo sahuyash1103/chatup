@@ -33,6 +33,15 @@ class _ChatListState extends State<ChatList> {
     super.dispose();
   }
 
+  void autoScroll() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 1), () {
+        _messageScrollController
+            .jumpTo(_messageScrollController.position.maxScrollExtent);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatCubit, ChatState>(
@@ -47,14 +56,11 @@ class _ChatListState extends State<ChatList> {
                 text: 'Your chats will show here.',
               );
             }
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              _messageScrollController
-                  .jumpTo(_messageScrollController.position.maxScrollExtent);
-            });
             return ListView.builder(
               controller: _messageScrollController,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
+                autoScroll();
                 final message = snapshot.data![index];
                 final previousDay = index != 0
                     ? formateDate(snapshot.data![index - 1].timeStamp)

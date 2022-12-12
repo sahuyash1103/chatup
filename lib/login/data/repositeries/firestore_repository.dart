@@ -21,11 +21,11 @@ class FirestoreRepository {
     );
   }
 
-   Future<void> setUserOnlineStatus({required bool isOnline}) async {
-    return firestoreProvider.setUserOnlineStatus(isOnline: isOnline);
+  Future<void> updateProfilPic(File profilePic) async {
+    return firestoreProvider.updateProfilPic(profilePic);
   }
 
-  Future<void> updateFcmToken({required String fcmToken}) async {
-    return firestoreProvider.updateFcmToken(fcmToken: fcmToken);
+  Future<void> updateUser(Map<String, dynamic> user) async {
+    return firestoreProvider.updateUser(user: user);
   }
 }

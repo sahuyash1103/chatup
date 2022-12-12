@@ -16,6 +16,9 @@ import 'package:chatup/router.dart';
 import 'package:chatup/select_contact/cubit/select_contact_cubit.dart';
 import 'package:chatup/select_contact/data/providers/select_contact_provider.dart';
 import 'package:chatup/select_contact/data/repositories/select_contact_repository.dart';
+import 'package:chatup/settings/cubit/settings_cubit.dart';
+import 'package:chatup/settings/data/providers/settings_provider.dart';
+import 'package:chatup/settings/data/repository/setting_repository.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:chatup/widgets/custom_loader.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,7 +57,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appRouter = AppRouter();
-    final firebaseLoginRepository = FirebaseAuthRepository(
+    final firebaseAuthRepository = FirebaseAuthRepository(
       firebaseLoginProvider: FirebaseAuthProvider(
         firebaseAuth: FirebaseAuth.instance,
         firestore: FirebaseFirestore.instance,
@@ -80,11 +83,19 @@ class App extends StatelessWidget {
         firebaseAuth: FirebaseAuth.instance,
       ),
     );
+
+    final settingsRepository = SettingsRepository(
+      settingsProvider: SettingsProvider(
+        firebaseAuth: FirebaseAuth.instance,
+        firebaseStorage: FirebaseStorage.instance,
+        firestore: FirebaseFirestore.instance,
+      ),
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => FirebaseAuthCubit(
-            firebaseLoginRepository: firebaseLoginRepository,
+            firebaseLoginRepository: firebaseAuthRepository,
           ),
         ),
         BlocProvider(
@@ -100,7 +111,12 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               FirestoreCubit(firestoreRepository: firestoreRepository),
-        )
+        ),
+        BlocProvider(
+          create: (context) => SettingsCubit(
+            settingsRepository: settingsRepository,
+          ),
+        ),
       ],
       child: materialApp(appRouter),
     );

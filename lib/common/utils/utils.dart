@@ -1,6 +1,8 @@
-
+import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/common/services/notification_service.dart';
 import 'package:chatup/login/views/landing.dart';
 import 'package:chatup/var/colors.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 void showSnackBar({required BuildContext context, required String content}) {
@@ -35,7 +37,6 @@ Future<void> afterLoggedOut(BuildContext context) async {
   );
 }
 
-
 String formateDate(DateTime dateTime) {
   final now = DateTime.now();
 
@@ -54,4 +55,42 @@ String formateDate(DateTime dateTime) {
 
 String formateTime(DateTime dateTime) {
   return '${dateTime.hour}:${dateTime.minute}';
+}
+
+void showNotification(RemoteMessage message) {
+  var body = message.notification!.body ??
+      'Notification service is not working properly';
+  if (message.data['messageType'] != null) {
+    final messageType = message.data['messageType'] as String;
+    body = getBody(messageType.toMessageEnum());
+  }
+
+  NotificationService().showNotification(
+    title: message.notification!.title ?? 'chatup Error:',
+    body: body,
+    payload: message.data.isNotEmpty ? '${message.data}' : 'server',
+  );
+}
+
+String getBody(MessageEnum messageType) {
+  switch (messageType) {
+    case MessageEnum.text:
+      return '📝 Text';
+    case MessageEnum.image:
+      return '📷 Photo';
+    case MessageEnum.video:
+      return '📸 Video';
+    case MessageEnum.audio:
+      return '🎵 Audio';
+    case MessageEnum.gif:
+      return 'GIF';
+    case MessageEnum.file:
+      return '📁 File';
+    case MessageEnum.sticker:
+      return '🎁 Sticker';
+    case MessageEnum.location:
+      return '📍 Location';
+    case MessageEnum.contact:
+      return '📞 Contact';
+  }
 }

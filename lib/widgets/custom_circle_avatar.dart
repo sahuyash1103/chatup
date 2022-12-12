@@ -24,7 +24,14 @@ class CustomCircleAvatar extends StatelessWidget {
                 backgroundImage: imageProvider,
               );
             },
-            placeholder: (context, url) => const CircularProgressIndicator(),
+            placeholder: (context, url) => CircleAvatar(
+              backgroundColor: appBarColor,
+              backgroundImage: const AssetImage(defaultProfilePath),
+              radius: radius,
+              child: const CircularProgressIndicator(
+                color: tabColor,
+              ),
+            ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           )
         : CircleAvatar(
