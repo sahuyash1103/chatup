@@ -28,6 +28,12 @@ class _ChatListState extends State<ChatList> {
   final _messageScrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 1), autoScroll);
+  }
+
+  @override
   void dispose() {
     _messageScrollController.dispose();
     super.dispose();
@@ -56,11 +62,11 @@ class _ChatListState extends State<ChatList> {
                 text: 'Your chats will show here.',
               );
             }
+            autoScroll();
             return ListView.builder(
               controller: _messageScrollController,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                autoScroll();
                 final message = snapshot.data![index];
                 final previousDay = index != 0
                     ? formateDate(snapshot.data![index - 1].timeStamp)
