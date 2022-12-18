@@ -33,7 +33,7 @@ void main() async {
 
   await NotificationService().init();
   await FirebaseMessagingService.instance.init();
-  
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await bootstrap(() => const App());

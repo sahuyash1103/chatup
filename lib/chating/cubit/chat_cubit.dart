@@ -68,4 +68,22 @@ class ChatCubit extends Cubit<ChatState> {
       emit(ChatErrorState(e.toString()));
     }
   }
+
+  Future<void> sendGIFMessage({
+    required String gifUrl,
+    required String recieverID,
+    required AppUser sender,
+  }) async {
+    try {
+      emit(ChatSendingState());
+      await chatRepository.sendGIFMessage(
+        gifUrl: gifUrl,
+        recieverID: recieverID,
+        sender: sender,
+      );
+      emit(ChatSentState());
+    } catch (e) {
+      emit(ChatErrorState(e.toString()));
+    }
+  }
 }

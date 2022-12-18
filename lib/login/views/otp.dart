@@ -82,8 +82,14 @@ class _OTPViewState extends State<OTPView> {
                   if (state is FirebaseAuthCodeSentState) {
                     showSnackBar(context: context, content: 'OTP sent');
                   }
+                  if (state is FirebaseAuthLogedInState) {
+                    navigateToUserInfoView(context);
+                  }
                 },
                 builder: (context, state) {
+                  if (state is FirebaseAuthLoadingState) {
+                    return const CircularProgressIndicator();
+                  }
                   return SizedBox(
                     width: size.width * 0.3,
                     child: ThemedButton(

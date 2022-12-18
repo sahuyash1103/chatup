@@ -7,9 +7,20 @@ import 'package:chatup/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectContactsView extends StatelessWidget {
+class SelectContactsView extends StatefulWidget {
   const SelectContactsView({super.key});
   static const String routeName = '/select-contact';
+
+  @override
+  State<SelectContactsView> createState() => _SelectContactsViewState();
+}
+
+class _SelectContactsViewState extends State<SelectContactsView> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<SelectContactCubit>(context).getContact();
+  }
 
   void selectContact(AppContact contact, BuildContext context) {
     BlocProvider.of<SelectContactCubit>(context)

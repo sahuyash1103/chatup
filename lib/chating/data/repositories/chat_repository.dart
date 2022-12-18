@@ -47,4 +47,19 @@ class ChatRepository {
   Future<void> updateMessageStatus({required Message message}) async {
     return chatProvider.updateMessageStatus(message: message);
   }
+
+  Future<void> sendGIFMessage({
+    required String gifUrl,
+    required String recieverID,
+    required AppUser sender,
+  }) async {
+    final gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
+    final gifUrlPart = gifUrl.substring(gifUrlPartIndex);
+    final newGifUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
+    await chatProvider.sendGIFMessage(
+      gifUrl: newGifUrl,
+      recieverID: recieverID,
+      sender: sender,
+    );
+  }
 }
