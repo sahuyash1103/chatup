@@ -1,9 +1,35 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/chating/views/chating_view.dart';
+import 'package:chatup/common/utils/utils.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+void showNotification(RemoteMessage message, {BuildContext? context}) {
+  var body = message.notification!.body ??
+      'Notification service is not working properly';
+  if (message.data['messageType'] != null) {
+    final messageType = message.data['messageType'] as String;
+    body = getBody(messageType.toMessageEnum());
+  }
+
+  NotificationService.of(context).showNotification(
+    title: message.notification!.title ?? 'chatup Error:',
+    body: body,
+    payload: message.data.isNotEmpty ? jsonEncode(message.data) : 'server',
+  );
+}
 
 class NotificationService {
   factory NotificationService() {
+    return _notificationService;
+  }
+
+  factory NotificationService.of(BuildContext? context) {
+    _notificationService.context = context;
     return _notificationService;
   }
 
@@ -30,6 +56,7 @@ class NotificationService {
   NotificationDetails? notificationDetails;
 
   static int notificationId = 0;
+  BuildContext? context;
 
   Future<void> init() async {
     const initializationSettingsAndroid =
@@ -63,19 +90,61 @@ class NotificationService {
     String? body,
     String? payload,
   ) {
-    log('$id\n$title\n$body\n$payload');
+    log('onDidReceiveLocalNotification: $id, $title, $body, $payload');
   }
 
   void onDidReceiveNotificationResponse(
     NotificationResponse? notificationResponse,
   ) {
-    log('${notificationResponse?.actionId}\n${notificationResponse?.payload}\n'
-        '${notificationResponse?.input}\n${notificationResponse?.id}');
+    try {
+      log('onDidReceiveNotificationResponse');
+      if (notificationResponse != null &&
+          notificationResponse.payload != null &&
+          context != null) {
+        final payload = jsonDecode(notificationResponse.payload!);
+        if (payload is Map) {
+          Navigator.pushNamed(
+            context!,
+            ChatingView.routeName,
+            arguments: {
+              'name': payload['senderName'] as String,
+              'profilePic': payload['senderProfilePic'] as String,
+              'uid': payload['senderId'] as String,
+            },
+          );
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   static void onDidReceiveBackgroundNotificationResponse(
     NotificationResponse? notificationResponse,
-  ) {}
+  ) {
+    try {
+      log('onDidReceiveBackgroundNotificationResponse');
+      if (notificationResponse != null &&
+          notificationResponse.payload != null &&
+          _notificationService.context != null) {
+        final payload = jsonDecode(notificationResponse.payload!);
+        if (payload is Map) {
+          log(payload['senderName'].toString());
+          Navigator.pushNamed(
+            _notificationService.context!,
+            ChatingView.routeName,
+            arguments: {
+              'name': payload['senderName'] as String,
+              'profilePic': payload['senderProfilePic'] as String,
+              'uid': payload['senderId'] as String,
+            },
+          );
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   void showNotification({
     required String title,

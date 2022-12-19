@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:chatup/app/app.dart';
 import 'package:chatup/bootstrap.dart';
@@ -12,12 +11,11 @@ import 'package:flutter/material.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  log('onBackgroundMessage');
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
   await NotificationService().init();
 
-  log(message.data.toString());
+  showNotification(message);
 }
 
 void main() async {
@@ -33,7 +31,7 @@ void main() async {
 
   await NotificationService().init();
   await FirebaseMessagingService.instance.init();
-  
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await bootstrap(() => const App());
