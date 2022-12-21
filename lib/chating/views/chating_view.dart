@@ -25,6 +25,8 @@ class ChatingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
+        backgroundColor: appBarColor,
         title: Row(
           children: [
             Padding(
@@ -60,8 +62,6 @@ class ChatingView extends StatelessWidget {
               ),
           ],
         ),
-        titleSpacing: 0,
-        backgroundColor: appBarColor,
         actions: [
           IconButton(
             onPressed: () {},
@@ -77,19 +77,27 @@ class ChatingView extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ChatList(
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/backgroundImage.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: ChatList(
+                recieverUserId: uid,
+                isGroupChat: isGroup,
+              ),
+            ),
+            BottomChatField(
               recieverUserId: uid,
               isGroupChat: isGroup,
             ),
-          ),
-          BottomChatField(
-            recieverUserId: uid,
-            isGroupChat: isGroup,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
