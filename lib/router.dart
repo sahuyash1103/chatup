@@ -57,16 +57,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ErrorView(error: error));
 
       default:
-        final error = settings.arguments;
-        return MaterialPageRoute(
-          builder: (context) => Scaffold(
-            body: Center(
-              child: Text(
-                error != null ? error.toString() : 'Restart the App.',
-              ),
-            ),
-          ),
-        );
+        final error = settings.arguments.toString();
+        return MaterialPageRoute(builder: (_) => ErrorView(error: error));
     }
   }
 }

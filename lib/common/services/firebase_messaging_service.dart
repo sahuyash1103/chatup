@@ -1,11 +1,14 @@
-
 import 'package:chatup/chating/views/chating_view.dart';
-import 'package:chatup/common/utils/utils.dart';
+import 'package:chatup/common/services/notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
 class FirebaseMessagingService {
   factory FirebaseMessagingService() => instance;
+  factory FirebaseMessagingService.of(BuildContext context) {
+    instance.context = context;
+    return instance;
+  }
   FirebaseMessagingService._();
 
   static final FirebaseMessagingService instance = FirebaseMessagingService._();
@@ -13,6 +16,7 @@ class FirebaseMessagingService {
   final firebaseMessaging = FirebaseMessaging.instance;
 
   static String? fcmToken;
+  BuildContext? context;
 
   Future<void> init() async {
     await firebaseMessaging.requestPermission();
@@ -37,12 +41,13 @@ class FirebaseMessagingService {
       (message) {
         if (message != null) {
           if (message.data['senderId'] != null) {
-            Navigator.of(context).pushNamed(
+            Navigator.pushNamed(
+              context,
               ChatingView.routeName,
               arguments: {
-                'name': message.data['senderName'],
-                'profilePic': message.data['senderProfilePic'],
-                'uid': message.data['senderId'],
+                'name': message.data['senderName'] as String,
+                'profilePic': message.data['senderProfilePic'] as String,
+                'uid': message.data['senderId'] as String,
               },
             );
           }
@@ -55,7 +60,7 @@ class FirebaseMessagingService {
     FirebaseMessaging.onMessage.listen(
       (message) {
         if (message.notification != null) {
-          showNotification(message);
+          showNotification(message, context: context);
         }
       },
     );
@@ -65,7 +70,7 @@ class FirebaseMessagingService {
     FirebaseMessaging.onMessageOpenedApp.listen(
       (message) {
         if (message.notification != null) {
-          showNotification(message);
+          showNotification(message, context: context);
         }
       },
     );
@@ -75,7 +80,7 @@ class FirebaseMessagingService {
     FirebaseMessaging.onBackgroundMessage(
       (message) async {
         if (message.notification != null) {
-          showNotification(message);
+          showNotification(message, context: context);
         }
       },
     );

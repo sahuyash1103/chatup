@@ -10,9 +10,12 @@ class ErrorView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text(
-            'Error: $error',
-            style: const TextStyle(fontSize: 20, color: Colors.redAccent),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              'Error: $error',
+              style: const TextStyle(fontSize: 20, color: Colors.redAccent),
+            ),
           ),
         ),
       ),

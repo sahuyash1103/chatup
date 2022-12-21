@@ -14,36 +14,64 @@ class DisplayTextImageGIF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return type == MessageEnum.text
-        ? Padding(
+    switch (type) {
+      case MessageEnum.text:
+        return Padding(
           padding: const EdgeInsets.only(left: 5, top: 2),
           child: Text(
-              message,
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+            message,
+            style: const TextStyle(
+              fontSize: 16,
             ),
-        )
-        : type == MessageEnum.image
-            ? CachedNetworkImage(
-                imageUrl: message,
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-              )
-            : type == MessageEnum.video
-                ? CustomVideoPlayer(
-                    videoUrl: message,
-                  )
-                : Text(type.toString());
+          ),
+        );
+      case MessageEnum.image:
+        return CachedNetworkImage(
+          imageUrl: message,
+          imageBuilder: (context, imageProvider) {
+            return Container(
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          },
+        );
+      case MessageEnum.video:
+        return CustomVideoPlayer(
+          videoUrl: message,
+        );
+      case MessageEnum.gif:
+        return CachedNetworkImage(
+          imageUrl: message,
+          imageBuilder: (context, imageProvider) {
+            return Container(
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          },
+        );
+      case MessageEnum.audio:
+        break;
+      case MessageEnum.file:
+        break;
+      case MessageEnum.location:
+        break;
+      case MessageEnum.contact:
+        break;
+      case MessageEnum.sticker:
+        break;
+    }
+    return Text(type.toString());
   }
 }

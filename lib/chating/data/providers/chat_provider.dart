@@ -120,6 +120,47 @@ class ChatProvider {
     }
   }
 
+  Future<void> sendGIFMessage({
+    required String gifUrl,
+    required String recieverID,
+    required AppUser sender,
+    bool isGroupChat = false,
+  }) async {
+    try {
+      final timeSent = DateTime.now();
+      final messageId = const Uuid().v1();
+
+      final contactMsg = getBody(MessageEnum.gif);
+      log('Contact Message: $contactMsg');
+
+      AppUser? recieverUserData;
+      if (!isGroupChat) {
+        final userDataMap =
+            await firestore.collection('users').doc(recieverID).get();
+        recieverUserData = AppUser.fromMap(userDataMap.data()!);
+      }
+
+      await _saveDataToContactSubCollection(
+        sender: sender,
+        reciever: recieverUserData!,
+        text: contactMsg,
+        timeStamp: timeSent,
+      );
+
+      await _saveMessageToMessageSubCollection(
+        recieverUserId: recieverID,
+        text: gifUrl,
+        timeStamp: timeSent,
+        messageType: MessageEnum.gif,
+        messageID: messageId,
+        senderUserName: sender.name,
+        recieverUserName: '',
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> _saveDataToContactSubCollection({
     required AppUser sender,
     required AppUser reciever,

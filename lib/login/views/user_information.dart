@@ -10,7 +10,6 @@ import 'package:chatup/login/cubit/firestore_cubit.dart';
 import 'package:chatup/login/cubit/firestore_state.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:chatup/var/strings.dart';
-import 'package:chatup/widgets/custom_center_text.dart';
 import 'package:chatup/widgets/custom_circle_avatar.dart';
 import 'package:chatup/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
@@ -69,33 +68,21 @@ class _UserInformationViewState extends State<UserInformationView> {
         },
         builder: (context1, authState) {
           return BlocConsumer<FirestoreCubit, FirestoreState>(
-            listener: (context, state) async {
+            listener: (context, state) {
               if (state is FirestoreSavedState) {
-                await BlocProvider.of<FirebaseAuthCubit>(context1)
-                    .refreshUser();
-                if (mounted) {
-                  await Navigator.of(context).pushNamedAndRemoveUntil(
-                    MobileView.routeName,
-                    (route) => false,
-                  );
-                }
+                BlocProvider.of<FirebaseAuthCubit>(context1).refreshUser();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  MobileView.routeName,
+                  (route) => false,
+                );
               }
               if (state is FirestoreSaveErrorState) {
-                await Future.delayed(
-                  const Duration(
-                    seconds: 3,
-                  ),
-                  () => BlocProvider.of<FirebaseAuthCubit>(context1).reset(),
-                );
+                navigateToErrorView(context, error: state.error);
               }
             },
             builder: (context2, state) {
               if (state is FirestoreSaveLoadingState) {
                 return const CustomLoadingIndicator();
-              }
-
-              if (state is FirestoreSaveErrorState) {
-                return CustomCenteredText(text: state.error);
               }
 
               if (authState is FirebaseAuthLogedInState) {

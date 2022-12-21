@@ -6,6 +6,7 @@ import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/views/widgets/custom_attetch_options.dart';
 import 'package:chatup/common/utils/custom_image_picker.dart';
 import 'package:chatup/common/utils/custom_video_picker.dart';
+import 'package:chatup/common/utils/gif_picker.dart';
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/data/models/app_user.dart';
@@ -98,6 +99,22 @@ class _BottomChatFieldState extends State<BottomChatField> {
     }
   }
 
+  Future<void> sendGIF() async {
+    final gif = await pickGIF(context);
+    AppUser? sender;
+    if (mounted) {
+      sender =
+          await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
+    }
+    if (gif != null && gif.url != null && sender != null && mounted) {
+      await BlocProvider.of<ChatCubit>(context).sendGIFMessage(
+        gifUrl: gif.url!,
+        recieverID: widget.recieverUserId,
+        sender: sender,
+      );
+    }
+  }
+
   void showEmojiKeyboard() {
     setState(() {
       isTypingEmoji = true;
@@ -125,9 +142,21 @@ class _BottomChatFieldState extends State<BottomChatField> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        hideEmojiKeyboard();
+      }
+    });
+    //..removeListener(() {});
+  }
+
+  @override
   void dispose() {
     _textEditingControllerMessage.dispose();
     super.dispose();
+    focusNode.dispose();
   }
 
   @override
@@ -166,35 +195,61 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       child: IconButton(
                         onPressed: toggleEmojiKeyboard,
                         icon: Icon(
-                          isTypingEmoji
-                              ? Icons.keyboard
-                              : Icons.emoji_emotions,
+                          isTypingEmoji ? Icons.keyboard : Icons.emoji_emotions,
                           color: Colors.grey,
                         ),
                       ),
                     ),
                   ),
-                  suffixIcon: SizedBox(
-                    width: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: sendImageMessage,
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey,
+                  suffixIcon: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (!isTyping)
+                        TextButton(
+                          onPressed: sendGIF,
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.grey),
+                            maximumSize: MaterialStateProperty.all(
+                              const Size(65, 40),
+                            ),
+                          ),
+                          child: const Text(
+                            'GIF',
+                            style: TextStyle(fontSize: 10),
                           ),
                         ),
-                        IconButton(
-                          onPressed: ahowAttetchOptions,
-                          icon: const Icon(
-                            Icons.attach_file,
-                            color: Colors.grey,
+                      IconButton(
+                        style: ButtonStyle(
+                          maximumSize: MaterialStateProperty.all(
+                            const Size(25, 40),
                           ),
                         ),
-                      ],
-                    ),
+                        onPressed: sendImageMessage,
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                      IconButton(
+                        style: ButtonStyle(
+                          maximumSize: MaterialStateProperty.all(
+                            const Size(25, 40),
+                          ),
+                          padding: MaterialStateProperty.all(
+                            const EdgeInsets.all(2),
+                          ),
+                        ),
+                        onPressed: ahowAttetchOptions,
+                        icon: const Icon(
+                          Icons.attach_file,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

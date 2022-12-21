@@ -11,6 +11,7 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
 
   final FirebaseAuthRepository firebaseLoginRepository;
   late String? _verificationId;
+  int? _forceResendToken;
 
   Future<AppUser?> refreshUser() async {
     final user = await firebaseLoginRepository.getCurrentUser();
@@ -43,11 +44,13 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
         },
         codeSent: (verificationId, resendToken) {
           _verificationId = verificationId;
+          _forceResendToken = resendToken;
           emit(FirebaseAuthCodeSentState());
         },
         codeAutoRetrievalTimeout: (verificationId) {
           _verificationId = verificationId;
         },
+        forceResendingToken: _forceResendToken,
       );
     } on FirebaseAuthException catch (e) {
       emit(FirebaseAuthErrorState(error: e.message ?? ''));
@@ -96,8 +99,8 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
     emit(FirebaseAuthErrorState(error: error));
   }
 
-  void reset() {
-    logOut();
-    emit(FirebaseAuthInitialState());
-  }
+  // void reset() {
+  //   logOut();
+  //   emit(FirebaseAuthInitialState());
+  // }
 }

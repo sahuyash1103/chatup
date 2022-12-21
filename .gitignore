@@ -162,6 +162,10 @@ app.*.map.json
 
 # the secrets
 **/secrets.txt
+
+
 .env
-.env.development
 .env.production
+.env.development
+
+**/.vscode/**

@@ -34,10 +34,10 @@ class _MobileViewState extends State<MobileView>
     tabBarController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addObserver(this);
 
-    FirebaseMessagingService.instance.onTokenRefresh(updateFcmToken);
+    FirebaseMessagingService.of(context).onTokenRefresh(updateFcmToken);
     FirebaseMessagingService.instance.getInitialMessage(context);
-    FirebaseMessagingService.instance.onMessage();
-    FirebaseMessagingService.instance.onMessageOpenedApp();
+    FirebaseMessagingService.of(context).onMessage();
+    FirebaseMessagingService.of(context).onMessageOpenedApp();
   }
 
   @override

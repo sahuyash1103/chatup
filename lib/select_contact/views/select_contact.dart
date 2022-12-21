@@ -1,3 +1,4 @@
+import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/select_contact/cubit/select_contact_cubit.dart';
 import 'package:chatup/select_contact/cubit/select_contact_state.dart';
 import 'package:chatup/select_contact/data/models/app_contact.dart';
@@ -7,9 +8,20 @@ import 'package:chatup/widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectContactsView extends StatelessWidget {
+class SelectContactsView extends StatefulWidget {
   const SelectContactsView({super.key});
   static const String routeName = '/select-contact';
+
+  @override
+  State<SelectContactsView> createState() => _SelectContactsViewState();
+}
+
+class _SelectContactsViewState extends State<SelectContactsView> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<SelectContactCubit>(context).getContact();
+  }
 
   void selectContact(AppContact contact, BuildContext context) {
     BlocProvider.of<SelectContactCubit>(context)
@@ -44,24 +56,11 @@ class SelectContactsView extends StatelessWidget {
           if (state is SelectContactInitial) {
             BlocProvider.of<SelectContactCubit>(context).getContact();
           }
+          if (state is SelectContactError) {
+            navigateToErrorView(context, error: state.error);
+          }
         },
         builder: (context, state) {
-          if (state is SelectContactInitial) {
-            BlocProvider.of<SelectContactCubit>(context).getContact();
-          }
-
-          if (state is SelectContactError) {
-            Future.delayed(
-              const Duration(seconds: 5),
-              () => BlocProvider.of<SelectContactCubit>(context).reset(),
-            );
-            return Center(
-              child: Text(
-                'Error ${state.message}',
-              ),
-            );
-          }
-
           if (state is SelectContactLoaded) {
             final contactList = state.contacts;
 
