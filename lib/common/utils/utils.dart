@@ -1,4 +1,5 @@
 import 'package:chatup/chating/data/enums/message_enums.dart';
+import 'package:chatup/common/views/error_view.dart';
 import 'package:chatup/login/views/landing.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
@@ -76,4 +77,9 @@ String getBody(MessageEnum messageType) {
     case MessageEnum.contact:
       return '📞 Contact';
   }
+}
+
+void navigateToErrorView(BuildContext context, {required String error}) {
+  Navigator.pop(context);
+  Navigator.pushNamed(context, ErrorView.routeName, arguments: error);
 }

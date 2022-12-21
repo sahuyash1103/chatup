@@ -1,3 +1,4 @@
+import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/select_contact/cubit/select_contact_cubit.dart';
 import 'package:chatup/select_contact/cubit/select_contact_state.dart';
 import 'package:chatup/select_contact/data/models/app_contact.dart';
@@ -55,24 +56,11 @@ class _SelectContactsViewState extends State<SelectContactsView> {
           if (state is SelectContactInitial) {
             BlocProvider.of<SelectContactCubit>(context).getContact();
           }
+          if (state is SelectContactError) {
+            navigateToErrorView(context, error: state.error);
+          }
         },
         builder: (context, state) {
-          if (state is SelectContactInitial) {
-            BlocProvider.of<SelectContactCubit>(context).getContact();
-          }
-
-          if (state is SelectContactError) {
-            Future.delayed(
-              const Duration(seconds: 5),
-              () => BlocProvider.of<SelectContactCubit>(context).reset(),
-            );
-            return Center(
-              child: Text(
-                'Error ${state.message}',
-              ),
-            );
-          }
-
           if (state is SelectContactLoaded) {
             final contactList = state.contacts;
 

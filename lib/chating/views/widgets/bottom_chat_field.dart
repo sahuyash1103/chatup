@@ -201,44 +201,55 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       ),
                     ),
                   ),
-                  suffixIcon: SizedBox(
-                    width: 175,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (!isTyping)
-                          TextButton(
-                            onPressed: sendGIF,
-                            style: ButtonStyle(
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.grey),
-                              maximumSize: MaterialStateProperty.all(
-                                const Size(75, 40),
-                              ),
-                            ),
-                            child: const Text(
-                              'GIF',
-                              style: TextStyle(fontSize: 14),
+                  suffixIcon: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (!isTyping)
+                        TextButton(
+                          onPressed: sendGIF,
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.grey),
+                            maximumSize: MaterialStateProperty.all(
+                              const Size(65, 40),
                             ),
                           ),
-                        IconButton(
-                          onPressed: sendImageMessage,
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey,
-                            size: 25,
+                          child: const Text(
+                            'GIF',
+                            style: TextStyle(fontSize: 10),
                           ),
                         ),
-                        IconButton(
-                          onPressed: ahowAttetchOptions,
-                          icon: const Icon(
-                            Icons.attach_file,
-                            color: Colors.grey,
-                            size: 25,
+                      IconButton(
+                        style: ButtonStyle(
+                          maximumSize: MaterialStateProperty.all(
+                            const Size(25, 40),
                           ),
                         ),
-                      ],
-                    ),
+                        onPressed: sendImageMessage,
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                      IconButton(
+                        style: ButtonStyle(
+                          maximumSize: MaterialStateProperty.all(
+                            const Size(25, 40),
+                          ),
+                          padding: MaterialStateProperty.all(
+                            const EdgeInsets.all(2),
+                          ),
+                        ),
+                        onPressed: ahowAttetchOptions,
+                        icon: const Icon(
+                          Icons.attach_file,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

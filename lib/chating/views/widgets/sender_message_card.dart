@@ -1,3 +1,4 @@
+import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/data/models/message.dart';
 import 'package:chatup/chating/views/widgets/display_text_image_gif.dart';
 import 'package:chatup/common/utils/utils.dart';
@@ -16,11 +17,12 @@ class SenderMessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Align(
       alignment: Alignment.centerLeft,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.8,
+          maxWidth: size.width * 0.8,
           minWidth: message.timeStamp.toString().length * 4.0,
         ),
         child: VisibilityDetector(
@@ -47,12 +49,9 @@ class SenderMessageCard extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    right: 5,
-                    bottom: 30,
-                    left: 8,
-                    top: 5,
-                  ),
+                  padding: message.messageType == MessageEnum.text
+                      ? const EdgeInsets.fromLTRB(5, 5, 15, 25)
+                      : const EdgeInsets.all(3),
                   child: DisplayTextImageGIF(
                     message: message.text,
                     type: message.messageType,
@@ -77,6 +76,35 @@ class SenderMessageCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (message.messageType != MessageEnum.text)
+                  Positioned(
+                    bottom: 3,
+                    right: 3,
+                    child: Container(
+                      height: 30,
+                      width: size.width * 0.7,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.1),
+                            Colors.black.withOpacity(0.3),
+                            Colors.black.withOpacity(0.5),
+                            Colors.black.withOpacity(0.6),
+                            Colors.black.withOpacity(0.7),
+                            // Colors.red,
+                            // Colors.blue,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

@@ -1,5 +1,3 @@
-//!Ko7Xc3hfHa95fZzKEHwVNvHctnKfuRKQ
-
 import 'dart:developer';
 
 import 'package:chatup/common/utils/environment_service.dart';
@@ -14,9 +12,8 @@ Future<GiphyGif?> pickGIF(BuildContext context) async {
     gif = await GiphyGet.getGif(
       context: context,
       apiKey: apiKey,
-      tabColor: backgroundColor,
+      tabColor: tabColor,
     );
-
   } catch (e) {
     log(e.toString());
   }

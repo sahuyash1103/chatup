@@ -1,4 +1,3 @@
-
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/cubit/firebase_login_state.dart';
@@ -119,7 +118,7 @@ class _LoginViewState extends State<LoginView> {
                 BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
                   listener: (context, state) {
                     if (state is FirebaseAuthErrorState) {
-                      BlocProvider.of<FirebaseAuthCubit>(context).reset();
+                      navigateToErrorView(context, error: state.error);
                     }
                   },
                   builder: (context, state) {

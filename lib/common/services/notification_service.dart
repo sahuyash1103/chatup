@@ -12,8 +12,10 @@ void showNotification(RemoteMessage message, {BuildContext? context}) {
   var body = message.notification!.body ??
       'Notification service is not working properly';
   if (message.data['messageType'] != null) {
-    final messageType = message.data['messageType'] as String;
-    body = getBody(messageType.toMessageEnum());
+    final messageType = (message.data['messageType'] as String).toMessageEnum();
+    if (messageType != MessageEnum.text) {
+      body = getBody(messageType);
+    }
   }
 
   NotificationService.of(context).showNotification(

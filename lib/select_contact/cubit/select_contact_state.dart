@@ -20,6 +20,6 @@ class SelectContactSelected extends SelectContactState {
 class SelectContactCancle extends SelectContactState {}
 
 class SelectContactError extends SelectContactState {
-  SelectContactError({required this.message});
-  final String message;
+  SelectContactError({required this.error});
+  final String error;
 }

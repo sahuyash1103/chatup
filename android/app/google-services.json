@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "163380633587",
+    "firebase_url": "https://chatup-backend-48ce4-default-rtdb.firebaseio.com",
     "project_id": "chatup-backend-48ce4",
     "storage_bucket": "chatup-backend-48ce4.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "163380633587-entlu0dido55usunte07ji6k0gcm4om3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unreal.chatup",
+            "certificate_hash": "ba3ccacbdc7dea63768dafc2c08b0a89126431ce"
+          }
+        },
+        {
+          "client_id": "163380633587-vo8m4gj0kuok23obg6k137c0vpeo4ns9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unreal.chatup",
+            "certificate_hash": "73fe33b11a0d047a11738b8c4e1e1fcbf978d1ac"
+          }
+        },
         {
           "client_id": "163380633587-n7oinmo1uj442a6bp5navc0t1pr3anm4.apps.googleusercontent.com",
           "client_type": 3

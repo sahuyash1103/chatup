@@ -1,3 +1,4 @@
+
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/login/cubit/firebase_login_cubit.dart';
 import 'package:chatup/login/cubit/firebase_login_state.dart';
@@ -21,6 +22,7 @@ class OTPView extends StatefulWidget {
 
 class _OTPViewState extends State<OTPView> {
   final _otpController = TextEditingController();
+  bool isVerifyClicked = false;
 
   Future<void> verifyOTP(BuildContext context, String userOTP) async {
     final isLoggedIn =
@@ -32,10 +34,16 @@ class _OTPViewState extends State<OTPView> {
     BlocProvider.of<FirebaseAuthCubit>(context).refreshUser();
 
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(
+    Navigator.pushNamedAndRemoveUntil(
       context,
       UserInformationView.routeName,
+      (route) => false,
     );
+  }
+
+  void resendOTP() {
+    BlocProvider.of<FirebaseAuthCubit>(context)
+        .verifyPhoneNumber(widget.phoneNumber);
   }
 
   @override
@@ -76,28 +84,62 @@ class _OTPViewState extends State<OTPView> {
                   keyboardType: TextInputType.number,
                 ),
               ),
-              SizedBox(height: size.height * 0.65),
+              const SizedBox(height: 10),
               BlocConsumer<FirebaseAuthCubit, FirebaseAuthState>(
                 listener: (context, state) {
                   if (state is FirebaseAuthCodeSentState) {
                     showSnackBar(context: context, content: 'OTP sent');
                   }
-                  if (state is FirebaseAuthLogedInState) {
+                  if (state is FirebaseAuthLogedInState && !isVerifyClicked) {
                     navigateToUserInfoView(context);
+                  }
+                  if (state is FirebaseAuthErrorState) {
+                    isVerifyClicked = false;
+                    setState(() {});
+                    navigateToErrorView(context, error: state.error);
                   }
                 },
                 builder: (context, state) {
-                  if (state is FirebaseAuthLoadingState) {
-                    return const CircularProgressIndicator();
-                  }
-                  return SizedBox(
-                    width: size.width * 0.3,
-                    child: ThemedButton(
-                      text: 'Verify',
-                      onPressed: () => _otpController.text.length == 6
-                          ? verifyOTP(context, _otpController.text)
-                          : null,
-                    ),
+                  return Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 25),
+                        // alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: resendOTP,
+                          child: const Text(
+                            'Resend OTP',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.6),
+                      if (state is FirebaseAuthLoadingState || isVerifyClicked)
+                        const CircularProgressIndicator(),
+                      if (state is FirebaseAuthCodeSentState &&
+                          !isVerifyClicked)
+                        SizedBox(
+                          width: size.width * 0.3,
+                          child: ThemedButton(
+                            text: 'Verify',
+                            onPressed: () {
+                              if (_otpController.text.length == 6) {
+                                isVerifyClicked = true;
+                                setState(() {});
+                                verifyOTP(context, _otpController.text);
+                              } else {
+                                showSnackBar(
+                                  context: context,
+                                  content: 'Enter a valid OTP',
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                    ],
                   );
                 },
               ),
