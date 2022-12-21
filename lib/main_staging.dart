@@ -12,7 +12,11 @@ import 'package:flutter/material.dart';
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  await FirebaseAppCheck.instance.activate();
+  
+  await FirebaseAppCheck.instance.activate(
+    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+    // androidProvider: AndroidProvider.debug,
+  );
   await NotificationService().init();
 
   showNotification(message);
