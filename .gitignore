@@ -102,6 +102,9 @@ unlinked_spec.ds
 **/ios/Runner/GeneratedPluginRegistrant.*
 
 # windows related
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugin_registrant.h
+windows/flutter/generated_plugins.cmake
 **/windows/**/Generated Files/
 **/windows/**/packages/
 **/windows/**/App.g.cs

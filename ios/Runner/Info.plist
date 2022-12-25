@@ -59,6 +59,11 @@
 		<key>NSContactsUsageDescription</key>
 		<string>need Contact permision to view contact</string>
 		<key>UIStatusBarHidden</key>
+		<!-- Permission options for the `microphone` group -->
+		<key>NSMicrophoneUsageDescription</key>
+		<string>microphone</string>
+		<key>NSAppleMusicUsageDescription</key>
+      	<string>MyApp does not need this permission</string>
 		<false/>
 	</dict>
 </plist>

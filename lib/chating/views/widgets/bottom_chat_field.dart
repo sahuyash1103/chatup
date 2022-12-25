@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:chatup/chating/cubit/chat_cubit.dart';
 import 'package:chatup/chating/cubit/chat_state.dart';
@@ -14,6 +16,10 @@ import 'package:chatup/var/colors.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BottomChatField extends StatefulWidget {
   const BottomChatField({
@@ -30,29 +36,98 @@ class BottomChatField extends StatefulWidget {
 
 class _BottomChatFieldState extends State<BottomChatField> {
   final _textEditingControllerMessage = TextEditingController();
+  AppUser? sender;
+  FlutterSoundRecorder? _soundRecorder;
+  bool isRecording = false;
+  bool isRecorderInitiated = false;
 
   bool isTyping = false;
   bool isTypingEmoji = false;
   final focusNode = FocusNode();
 
-  Future<void> recordAudio() async {}
+  String? path;
 
-  Future<void> sendTextMessage() async {
-    final sender =
-        await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
-    final textMessage = _textEditingControllerMessage.text.trim();
-    _textEditingControllerMessage.text = '';
-    isTyping = false;
+  Future<void> startRecordingAudio() async {
+    isRecording = true;
     setState(() {});
-    if (mounted && sender != null && textMessage.isNotEmpty) {
-      await BlocProvider.of<ChatCubit>(context).sendTextMessage(
-        text: textMessage,
+    await _soundRecorder!.startRecorder(
+      toFile: path,
+    );
+  }
+
+  Future<void> stopRecordingAudio() async {
+    isRecording = false;
+    setState(() {});
+    await _soundRecorder!.stopRecorder();
+  }
+
+  Future<void> sendTextAudioMessage() async {
+    if (isTyping) {
+      final textMessage = _textEditingControllerMessage.text.trim();
+      _textEditingControllerMessage.text = '';
+      isTyping = false;
+      setState(() {});
+      if (mounted && sender != null && textMessage.isNotEmpty) {
+        await BlocProvider.of<ChatCubit>(context).sendTextMessage(
+          text: textMessage,
+          recieverID: widget.recieverUserId,
+          sender: sender!,
+        );
+      }
+    } else if (_soundRecorder != null && path != null && isRecorderInitiated) {
+      if (isRecording) {
+        await startRecordingAudio();
+        await sendFileMessage(File(path!), MessageEnum.audio);
+      } else {
+        await stopRecordingAudio();
+      }
+    }
+  }
+
+  Future<void> sendImageMessage() async {
+    final img = await pickImage(context, isCroped: false);
+    log(img.toString());
+    if (img != null && sender != null && mounted) {
+      await BlocProvider.of<ChatCubit>(context).sendFileMessage(
+        file: img,
         recieverID: widget.recieverUserId,
-        sender: sender,
+        sender: sender!,
+        messageEnum: MessageEnum.image,
       );
-      // showSnackBar(context: context, content: 'Message sent');
-    } else {
-      showSnackBar(context: context, content: 'Unable to send message');
+    }
+  }
+
+  Future<void> sendVideoMessage() async {
+    final video = await pickVideo(context);
+    if (video != null && sender != null && mounted) {
+      await BlocProvider.of<ChatCubit>(context).sendFileMessage(
+        file: video,
+        recieverID: widget.recieverUserId,
+        sender: sender!,
+        messageEnum: MessageEnum.video,
+      );
+    }
+  }
+
+  Future<void> sendGIF() async {
+    final gif = await pickGIF(context);
+    if (gif != null && gif.url != null && sender != null && mounted) {
+      await BlocProvider.of<ChatCubit>(context).sendGIFMessage(
+        gifUrl: gif.url!,
+        recieverID: widget.recieverUserId,
+        sender: sender!,
+      );
+    }
+  }
+
+  Future<void> sendFileMessage(File? file, MessageEnum messageEnum) async {
+    if (file != null && sender != null && mounted) {
+      await BlocProvider.of<ChatCubit>(context).sendFileMessage(
+        file: file,
+        recieverID: widget.recieverUserId,
+        sender: sender!,
+        messageEnum: messageEnum,
+      );
     }
   }
 
@@ -62,57 +137,6 @@ class _BottomChatFieldState extends State<BottomChatField> {
       onTapImage: sendImageMessage,
       onTapVideo: sendVideoMessage,
     );
-  }
-
-  Future<void> sendImageMessage() async {
-    final img = await pickImage(context, isCroped: false);
-    log(img.toString());
-    AppUser? sender;
-    if (mounted) {
-      sender =
-          await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
-    }
-    if (img != null && sender != null && mounted) {
-      await BlocProvider.of<ChatCubit>(context).sendFileMessage(
-        file: img,
-        recieverID: widget.recieverUserId,
-        sender: sender,
-        messageEnum: MessageEnum.image,
-      );
-    }
-  }
-
-  Future<void> sendVideoMessage() async {
-    final video = await pickVideo(context);
-    AppUser? sender;
-    if (mounted) {
-      sender =
-          await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
-    }
-    if (video != null && sender != null && mounted) {
-      await BlocProvider.of<ChatCubit>(context).sendFileMessage(
-        file: video,
-        recieverID: widget.recieverUserId,
-        sender: sender,
-        messageEnum: MessageEnum.video,
-      );
-    }
-  }
-
-  Future<void> sendGIF() async {
-    final gif = await pickGIF(context);
-    AppUser? sender;
-    if (mounted) {
-      sender =
-          await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
-    }
-    if (gif != null && gif.url != null && sender != null && mounted) {
-      await BlocProvider.of<ChatCubit>(context).sendGIFMessage(
-        gifUrl: gif.url!,
-        recieverID: widget.recieverUserId,
-        sender: sender,
-      );
-    }
   }
 
   void showEmojiKeyboard() {
@@ -141,9 +165,39 @@ class _BottomChatFieldState extends State<BottomChatField> {
     }
   }
 
+  Future<void> openAudio() async {
+    final status = await Permission.microphone.request();
+    if (_soundRecorder == null) return;
+    if (status != PermissionStatus.granted) {
+      log('MICROPHONE PERMISSION IS NOT GRANTED');
+      return;
+    }
+    await _soundRecorder!.openRecorder();
+    isRecorderInitiated = true;
+  }
+
+  Future<void> closeAudio() async {
+    if (_soundRecorder == null) return;
+    await _soundRecorder!.closeRecorder();
+    isRecorderInitiated = false;
+  }
+
+  Future<void> _setAudioPath() async {
+    final tempDir = await getTemporaryDirectory();
+    path = '${tempDir.path}/flutter_sound.aac';
+  }
+
+  Future<void> setSender() async {
+    sender = await BlocProvider.of<FirebaseAuthCubit>(context).getCurrentUser();
+  }
+
   @override
   void initState() {
     super.initState();
+    setSender();
+    _soundRecorder = FlutterSoundRecorder(logLevel: Level.nothing);
+    _setAudioPath();
+    openAudio();
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         hideEmojiKeyboard();
@@ -155,8 +209,9 @@ class _BottomChatFieldState extends State<BottomChatField> {
   @override
   void dispose() {
     _textEditingControllerMessage.dispose();
-    super.dispose();
     focusNode.dispose();
+    closeAudio();
+    super.dispose();
   }
 
   @override
@@ -262,7 +317,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
               },
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: isTyping ? sendTextMessage : recordAudio,
+                  onTap: sendTextAudioMessage,
                   child: Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.fromLTRB(1, 0, 5, 0),
@@ -276,10 +331,15 @@ class _BottomChatFieldState extends State<BottomChatField> {
                             Icons.send_rounded,
                             size: 25,
                           )
-                        : const Icon(
-                            Icons.mic,
-                            size: 25,
-                          ),
+                        : isRecording
+                            ? const Icon(
+                                Icons.stop,
+                                size: 25,
+                              )
+                            : const Icon(
+                                Icons.mic,
+                                size: 25,
+                              ),
                   ),
                 );
               },

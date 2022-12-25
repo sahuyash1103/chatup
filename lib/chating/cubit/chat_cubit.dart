@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -58,6 +59,7 @@ class ChatCubit extends Cubit<ChatState> {
       emit(ChatSentState());
     } catch (e) {
       emit(ChatErrorState(e.toString()));
+      log(e.toString());
     }
   }
 

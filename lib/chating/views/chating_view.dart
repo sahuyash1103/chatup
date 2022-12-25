@@ -7,7 +7,7 @@ import 'package:chatup/widgets/custom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChatingView extends StatelessWidget {
+class ChatingView extends StatefulWidget {
   const ChatingView({
     super.key,
     required this.name,
@@ -22,6 +22,11 @@ class ChatingView extends StatelessWidget {
   final bool isGroup;
 
   @override
+  State<ChatingView> createState() => _ChatingViewState();
+}
+
+class _ChatingViewState extends State<ChatingView> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -32,22 +37,22 @@ class ChatingView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(1, 0, 10, 0),
               child: CustomCircleAvatar(
-                profilePicURL: profilePic,
+                profilePicURL: widget.profilePic,
                 radius: 20,
               ),
             ),
-            if (isGroup)
-              Text(name)
+            if (widget.isGroup)
+              Text(widget.name)
             else
               StreamBuilder<AppUser>(
                 stream: BlocProvider.of<FirebaseAuthCubit>(context)
-                    .getUserByUID(uid),
+                    .getUserByUID(widget.uid),
                 builder: (context, snapshot) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        widget.name,
                         style: const TextStyle(fontSize: 18),
                       ),
                       if (snapshot.data != null)
@@ -77,6 +82,20 @@ class ChatingView extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: Container(
+        width: 40,
+        height: 40,
+        margin: const EdgeInsets.only(bottom: 40),
+        child: FloatingActionButton(
+          backgroundColor: messageColor,
+          onPressed: () {},
+          child: const Icon(
+            Icons.keyboard_double_arrow_down,
+            color: Colors.white,
+            size: 25,
+          ),
+        ),
+      ),
       body: DecoratedBox(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -88,13 +107,13 @@ class ChatingView extends StatelessWidget {
           children: [
             Expanded(
               child: ChatList(
-                recieverUserId: uid,
-                isGroupChat: isGroup,
+                recieverUserId: widget.uid,
+                isGroupChat: widget.isGroup,
               ),
             ),
             BottomChatField(
-              recieverUserId: uid,
-              isGroupChat: isGroup,
+              recieverUserId: widget.uid,
+              isGroupChat: widget.isGroup,
             ),
           ],
         ),

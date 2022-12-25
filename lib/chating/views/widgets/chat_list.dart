@@ -25,27 +25,23 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
-  final _messageScrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 1), autoScroll);
-  }
+  final messageScrollController = ScrollController();
 
   @override
   void dispose() {
-    _messageScrollController.dispose();
+    messageScrollController.dispose();
     super.dispose();
   }
 
   void autoScroll() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 1), () {
-        _messageScrollController
-            .jumpTo(_messageScrollController.position.maxScrollExtent);
-      });
+      Future.delayed(const Duration(seconds: 1), jumpDown);
     });
+  }
+
+  void jumpDown() {
+    messageScrollController
+        .jumpTo(messageScrollController.position.maxScrollExtent);
   }
 
   @override
@@ -64,7 +60,7 @@ class _ChatListState extends State<ChatList> {
             }
             autoScroll();
             return ListView.builder(
-              controller: _messageScrollController,
+              controller: messageScrollController,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
