@@ -1,6 +1,6 @@
 import 'package:chatup/chating/data/enums/message_enums.dart';
 import 'package:chatup/chating/data/models/message.dart';
-import 'package:chatup/chating/views/widgets/display_text_image_gif.dart';
+import 'package:chatup/chating/views/widgets/display_text_image_etc.dart';
 import 'package:chatup/common/utils/utils.dart';
 import 'package:chatup/var/colors.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,6 @@ class UserMessageCard extends StatelessWidget {
                   type: message.messageType,
                 ),
               ),
-              // const SizedBox(height: 10),
               Positioned(
                 bottom: 5,
                 right: 5,
@@ -54,9 +53,11 @@ class UserMessageCard extends StatelessWidget {
                     const SizedBox(width: 10),
                     Text(
                       formateTime(message.timeStamp),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
-                        color: Colors.white60,
+                        color: message.messageType == MessageEnum.text
+                            ? Colors.white60
+                            : Colors.white,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -65,17 +66,17 @@ class UserMessageCard extends StatelessWidget {
                       size: 20,
                       color: message.isSeen ? Colors.blue : Colors.white60,
                     ),
-                    // const SizedBox(width: 5),
                   ],
                 ),
               ),
-              if (message.messageType != MessageEnum.text)
+              if (message.messageType != MessageEnum.text &&
+                  message.messageType != MessageEnum.audio)
                 Positioned(
                   bottom: 3,
                   right: 3,
                   child: Container(
                     height: 30,
-                    width: size.width * 0.7,
+                    width: size.width * 0.7 + 5,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
@@ -91,8 +92,6 @@ class UserMessageCard extends StatelessWidget {
                           Colors.black.withOpacity(0.5),
                           Colors.black.withOpacity(0.6),
                           Colors.black.withOpacity(0.7),
-                          // Colors.red,
-                          // Colors.blue,
                         ],
                       ),
                     ),

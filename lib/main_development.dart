@@ -2,6 +2,7 @@ import 'package:chatup/app/app.dart';
 import 'package:chatup/bootstrap.dart';
 import 'package:chatup/common/services/firebase_messaging_service.dart';
 import 'package:chatup/common/services/notification_service.dart';
+import 'package:chatup/common/views/error_view.dart';
 import 'package:chatup/firebase_options.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,6 +37,9 @@ void main() async {
   await FirebaseMessagingService.instance.init();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  ErrorWidget.builder =
+      (details) => ErrorView(error: details.exceptionAsString());
 
   await bootstrap(() => const App());
 }

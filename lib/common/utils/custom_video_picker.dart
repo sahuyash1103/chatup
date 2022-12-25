@@ -19,7 +19,6 @@ Future<File?> pickVideo(BuildContext context) async {
       selectVideo: selectVideo,
     ),
   );
-
   return video;
 }
 
@@ -33,7 +32,7 @@ Future<File?> _pickVideo(
 
     if (pickedVideo != null) {
       videoPath = pickedVideo.path;
-    }
+    } else {}
   } catch (e) {
     showSnackBar(context: context, content: e.toString());
   }
@@ -67,7 +66,7 @@ class SelectVideoOptionSheet extends StatelessWidget {
               _pickVideo(context, ImageSource.gallery).then((video) {
                 if (video != null) {
                   selectVideo(video);
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 }
               });
             },
