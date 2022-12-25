@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +40,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
         isEnded = false;
         setState(() {});
       }
-      log('isEnded: $isEnded, isPlaying: $isPlaying');
     });
   }
 
@@ -61,30 +58,35 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
           CachedVideoPlayer(videoPlayerController),
           Align(
             child: IconButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+                shape: MaterialStateProperty.all(
+                  const CircleBorder(),
+                ),
+              ),
               onPressed: () {
-                setState(() {
-                  if (isEnded) {
-                    videoPlayerController
-                      ..seekTo(Duration.zero)
-                      ..play();
-                    isPlaying = true;
-                    isEnded = false;
-                  } else if (videoPlayerController.value.isPlaying) {
-                    videoPlayerController.pause();
-                    isPlaying = false;
-                  } else {
-                    videoPlayerController.play();
-                    isPlaying = true;
-                    isEnded = false;
-                  }
-                });
+                if (isEnded) {
+                  videoPlayerController
+                    ..seekTo(Duration.zero)
+                    ..play();
+                  isPlaying = true;
+                  isEnded = false;
+                } else if (videoPlayerController.value.isPlaying) {
+                  videoPlayerController.pause();
+                  isPlaying = false;
+                } else {
+                  videoPlayerController.play();
+                  isPlaying = true;
+                  isEnded = false;
+                }
+                setState(() {});
               },
               icon: Icon(
                 isEnded
-                    ? Icons.replay
+                    ? Icons.replay_outlined
                     : isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow,
+                        ? Icons.pause_circle
+                        : Icons.play_circle,
                 size: 65,
                 color: Colors.black.withOpacity(0.5),
               ),
